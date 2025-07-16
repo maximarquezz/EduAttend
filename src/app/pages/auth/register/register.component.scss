@@ -1,0 +1,79 @@
+@use '../../../shared/styles/layout.scss' as *;
+
+.register {
+
+  @extend .container-full_dv;
+  @extend .flex-col_spc-ctr;
+
+  &__navigation {
+    @extend .flex-row_spc-ctr;
+
+    flex: 1;
+    width: 100%;
+    background-color: var(--mat-sys-primary);
+
+    div {
+      @extend .container-full;
+      @extend .flex-row_spc-btw;
+
+      width: 90%;
+
+      button {
+        background: var(--mat-sys-secondary);
+      }
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+  }
+
+  &__card {
+    @extend .container-full;
+    @extend .flex-col_spc-ctr;
+
+    flex: 9;
+
+    mat-card {
+      @extend .flex-col_spc-btw;
+
+      width: 90%;
+      height: 90%;
+
+      img {
+        width: 150px;
+        position: absolute
+      }
+
+      mat-card-header {
+        @extend .flex-col_spc-ctr;
+
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      div {
+        @extend .flex-col_spc-ctr;
+
+        width: 100%;
+
+        mat-form-field {
+          width: 90%;
+        }
+      }
+
+      mat-card-actions {
+        @extend .flex-row_spc-btw;
+
+        width: 100%;
+
+        a {
+          font: var(--mat-sys-body-medium);
+        }
+      }
+    }
+
+  }
+
+}

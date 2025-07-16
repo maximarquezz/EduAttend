@@ -1,0 +1,24 @@
+@use '../../styles/layout.scss' as *;
+@use '../../styles/breakpoints.scss' as *;
+@use 'sass:map';
+
+mat-toolbar {
+  @extend .flex-row_spc-btw;
+
+  background: var(--mat-sys-primary);
+
+  mat-icon,
+  img {
+    filter: invert(1) brightness(999999);
+  }
+
+  img {
+    width: 100px;
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, md)) {
+  mat-toolbar {
+    display: none;
+  }
+}

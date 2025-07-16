@@ -1,0 +1,53 @@
+// Flex templates
+.flex-row_spc-ctr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-row_spc-evly {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.flex-row_spc-btw {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col_spc-ctr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-col_spc-evly {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.flex-col_spc-btw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Container dimensions
+.container-full_dv {
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.container-full {
+  width: 100%;
+  height: 100%;
+}

@@ -1,4 +1,7 @@
+// Angular Imports
 import { Component } from '@angular/core';
+
+// Material Imports
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,12 +10,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 
+// Services Imports
+import { RouterLinksService } from './../../../core/services/navigation/router-links.service';
+
 @Component({
   selector: 'app-login',
-  imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatDividerModule],
+  imports: [
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDividerModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
-export class LoginComponent {
 
+export class LoginComponent {
+  constructor(public routerLinks: RouterLinksService){}
 }

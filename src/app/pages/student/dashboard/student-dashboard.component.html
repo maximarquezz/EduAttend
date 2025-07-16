@@ -1,1 +1,47 @@
-<p>student-dashboard works!</p>
+<app-header></app-header>
+
+<section class="student-dashboard">
+  <app-sidebar></app-sidebar>
+  <article class="student-dashboard__content">
+    <div class="student-dashboard__content--hero">
+      <!--Hero Background-->
+    </div>
+
+    <mat-card>
+      <div class="student-dashboard__content--title">
+        <p>Panel de Inicio</p>
+      </div>
+
+      <mat-card-content>
+        <p>Total de Asistencias</p>
+        <h2>90%</h2>
+        <p>Últimos 30 días</p>
+        <div #chartContainer></div>
+      </mat-card-content>
+
+      <div class="student-dashboard__content--title">
+        <p>Materias Inscritas</p>
+      </div>
+
+      <mat-card-content>
+        <mat-card>
+          <mat-card-header>
+            <img src="assets/images/blank-profile.webp" alt="" mat-card-avatar>
+
+            <mat-card-title>Programación III</mat-card-title>
+            <mat-card-subtitle>Vanegas Brian</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>Asistencias: 85%</p>
+            <p>Última asistencia: 15/10/2023</p>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button matButton="filled">Ver Detalles</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </article>
+</section>

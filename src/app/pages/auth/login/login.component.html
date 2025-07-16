@@ -5,31 +5,35 @@
 
   <article class="login__form">
     <mat-card>
-      <mat-card-header>Iniciar Sesión</mat-card-header>
+      <img src="/assets/images/logo.png" width="150px" alt="">
 
       <form action="#">
         <mat-form-field>
           <mat-label>Documento</mat-label>
           <input matInput placeholder="Ej: 45168933">
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-icon matSuffix>highlight_off</mat-icon>
           <mat-hint>Ingrese su número de documento</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Contraseña</mat-label>
-          <input matInput placeholder="Ej: zKjl8U12z-">
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <input matInput placeholder="Ej: mzOjKxK1-">
+          <mat-icon matSuffix>highlight_off</mat-icon>
           <mat-hint>Ingrese su contraseña</mat-hint>
         </mat-form-field>
 
-        <mat-checkbox>Recordarme</mat-checkbox>
+        <div class="checkbox-container">
+          <mat-checkbox>Recordarme</mat-checkbox>
+        </div>
 
-        <button mat-flat-button appearance="filled">Iniciar sesión</button>
-        <button mat-flat-button appearance="outlined">¿Olvidaste tu contraseña?</button>
+        <mat-card-actions>
+          <button matButton="filled" (click)="routerLinks.goToStudentDashboard()">Iniciar sesión</button>
+          <button matButton="tonal" (click)="routerLinks.goToPasswordRecovery()">¿Olvidaste tu contraseña?</button>
+        </mat-card-actions>
 
         <mat-divider></mat-divider>
 
-        <button mat-stroked-button>¿No tienes una cuenta? Regístrate</button>
+        <a (click)="routerLinks.goToRegister()">¿No tienes una cuenta? Regístrate</a>
       </form>
     </mat-card>
   </article>

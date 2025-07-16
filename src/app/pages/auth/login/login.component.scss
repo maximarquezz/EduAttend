@@ -1,49 +1,116 @@
-.login {
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use 'sass:map';
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100dvw;
-  height: 100dvh;
+.login {
+  @extend .flex-col_spc-ctr;
+  @extend .container-full_dv;
 
   &__hero {
-    background-color: var(--mat-sys-primary-container);
+    position: relative;
+    background: linear-gradient(rgba(0, 92, 187, 0.8), rgba(0, 92, 187, 0.8)),
+      url('../../../../../public/assets/images/escuela-sagarna.jpg') center/cover;
     flex: 1;
     width: 100%;
   }
 
   &__form {
+    @extend .flex-row_spc-ctr;
+
     flex: 4;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     mat-card {
-      height: 90%;
-      width: 90%;
-      background-color: var(--mat-sys-secondary);
-    }
+      @extend .container-full;
+      background-color: var(--mat-sys-primary-container);
 
-    form {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-
-      mat-form-field {
-        width: 90%;
+      img {
+        margin: auto;
+        padding: 30px 0 20px 0;
       }
 
+      form {
+        @extend .flex-col_spc-evly;
+        @extend .container-full;
+
+        mat-form-field {
+          width: 90%;
+        }
+
+        mat-card-actions {
+          @extend .flex-col_spc-ctr;
+          width: 100%;
+          gap: 5px;
+
+          button {
+            width: 90%;
+          }
+        }
+
+        .checkbox-container {
+          width: 90%;
+        }
+
+        mat-checkbox {
+          align-self: flex-start;
+        }
+
+        mat-divider {
+          width: 90%;
+          min-width: 100px;
+          display: block;
+          background-color: var(--mat-sys-outline);
+          filter: opacity(0.3);
+          height: 1px;
+        }
+
+        a {
+          font: var(--mat-sys-body-medium);
+          color: var(--mat-sys-primary);
+          text-decoration: none;
+          padding: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+// Media Queries
+@media (min-width: map.get($width-breakpoints, md)) {
+
+  .login {
+    flex-direction: row;
+
+    &__hero,
+    &__form {
+      height: 100dvh;
     }
 
+    &__hero {
+      flex: 3;
+    }
+
+    &__form {
+      flex: 2;
+
+      mat-card {
+        img {
+          width: 200px;
+          padding: 80px 0 20px 0;
+        }
+      }
+    }
   }
 
 }
 
-::ng-deep .mat-mdc-form-field-fill .mat-mdc-shape-container {
-  background-color: transparent !important;
+@media (min-width: map.get($width-breakpoints, lg)) {
+
+  .login {
+    &__hero {
+      flex: 4;
+    }
+  }
+
 }
