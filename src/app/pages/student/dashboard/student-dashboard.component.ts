@@ -11,12 +11,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-// Components Imports
-import { HeaderComponent } from "../../../shared/layouts/header/header.component";
-import { SidebarComponent } from "../../../shared/layouts/sidebar/sidebar.component";
-
 // ECharts Imports
 import * as echarts from 'echarts';
+import { CardComponent } from "../../../shared/components/card/card.component";
+import { CardCompactComponent } from "../../../shared/components/card-compact/card-compact.component";
 
 @Component({
   selector: 'app-student-dashboard',
@@ -29,8 +27,8 @@ import * as echarts from 'echarts';
     MatCheckboxModule,
     MatDividerModule,
     MatToolbarModule,
-    HeaderComponent,
-    SidebarComponent
+    CardComponent,
+    CardCompactComponent
 ],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.scss'

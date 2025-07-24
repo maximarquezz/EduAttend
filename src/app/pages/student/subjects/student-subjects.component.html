@@ -1,0 +1,158 @@
+<section class="student-subjects">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Mis Materias</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <app-card-compact [cardImageUrl]="'https://avatars.githubusercontent.com/u/122392675?v=4'"
+        [cardTitle]="'Programación III'" [cardSubtitle]="'Vanegas Brian'"
+        [cardPercentageLabel]="'Porcentaje de asistencias'" [cardPercentage]="80" [cardDateLabel]="'Última asistencia'"
+        [cardDate]="'01/01/12ac'">
+      </app-card-compact>
+
+      <app-card-compact [cardTitle]="'Probabilidad y Estadística'" [cardSubtitle]="'Traverso Carolina'"
+        [cardPercentage]="71"></app-card-compact>
+
+      <app-card-compact [cardTitle]="'Análisis y Diseño de Sistemas II'" [cardSubtitle]="'Steven Verónica'"
+        [cardPercentage]="22">
+      </app-card-compact>
+
+      <app-card-compact [cardTitle]="'Derechos Humanos y Ciudadanía'" [cardSubtitle]="'María Angélica Toledo'"
+        [cardPercentage]="87"></app-card-compact>
+
+      <app-card-compact [cardTitle]="'UDI III'" [cardSubtitle]="'Carla Jaqueline Diaz'" [cardPercentage]="36">
+      </app-card-compact>
+    </mat-card-content>
+
+  </mat-card>
+
+  <aside>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Mi Carrera</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>Nombre:</span>
+            <span matListItemLine>Análisis y Desarrollo de Software</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Tipo:</span>
+            <span matListItemLine>Tecnicatura</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Duración:</span>
+            <span matListItemLine>3 años</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Cant. Materias:</span>
+            <span matListItemLine>24</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Ciclo Lectivo:</span>
+            <span matListItemLine>2025</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Plan de Estudios</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> 1er año </mat-panel-title>
+              <mat-panel-description> Lista de Materias </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+              <li>Problemáticas Sociales, Económicas y Políticas</li>
+              <li>Matemática I</li>
+              <li>Lógica</li>
+              <li>Idioma Extranjero: Inglés Técnico I</li>
+              <li>Administración y Gestión I</li>
+              <li>Tecnología de la Información</li>
+              <li>Programación I</li>
+              <li>Base de Datos</li>
+              <li>Prácticas Profesionalizantes I</li>
+            </ul>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> 2do año </mat-panel-title>
+              <mat-panel-description> Lista de Materias </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+              <li>Problemáticas Sociales, Económicas y Políticas</li>
+              <li>Matemática I</li>
+              <li>Lógica</li>
+              <li>Idioma Extranjero: Inglés Técnico I</li>
+              <li>Administración y Gestión I</li>
+              <li>Tecnología de la Información</li>
+              <li>Programación I</li>
+              <li>Base de Datos</li>
+              <li>Prácticas Profesionalizantes I</li>
+            </ul>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> 3er año </mat-panel-title>
+              <mat-panel-description> Lista de Materias </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+              <li>Problemáticas Sociales, Económicas y Políticas</li>
+              <li>Matemática I</li>
+              <li>Lógica</li>
+              <li>Idioma Extranjero: Inglés Técnico I</li>
+              <li>Administración y Gestión I</li>
+              <li>Tecnología de la Información</li>
+              <li>Programación I</li>
+              <li>Base de Datos</li>
+              <li>Prácticas Profesionalizantes I</li>
+            </ul>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Tabla de Referencias</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>check_circle</mat-icon>
+            <div matListItemTitle>Promocional</div>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListItemIcon>schedule</mat-icon>
+            <div matListItemTitle>Regular</div>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon matListItemIcon>block</mat-icon>
+            <div matListItemTitle>Libre</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </aside>
+
+</section>

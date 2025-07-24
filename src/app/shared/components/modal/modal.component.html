@@ -1,0 +1,16 @@
+<mat-card>
+  <div>
+    <img src="{{ data.cardImageUrl }}" width="200px" alt="">
+  </div>
+  <mat-card-header>
+    <mat-card-title>{{ data.cardTitle }}</mat-card-title>
+    <mat-card-subtitle>{{ data.cardSubtitle }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    {{ data.cardPercentageLabel }}: {{ data.cardPercentage }}%<br />
+    {{ data.cardDateLabel }}: {{ data.cardDate }}
+  </mat-card-content>
+  <mat-card-actions>
+    <button matDialog="close" matButton="filled">Cerrar</button>
+  </mat-card-actions>
+</mat-card>

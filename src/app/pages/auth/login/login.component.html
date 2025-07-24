@@ -7,7 +7,7 @@
     <mat-card>
       <img src="/assets/images/logo.png" width="150px" alt="">
 
-      <form action="#">
+      <form>
         <mat-form-field>
           <mat-label>Documento</mat-label>
           <input matInput placeholder="Ej: 45168933">
@@ -27,8 +27,9 @@
         </div>
 
         <mat-card-actions>
-          <button matButton="filled" (click)="routerLinks.goToStudentDashboard()">Iniciar sesión</button>
-          <button matButton="tonal" (click)="routerLinks.goToPasswordRecovery()">¿Olvidaste tu contraseña?</button>
+          <button type="button" matButton="filled" (click)="routerLinks.goToStudentDashboard()">Iniciar sesión</button>
+          <button type="button" matButton="tonal" (click)="routerLinks.goToPasswordRecovery()">¿Olvidaste tu
+            contraseña?</button>
         </mat-card-actions>
 
         <mat-divider></mat-divider>

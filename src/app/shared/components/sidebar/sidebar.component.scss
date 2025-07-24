@@ -13,30 +13,53 @@ mat-sidenav-container {
 
   mat-divider {
     border-top-color: var(--mat-sys-on-primary);
-    filter: brightness(0.7);
+    filter: brightness(0.8);
+    margin: 0 10px;
   }
 
   mat-sidenav-content {
-    padding: 10px;
     width: 80%;
     height: 100%;
-    background: var(--mat-sys-primary);
+    background: var(--mat-sys-on-primary);
+
+    header {
+      @extend .flex-row_spc-ctr;
+
+      background: var(--mat-sys-primary);
+      padding: 15px;
+
+      img {
+        filter: invert(1) brightness(999999);
+      }
+    }
 
     nav {
       div {
         @extend .flex-row_spc-btw;
-        color: var(--mat-sys-on-primary);
+
+        color: var(--mat-sys-on-surface);
 
         mat-card-title {
           font: var(--mat-sys-title-medium);
+        }
+
+        mat-card-subtitle {
           padding-bottom: 10px;
+          font: var(--mat-sys-body-medium);
         }
       }
 
       mat-list {
+        padding: 0;
+
+        [mat-subheader] {
+          font: var(--mat-sys-title-medium);
+        }
 
         mat-list-item {
-          padding: 0;
+          padding: 10px;
+          cursor: pointer;
+          transition: 0.3s background;
 
           [matListItemTitle] {
             display: flex;
@@ -45,26 +68,36 @@ mat-sidenav-container {
 
             mat-icon {
               margin-right: 10px;
-              color: var(--mat-sys-on-primary);
+              color: var(--mat-sys-primary);
             }
           }
+        }
 
-          [matListItemLine] {
-            margin-top: 15px;
-            color: var(--mat-sys-inverse-on-surface);
-            filter: brightness(0.8);
+        mat-list-item:last-of-type:hover {
+          background-color: rgb(255, 177, 187);
+
+          mat-icon,
+          a {
+            color: rgb(214, 34, 64);
           }
+        }
 
+        mat-list-item:hover {
+          background: #d1d1d1;
         }
       }
     }
 
     a {
-      color: var(--mat-sys-on-primary);
+      color: var(--mat-sys-on-surface);
       text-decoration: none;
     }
   }
+}
 
+.active-link {
+  background: #0077ff3a;
+  border-right: 2px solid blue;
 }
 
 @media (min-width: map.get($width-breakpoints, md)) {

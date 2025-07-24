@@ -2,12 +2,16 @@
 <mat-sidenav-container>
   <mat-sidenav>Start</mat-sidenav>
   <mat-sidenav-content>
+    <header>
+      <img src="assets/images/logo.png" width="150px" alt="">
+    </header>
     <nav>
       <div>
         <mat-card-header>
-          <img src="assets/images/blank-profile.webp" alt="" mat-card-avatar>
+          <img src="https://avatars.githubusercontent.com/u/107851137?v=4" alt="" mat-card-avatar>
 
           <mat-card-title>Maximiliano Marquez</mat-card-title>
+          <mat-card-subtitle>{{ role }}</mat-card-subtitle>
         </mat-card-header>
         <mat-icon (click)="toggle.isToggled = !toggle.isToggled">close</mat-icon>
       </div>
@@ -15,111 +19,100 @@
       <mat-divider></mat-divider>
 
       <mat-list>
+        <div mat-subheader>Tus Secciones</div>
         @if(role == 'student'){
-        <mat-list-item>
+        <mat-list-item routerLink="/private/student/dashboard" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>home</mat-icon>
-            <a href="/private/student/dashboard">Dashboard</a>
+            <a>Dashboard</a>
           </span>
-          <span matListItemLine>Panel de inicio del estudiante.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/student/subjects" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>menu_book</mat-icon>
-            <a href="/private/student/subjects">Materias</a>
+            <a>Materias</a>
           </span>
-          <span matListItemLine>Consulta las estadísticas por materia.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/student/attendance-history" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>event_available</mat-icon>
-            <a href="/private/student/attendance-history">Asistencias</a>
+            <a>Asistencias</a>
           </span>
-          <span matListItemLine>Consulta el historial de asistencias.</span>
         </mat-list-item>
         }
         @if (role == 'teacher'){
-        <mat-list-item>
+        <mat-list-item routerLink="/private/teacher/dashboard" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>home</mat-icon>
-            <a href="/private/teacher/dashboard">Dashboard</a>
+            <a>Dashboard</a>
           </span>
-          <span matListItemLine>Panel de inicio del profesor.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/teacher/subjects" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>groups</mat-icon>
-            <a href="/private/teacher/subjects">Materias</a>
+            <a>Materias</a>
           </span>
-          <span matListItemLine>Gestionar materias y comisiones.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/teacher/attendance-list" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>assignment_turned_in</mat-icon>
-            <a href="/private/teacher/attendance-list">Asistencias</a>
+            <a>Asistencias</a>
           </span>
-          <span matListItemLine>Tomar y/o editar asistencia.</span>
         </mat-list-item>
         }
         @if (role == 'admin'){
-        <mat-list-item>
+        <mat-list-item routerLink="/private/admin/dashboard" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>home</mat-icon>
-            <a href="/private/admin/dashboard">Dashboard</a>
+            <a>Dashboard</a>
           </span>
-          <span matListItemLine>Panel de inicio del preceptor.</span>
         </mat-list-item>
 
         <mat-list-item>
           <span matListItemTitle>
             <mat-icon>groups</mat-icon>
-            <a href="/private/">Comisiones</a>
+            <a routerLink="/private/">Comisiones</a>
           </span>
-          <span matListItemLine>Gestionar comisiones y materias.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/admin/take-attendance" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>assignment_turned_in</mat-icon>
-            <a href="/private/admin/take-attendance">Asistencias</a>
+            <a>Asistencias</a>
           </span>
-          <span matListItemLine>Tomar y/o editar asistencia.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/admin/justify-absence" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>event_busy</mat-icon>
-            <a href="/private/admin/justify-absence">Inasistencias</a>
+            <a>Inasistencias</a>
           </span>
-          <span matListItemLine>Justificaciones de inasistencia.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/admin/generate-report" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>bar_chart</mat-icon>
-            <a href="/private/admin/generate-report">Reportes</a>
+            <a>Reportes</a>
           </span>
-          <span matListItemLine>Generar reportes generales.</span>
         </mat-list-item>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/private/admin/user-management" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>assignment_ind</mat-icon>
-            <a href="/private/admin/user-management">Solicitudes</a>
+            <a>Solicitudes</a>
           </span>
-          <span matListItemLine>Gestionar solicitudes de registro.</span>
         </mat-list-item>
         }
         <mat-divider></mat-divider>
 
-        <mat-list-item>
+        <mat-list-item routerLink="/public/auth/login">
           <span matListItemTitle>
             <mat-icon>logout</mat-icon>
-            <a href="/public/">Cerrar Sesión</a>
+            <a>Cerrar Sesión</a>
           </span>
         </mat-list-item>
       </mat-list>

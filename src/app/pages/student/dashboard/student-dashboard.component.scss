@@ -5,6 +5,7 @@
 .student-dashboard {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 
   mat-tab-group {
     position: fixed;
@@ -47,6 +48,7 @@
       border-radius: 0;
       margin-top: 100px;
       width: 100%;
+      box-shadow: var(--mat-sys-level3);
 
       mat-card-header {
         display: flex;
@@ -59,11 +61,11 @@
       }
 
       mat-card-content {
-        width: 80%;
         height: 100%;
-        padding: 10px;
+        padding: 20px;
         margin: 20px;
-        background: rgb(216, 216, 216);
+        background: rgb(236, 236, 236);
+        box-sizing: border-box;
 
         p,
         h2 {
@@ -78,23 +80,6 @@
         div {
           width: 100%;
           height: 270px;
-        }
-
-        mat-card {
-          height: auto;
-          margin: 0;
-          width: 100%;
-
-          mat-card-header {
-            width: 100%;
-          }
-
-          mat-card-content {
-            margin: 5px;
-            padding: 0;
-            width: 90%;
-            background: var(--mat-sys-container);
-          }
         }
       }
 
@@ -111,24 +96,26 @@
 }
 
 @media (min-width: map.get($width-breakpoints, md)) {
-  app-sidebar {
-    flex: 1;
-  }
-
   .student-dashboard {
-    display: flex;
-    flex-direction: row;
-
     &__content {
-      flex: 5;
+      mat-card {
+        div:nth-of-type(2) {
+          width: 100%;
+          display: flex;
+
+          mat-card-content:nth-of-type(1),
+          mat-card-content:nth-of-type(2) {
+            flex: 2;
+            width: 50%;
+            height: 100%;
+          }
+        }
+
+      }
 
       &--hero {
         border-radius: 0;
       }
     }
-  }
-
-  * {
-    flex-direction: row;
   }
 }

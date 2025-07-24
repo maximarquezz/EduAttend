@@ -1,0 +1,17 @@
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use 'sass:map';
+
+.attendance-history {
+  mat-card {
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 12px 0;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      margin: auto;
+    }
+  }
+}

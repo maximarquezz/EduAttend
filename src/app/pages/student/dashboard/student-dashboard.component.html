@@ -1,7 +1,4 @@
-<app-header></app-header>
-
 <section class="student-dashboard">
-  <app-sidebar></app-sidebar>
   <article class="student-dashboard__content">
     <div class="student-dashboard__content--hero">
       <!--Hero Background-->
@@ -12,35 +9,34 @@
         <p>Panel de Inicio</p>
       </div>
 
-      <mat-card-content>
-        <p>Total de Asistencias</p>
-        <h2>90%</h2>
-        <p>Últimos 30 días</p>
-        <div #chartContainer></div>
-      </mat-card-content>
+      <div>
+        <mat-card-content>
+          <p>Total de Asistencias</p>
+          <h2>90%</h2>
+          <p>Últimos 30 días</p>
+          <div #chartContainer></div>
+        </mat-card-content>
+
+        <mat-card-content>
+          <h4>Materia más asistida</h4>
+          <app-card-compact [cardImageUrl]="'https://avatars.githubusercontent.com/u/122392675?v=4'"
+            [cardTitle]="'Programación III'" [cardSubtitle]="'Vanegas Brian'" [cardPercentage]="80">
+          </app-card-compact>
+
+          <h4>Materia menos asistida</h4>
+          <app-card-compact [cardTitle]="'PHP 4'" [cardSubtitle]="'Werfelli Julián'"
+            [cardPercentage]="40"></app-card-compact>
+        </mat-card-content>
+      </div>
 
       <div class="student-dashboard__content--title">
         <p>Materias Inscritas</p>
       </div>
 
       <mat-card-content>
-        <mat-card>
-          <mat-card-header>
-            <img src="assets/images/blank-profile.webp" alt="" mat-card-avatar>
-
-            <mat-card-title>Programación III</mat-card-title>
-            <mat-card-subtitle>Vanegas Brian</mat-card-subtitle>
-          </mat-card-header>
-
-          <mat-card-content>
-            <p>Asistencias: 85%</p>
-            <p>Última asistencia: 15/10/2023</p>
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button matButton="filled">Ver Detalles</button>
-          </mat-card-actions>
-        </mat-card>
+        <app-card [cardTitle]="'Programación III'" [cardSubtitle]="'Vanegas Brian'" [cardPercentageLabel]="'Asistencia'"
+          [cardPercentage]="70" [cardDateLabel]="'Última asistencia'" [cardDate]="'1999-01-01'">
+        </app-card>
       </mat-card-content>
     </mat-card>
   </article>

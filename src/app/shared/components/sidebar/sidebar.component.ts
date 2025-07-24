@@ -1,5 +1,6 @@
 // Angular Imports
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // Material Imports
 import { MatSidenavModule } from '@angular/material/sidenav'
@@ -14,6 +15,8 @@ import { MatCardModule } from "@angular/material/card";
 @Component({
   selector: 'app-sidebar',
   imports: [
+    RouterLink,
+    RouterLinkActive,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
@@ -23,13 +26,8 @@ import { MatCardModule } from "@angular/material/card";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnDestroy {
+export class SidebarComponent {
   constructor(public toggle: ToggleService){}
 
   role = 'student';
-
-  ngOnDestroy(): void {
-    this.toggle.isToggled = false;
-  }
-
 }
