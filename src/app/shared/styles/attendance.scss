@@ -1,0 +1,22 @@
+// Circles
+.circle-present,
+.circle-absent,
+.circle-justified {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.circle-present {
+  background-color: green;
+}
+
+.circle-absent {
+  background-color: red;
+}
+
+.circle-justified {
+  background-color: orange;
+}

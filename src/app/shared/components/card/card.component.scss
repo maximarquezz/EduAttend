@@ -1,48 +1,49 @@
 @use '../../styles/layout.scss' as *;
 
 mat-card {
-  height: auto;
-  margin: 0;
-  width: 100%;
+  background: var(--mat-sys-surface);
+  cursor: pointer;
+  transition: 0.2s all;
 
   mat-card-header {
     @extend .flex-row_spc-ctr;
-    box-sizing: border-box;
-    background: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
-    width: 100%;
-    padding: 10px;
-    margin: 0;
-    gap: 20px;
 
-    img,
-    mat-card-title,
-    mat-card-subtitle {
-      padding: 0;
-      margin: 0;
-    }
+    justify-content: flex-start;
   }
 
   mat-card-content {
-    @extend .flex-col_spc-ctr;
-    box-sizing: border-box;
-    align-items: flex-start;
+    @extend .flex-row_spc-btw;
+
+    padding: 10px 0;
     width: 90%;
     margin: auto;
-    padding: 15px 0;
-    gap: 10px;
-    background: var(--mat-sys-container);
+
+    mat-progress-bar {
+      flex: 3;
+    }
 
     p {
+      flex: 1;
       margin: 0;
+      text-align: right;
+      font: var(--mat-sys-title-medium);
+    }
+
+    mat-icon {
+      margin-left: 10px;
     }
   }
 
   mat-card-actions {
-    @extend .flex-row_spc-evly;
+    width: 100%;
 
     button {
       width: 100%;
     }
   }
+}
+
+mat-card:hover {
+  background: var(--mat-sys-tertiary-container);
+  scale: 1.03;
 }

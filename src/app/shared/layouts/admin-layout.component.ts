@@ -47,6 +47,8 @@ import { FooterComponent } from "../components/footer/footer.component";
       .main-content {
         grid-area: main;
         overflow-y: auto;
+        padding: 20px;
+        background: #d4d4d49d;
       }
 
       app-footer {

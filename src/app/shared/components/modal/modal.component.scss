@@ -1,4 +1,5 @@
 @use '../../styles/layout.scss' as *;
+@use '../../styles/attendance.scss' as *;
 
 mat-card {
   @extend .flex-col_spc-btw;
@@ -6,17 +7,56 @@ mat-card {
   align-items: flex-start;
   height: 100%;
 
-  div {
-    @extend .flex-row_spc-evly;
-
-    background: linear-gradient(rgba(0, 47, 94, 0.8), rgba(0, 47, 94, 0.8)),
-      url('/assets/images/escuela-sagarna.jpg') center / cover no-repeat;
+  mat-card-header {
+    box-sizing: border-box;
     width: 100%;
-    height: 300px;
+    background: var(--mat-sys-primary);
 
-    img {
-      border-radius: 50%;
-      aspect-ratio: 1/1;
+    mat-card-title,
+    mat-card-subtitle {
+      color: var(--mat-sys-on-primary);
     }
+  }
+
+  mat-card-content {
+    @extend .flex-col_spc-btw;
+    box-sizing: border-box;
+    width: 100%;
+    flex: 3;
+    padding: 10px;
+
+    overflow-y: auto;
+    max-height: 100%;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      flex: 1;
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+      }
+
+      thead {
+        background-color: #f3f3f3;
+        font-weight: 600;
+      }
+
+      tbody tr:nth-child(odd) {
+        background-color: #fafafa;
+      }
+    }
+
+    mat-paginator {
+      width: 100%;
+    }
+  }
+
+  mat-card-actions {
+    @extend .flex-row_spc-btw;
+    justify-content: flex-end;
+    width: 100%;
   }
 }

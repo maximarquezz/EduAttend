@@ -13,8 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 // ECharts Imports
 import * as echarts from 'echarts';
-import { CardComponent } from "../../../shared/components/card/card.component";
-import { CardCompactComponent } from "../../../shared/components/card-compact/card-compact.component";
+import { CardComponent } from '../../../shared/components/card/card.component';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -27,8 +26,7 @@ import { CardCompactComponent } from "../../../shared/components/card-compact/ca
     MatCheckboxModule,
     MatDividerModule,
     MatToolbarModule,
-    CardComponent,
-    CardCompactComponent
+    CardComponent
 ],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.scss'
@@ -37,7 +35,7 @@ export class StudentDashboardComponent implements AfterViewInit {
 
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     const chart = echarts.init(this.chartContainer.nativeElement);
 
     chart.setOption({

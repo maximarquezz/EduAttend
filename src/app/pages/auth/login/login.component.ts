@@ -12,6 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 
 // Services Imports
 import { RouterLinksService } from './../../../core/services/navigation/router-links.service';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,14 @@ import { RouterLinksService } from './../../../core/services/navigation/router-l
     MatIconModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDividerModule],
+    MatDividerModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 
 export class LoginComponent {
   constructor(public routerLinks: RouterLinksService){}
+
+  role = environment.userRole;
 }

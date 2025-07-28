@@ -18,7 +18,7 @@ import { FooterComponent } from "../components/footer/footer.component";
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
-    <app-footer></app-footer>
+    <!--<app-footer></app-footer>-->
   `,
   styles: `
     @use '../styles/breakpoints.scss' as *;
@@ -28,7 +28,7 @@ import { FooterComponent } from "../components/footer/footer.component";
       :host {
         display: grid;
         grid-template-rows: auto 1fr auto; // header - main - footer
-        grid-template-columns: 1fr 3fr; // sidebar - main
+        grid-template-columns: 1fr 4fr; // sidebar - main
         grid-template-areas:
           "header header"
           "sidebar main"
@@ -47,6 +47,8 @@ import { FooterComponent } from "../components/footer/footer.component";
       .main-content {
         grid-area: main;
         overflow-y: auto;
+        padding: 20px;
+        background: #d4d4d49d;
       }
 
       app-footer {

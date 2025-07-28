@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CardCompactComponent } from "../../../shared/components/card-compact/card-compact.component";
+import { CardComponent } from '../../../shared/components/card/card.component';
 import { MatCardModule } from "@angular/material/card";
 import { MatListModule } from "@angular/material/list";
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-student-subjects',
   imports: [
     MatCardModule,
-    CardCompactComponent,
+    CardComponent,
     MatListModule,
     MatExpansionModule,
     MatIconModule,

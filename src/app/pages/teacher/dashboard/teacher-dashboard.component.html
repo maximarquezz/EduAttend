@@ -1,1 +1,40 @@
-<p>teacher-dashboard works!</p>
+<section class="teacher-dashboard">
+  <article class="teacher-dashboard__content">
+    <div class="teacher-dashboard__content--hero">
+      <!--Hero Background-->
+    </div>
+
+    <mat-card>
+      <div class="teacher-dashboard__content--title">
+        <p>Panel de Inicio</p>
+      </div>
+
+      <div>
+        <mat-card-content>
+          <p>Carreras con menos asistencias</p>
+          <h2>Top 5</h2>
+          <p>Últimos 30 días</p>
+          <div #chartContainer></div>
+        </mat-card-content>
+
+        <mat-card-content>
+          <h4>Comisión con más asistencias</h4>
+          <app-card [cardTitle]="'Software'" [cardSubtitle]="'3er año - 1era división'" [cardPercentage]="80">
+          </app-card>
+
+          <h4>Comisión con menos asistencias</h4>
+          <app-card [cardTitle]="'Medicina'" [cardSubtitle]="'2do año - 3era división'"
+            [cardPercentage]="40"></app-card>
+        </mat-card-content>
+      </div>
+
+      <div class="teacher-dashboard__content--title">
+        <p>Materias Inscritas</p>
+      </div>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </article>
+</section>

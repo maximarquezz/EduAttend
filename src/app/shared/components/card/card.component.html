@@ -1,17 +1,17 @@
-<mat-card>
+<mat-card (click)="openModal()">
   <mat-card-header>
     <img src="{{ cardImageUrl }}" alt="" mat-card-avatar>
-
     <mat-card-title>{{ cardTitle }}</mat-card-title>
     <mat-card-subtitle>{{ cardSubtitle }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <p>{{ cardPercentageLabel }}: {{ cardPercentage }}%</p>
-    <p>{{ cardDateLabel }}: {{ cardDate }}</p>
+    <mat-progress-bar value="{{ cardPercentage }}"></mat-progress-bar>
+    <p>{{ cardPercentage }}%</p>
+    @if(cardPercentage > 70){
+    <mat-icon fontIcon="check_circle"></mat-icon>
+    } @else if (cardPercentage > 60 && cardPercentage < 70) { <mat-icon fontIcon="schedule"></mat-icon>
+      } @else if (cardPercentage < 60) { <mat-icon fontIcon="block"></mat-icon>
+        }
   </mat-card-content>
-
-  <mat-card-actions>
-    <button matButton="filled">Ver Detalles</button>
-  </mat-card-actions>
 </mat-card>

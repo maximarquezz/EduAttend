@@ -30,7 +30,27 @@ export class RouterLinksService {
     this.router.navigate(['private/student/dashboard']);
   }
 
+  goToStudentSubjects(){
+    this.router.navigate(['private/student/subjects']);
+  }
+
+  goToStudentAttendances(){
+    this.router.navigate(['private/student/attendance-history']);
+  }
+
   // Rutas de Teacher
+  goToTeacherDashboard(){
+    this.router.navigate(['private/teacher/dashboard']);
+  }
+
+  goToTeacherSubjects(){
+    this.router.navigate(['private/teacher/subjects']);
+  }
+
+  goToTeacherAttendances(){
+    this.router.navigate(['private/teacher/attendance-list']);
+  }
+
   // Rutas de Admin
 
 }

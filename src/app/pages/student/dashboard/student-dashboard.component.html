@@ -19,13 +19,12 @@
 
         <mat-card-content>
           <h4>Materia más asistida</h4>
-          <app-card-compact [cardImageUrl]="'https://avatars.githubusercontent.com/u/122392675?v=4'"
+          <app-card [cardImageUrl]="'https://avatars.githubusercontent.com/u/122392675?v=4'"
             [cardTitle]="'Programación III'" [cardSubtitle]="'Vanegas Brian'" [cardPercentage]="80">
-          </app-card-compact>
+          </app-card>
 
           <h4>Materia menos asistida</h4>
-          <app-card-compact [cardTitle]="'PHP 4'" [cardSubtitle]="'Werfelli Julián'"
-            [cardPercentage]="40"></app-card-compact>
+          <app-card [cardTitle]="'PHP 4'" [cardSubtitle]="'Werfelli Julián'" [cardPercentage]="40"></app-card>
         </mat-card-content>
       </div>
 
@@ -34,9 +33,7 @@
       </div>
 
       <mat-card-content>
-        <app-card [cardTitle]="'Programación III'" [cardSubtitle]="'Vanegas Brian'" [cardPercentageLabel]="'Asistencia'"
-          [cardPercentage]="70" [cardDateLabel]="'Última asistencia'" [cardDate]="'1999-01-01'">
-        </app-card>
+        <!--Estadísticas quizás-->
       </mat-card-content>
     </mat-card>
   </article>
