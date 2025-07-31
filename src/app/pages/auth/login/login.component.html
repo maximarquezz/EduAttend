@@ -27,9 +27,11 @@
         </div>
 
         <mat-card-actions>
-          @if(role == 'student'){
+          @if(role === Role.Student){
           <button type="button" matButton="filled" (click)="routerLinks.goToStudentDashboard()">Iniciar sesión</button>
-          } @else if (role == 'teacher') {
+          } @else if (role === Role.Teacher) {
+          <button type="button" matButton="filled" (click)="routerLinks.goToTeacherDashboard()">Iniciar sesión</button>
+          } @else if (role === Role.Admin){
           <button type="button" matButton="filled" (click)="routerLinks.goToTeacherDashboard()">Iniciar sesión</button>
           }
           <button type="button" matButton="tonal" (click)="routerLinks.goToPasswordRecovery()">¿Olvidaste tu

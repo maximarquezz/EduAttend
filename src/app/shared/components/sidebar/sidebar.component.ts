@@ -1,5 +1,6 @@
 // Angular Imports
-import { Component, inject } from '@angular/core';
+import { Component, inject} from '@angular/core';
+import { Role } from './../../../core/models/enums/role.enum';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from './../../../../environments/environment.development';
 
@@ -22,13 +23,13 @@ import { MatCardModule } from "@angular/material/card";
     MatListModule,
     MatIconModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
 ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   constructor(public toggle: ToggleService){}
-
+  Role = Role;
   role = environment.userRole;
 }

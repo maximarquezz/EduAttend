@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 // Services Imports
 import { RouterLinksService } from './../../../core/services/navigation/router-links.service';
 import { environment } from '../../../../environments/environment.development';
+import { Role } from '../../../core/models/enums/role.enum';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,6 @@ import { environment } from '../../../../environments/environment.development';
 
 export class LoginComponent {
   constructor(public routerLinks: RouterLinksService){}
-
+  Role = Role;
   role = environment.userRole;
 }

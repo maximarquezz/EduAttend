@@ -20,7 +20,7 @@
 
       <mat-list>
         <div mat-subheader>Tus Secciones</div>
-        @if(role == 'student'){
+        @if(role === Role.Student){
         <mat-list-item routerLink="/private/student/dashboard" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>home</mat-icon>
@@ -42,7 +42,7 @@
           </span>
         </mat-list-item>
         }
-        @if (role == 'teacher'){
+        @if (role === Role.Teacher){
         <mat-list-item routerLink="/private/teacher/dashboard" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>home</mat-icon>
@@ -64,7 +64,7 @@
           </span>
         </mat-list-item>
         }
-        @if (role == 'admin'){
+        @if (role === Role.Admin){
         <mat-list-item routerLink="/private/admin/dashboard" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>home</mat-icon>

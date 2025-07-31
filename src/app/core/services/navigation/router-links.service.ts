@@ -4,12 +4,19 @@ import { Injectable } from '@angular/core';
 /**
  * Servicio que gestiona las redirecciones a diferentes componentes de la aplicación,
  * proporcionando métodos públicos a los demás componentes.
+ * @service
+ * @type {RouterLinksService}
  */
 @Injectable({
   providedIn: 'root'
 })
 export class RouterLinksService {
 
+  /**
+   * Instancia un objeto de tipo Router que se utilizará para realizar las redirecciones.
+   * @param router objeto de tipo Router.
+   * @constructor
+   */
   constructor(private router: Router){}
 
   // Rutas de Login

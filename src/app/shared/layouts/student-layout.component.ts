@@ -1,9 +1,24 @@
+import { TeacherLayoutComponent } from './teacher-layout.component';
+import { AdminLayoutComponent } from './admin-layout.component';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from "../components/sidebar/sidebar.component";
 import { FooterComponent } from "../components/footer/footer.component";
 import { HeaderComponent } from "../components/header/header.component";
 
+/**
+ * Componente que funciona como layout para el estudiante.
+ *
+ * @remarks
+ * Este componente genera una estructura y distribución aplicando CSS Grid y los siguientes componentes:
+ * - {@link HeaderComponent}.
+ * - {@link SidebarComponent}.
+ * - {@link RouterOutlet}.
+ * - {@link FooterComponent}.
+ *
+ * @see {@link AdminLayoutComponent} - Componente que funciona como layout para el administrador.
+ * @see {@link TeacherLayoutComponent} - Componente que funciona como layout para el profesor.
+ */
 @Component({
   selector: 'app-student-layout',
   imports: [

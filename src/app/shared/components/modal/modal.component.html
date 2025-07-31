@@ -1,39 +1,45 @@
 <mat-card>
   <mat-card-header>
-    <img mat-card-avatar src="{{ data.cardImageUrl }}" width="150px" alt="">
+    <img mat-card-avatar [src]="data.cardImageUrl" width="150px" alt="">
     <mat-card-title>{{ data.cardTitle }}</mat-card-title>
     <mat-card-subtitle>{{ data.cardSubtitle }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <table mat-table matSort [dataSource]="tableData" class="mat-elevation-z8">
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+      @for (col of tableCols; track col) {
+      <ng-container [matColumnDef]="col">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ col | titlecase }}
+        </th>
         <td mat-cell *matCellDef="let element">
-          @if (element.state == 'Presente') {
+          @if (col === 'state') {
+          @switch (element[col]) {
+          @case ('Presente') {
           <div class="circle-present"></div>
-          } @else if (element.state == 'Ausente'){
+          }
+          @case ('Ausente') {
           <div class="circle-absent"></div>
-          } @else {
+          }
+          @default {
           <div class="circle-justified"></div>
           }
-          <span>
-            {{element.state}}
-          </span>
+          }
+          <span>{{ element[col] }}</span>
+          } @else {
+          {{ element[col] }}
+          }
         </td>
       </ng-container>
+      }
       <tr mat-header-row *matHeaderRowDef="tableCols"></tr>
       <tr mat-row *matRowDef="let row; columns: tableCols;"></tr>
     </table>
+
     <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
   </mat-card-content>
 
   <mat-card-actions>
-    <button matDialog="close" matButton="filled">Cerrar</button>
+    <button matButton="filled" (click)="close()">Cerrar</button>
   </mat-card-actions>
 </mat-card>

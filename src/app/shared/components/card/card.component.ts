@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { MatIconModule } from "@angular/material/icon";
 import { environment } from '../../../../environments/environment.development';
+import { ModalFactory } from '../../../core/factories/ModalFactory';
+import { Role } from '../../../core/models/enums/role.enum';
 
 @Component({
   selector: 'app-card',
@@ -20,9 +22,20 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class CardComponent {
   dialog = inject(MatDialog);
+  modalFactory = inject(ModalFactory);
 
+  role = environment.userRole as Role;
+  tableCols: any;
+  tableData: any;
   isMinimumAttendance = false;
-  role = environment.userRole;
+
+  constructor() {
+    const modal = this.modalFactory.createModalData(this.role);
+    const { modalCols, modalData } = modal.retrieveData();
+    this.tableCols = modalCols;
+    this.tableData = modalData;
+  }
+
   @Input() cardImageUrl: string = "assets/images/blank-profile.webp";
   @Input() cardTitle: string = "Título";
   @Input() cardSubtitle: string = "Subtítulo";
@@ -30,14 +43,6 @@ export class CardComponent {
   @Input() cardPercentage: number = 100;
   @Input() cardDateLabel: string = "Última asistencia";
   @Input() cardDate: Date | string = "01/01/1999"; //string está mal pero es provisorio
-
-  /**
-   * Acá estos datos se obtendrían desde un service o un repository.
-   * Sería crear funciones que retornen un array de las columnas y un objeto correspondientemente.
-   * Podría usarse Factory Method???
-   */
-  tableCols = [];
-  tableData = {};
 
     openModal(){
       this.dialog.open(ModalComponent, {
