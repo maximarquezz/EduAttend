@@ -1,0 +1,273 @@
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use 'sass:map';
+
+.teacher-dashboard {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  // Tab group styles
+  mat-tab-group {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100dvw;
+
+    mat-tab {
+      @extend .flex-row_spc-evly;
+      height: 100px;
+    }
+  }
+
+  // Main content container
+  &__content {
+    @extend .flex-col_spc-evly;
+    position: relative;
+    background: var(--mat-sys-primary);
+
+    // Hero section styles
+    &--hero {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(rgba(0, 47, 94, 0.8), rgba(0, 47, 94, 0.8)),
+        url('../../../../../public/assets/images/escuela-sagarna.jpg') center/cover;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+
+      @media (min-width: map.get($width-breakpoints, md)) {
+        border-radius: 0;
+      }
+    }
+
+    // Title section styles
+    &--title {
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      font: var(--mat-sys-title-large);
+      text-align: center;
+      width: 100%;
+    }
+
+    // Stats grid container (for responsive layout)
+    &--stats-grid {
+      width: 100%;
+      display: block;
+
+      @media (min-width: map.get($width-breakpoints, md)) {
+        display: flex;
+        gap: 20px;
+
+        .stats-grid__chart,
+        .stats-grid__cards {
+          flex: 1;
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  // Card styles
+  &__card {
+    @extend .flex-col_spc-evly;
+    border-radius: 0;
+    margin-top: 100px;
+    width: 100%;
+    box-shadow: var(--mat-sys-level3);
+
+    // Card header
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 12px 0 0 0;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      margin: auto;
+    }
+
+    // Card content
+    mat-card-content {
+      height: 100%;
+      padding: 20px;
+      margin: 20px;
+      background: rgb(236, 236, 236);
+      box-sizing: border-box;
+
+      p,
+      h2,
+      h4 {
+        padding: 0;
+        margin: 0;
+      }
+
+      p {
+        font: var(--mat-sys-title-medium);
+      }
+
+      // Chart container
+      &.chart-content {
+        div {
+          width: 100%;
+          height: 270px;
+        }
+      }
+
+      // Cards content spacing
+      &.cards-content {
+        h4 {
+          margin-bottom: 10px;
+
+          &:not(:first-child) {
+            margin-top: 20px;
+          }
+        }
+      }
+
+      // Notifications content
+      &.notifications-content {
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+
+        .notifications-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 20px;
+          width: 100%;
+          min-height: 400px;
+
+          @media (min-width: map.get($width-breakpoints, md)) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 20px;
+            height: 400px;
+          }
+        }
+
+        .notifications-section {
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+
+          &__header {
+            background: var(--mat-sys-primary);
+            color: var(--mat-sys-on-primary);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h4 {
+              margin: 0;
+              font-size: 16px;
+              font-weight: 500;
+            }
+
+            .notification-counter {
+              background: var(--mat-sys-error);
+              color: var(--mat-sys-on-error);
+              border-radius: 12px;
+              padding: 4px 8px;
+              font-size: 12px;
+              font-weight: bold;
+              min-width: 20px;
+              text-align: center;
+            }
+          }
+
+          &__content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+
+            .notification-item {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 15px 20px;
+              border-bottom: 1px solid #f0f0f0;
+              transition: background-color 0.2s ease;
+
+              &:hover {
+                background-color: #f8f9fa;
+              }
+
+              &:last-child {
+                border-bottom: none;
+              }
+
+              .notification-info {
+                flex: 1;
+
+                .notification-name {
+                  margin: 0 0 4px 0;
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: #333;
+                }
+
+                .notification-detail {
+                  margin: 0;
+                  font-size: 12px;
+                  color: #666;
+                }
+              }
+
+              .notification-actions {
+                display: flex;
+                gap: 8px;
+
+                button {
+                  width: 32px;
+                  height: 32px;
+                  min-width: unset;
+
+                  &.action-accept {
+                    color: #4caf50;
+
+                    &:hover {
+                      background-color: rgba(76, 175, 80, 0.1);
+                    }
+                  }
+
+                  &.action-reject {
+                    color: #f44336;
+
+                    &:hover {
+                      background-color: rgba(244, 67, 54, 0.1);
+                    }
+                  }
+
+                  mat-icon {
+                    font-size: 18px;
+                    width: 18px;
+                    height: 18px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Card actions
+    mat-card-actions {
+      @extend .flex-row_spc-btw;
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

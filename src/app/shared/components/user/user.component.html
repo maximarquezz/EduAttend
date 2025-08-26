@@ -1,0 +1,17 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ userName }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ userRole }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    @for (userD of userData; track $index){
+      <ul>
+        <li>{{ userD }}</li>
+      </ul>
+    }
+  </mat-expansion-panel>
+</mat-accordion>

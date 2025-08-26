@@ -1,0 +1,77 @@
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use 'sass:map';
+
+.attendance-overview {
+  mat-card {
+    box-sizing: border-box;
+
+    mat-card-header {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 12px 0;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      margin: auto;
+    }
+
+    mat-card-content {
+      box-sizing: border-box;
+      padding: 0;
+
+      header {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        background: var(--mat-sys-tertiary-container);
+
+        .filters {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+        }
+
+        .controls {
+          @extend .flex-row_spc-btw;
+        }
+
+        .actions {
+          display: flex;
+          gap: 8px;
+        }
+      }
+
+      h5,
+      h6 {
+        margin: 0;
+        background: var(--mat-sys-surface);
+      }
+
+      h5 {
+        font: var(--mat-sys-title-medium);
+        padding: 15px 10px 0 10px;
+      }
+
+      h6 {
+        font: var(--mat-sys-body-large);
+        padding: 0 10px 15px 10px;
+      }
+
+      section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+
+        div {
+          background-color: gray;
+          height: 100px;
+          width: 100%;
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use '../../../shared/styles/attendance.scss' as *;
+@use 'sass:map';
+
+footer {
+  @extend .container-full;
+  padding: 5px;
+  margin: 0;
+  box-sizing: border-box;
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  height: fit-content;
+
+  section {
+    @extend .flex-row_spc-btw;
+
+    article {
+      @extend .flex-row_spc-btw;
+      gap: 3px;
+
+      mat-icon {
+        cursor: pointer;
+        transition: scale 0.3s;
+        scale: 0.9;
+      }
+
+      mat-icon:hover {
+        scale: 1.3;
+      }
+    }
+  }
+}

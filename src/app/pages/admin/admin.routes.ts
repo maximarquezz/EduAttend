@@ -7,6 +7,7 @@ import { AbsenceReportsComponent } from "./reports/absence-reports/absence-repor
 import { GenerateReportComponent } from "./reports/generate-report/generate-report.component";
 import { TakeAttendanceComponent } from "../teacher/take-attendance/take-attendance.component";
 import { UserManagementComponent } from "./user-management/user-management.component";
+import { UserListComponent } from "./user-list/user-list.component";
 
 export const ADMIN_ROUTES: Routes = [
   { path: 'attendance-overview', component: AttendanceOverviewComponent },
@@ -17,4 +18,5 @@ export const ADMIN_ROUTES: Routes = [
   { path: 'generate-report', component: GenerateReportComponent },
   { path: 'take-attendance', component: TakeAttendanceComponent },
   { path: 'user-management', component: UserManagementComponent },
+  { path: 'user-list', component: UserListComponent },
 ];

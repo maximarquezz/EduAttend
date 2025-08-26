@@ -33,7 +33,7 @@ import { HeaderComponent } from "../components/header/header.component";
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
-    <!--<app-footer></app-footer>-->
+   <app-footer></app-footer>
   `,
   styles: `
     @use '../styles/breakpoints.scss' as *;

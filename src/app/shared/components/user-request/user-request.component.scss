@@ -1,0 +1,40 @@
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use 'sass:map';
+
+mat-accordion {
+  box-sizing: border-box;
+  padding: 0;
+
+  mat-expansion-panel {
+    box-shadow: none;
+    outline: 1px solid var(--mat-sys-outline-variant);
+    border-left: 3px solid var(--mat-sys-primary);
+
+    mat-expansion-panel-header {
+      span {
+        padding: 5px 15px;
+        margin-right: 10px;
+        background: var(--mat-sys-tertiary);
+        border-radius: 20px;
+        color: #fff;
+      }
+    }
+
+    mat-list {
+      background-color: var(--mat-sys-secondary-container);
+      border-radius: 10px;
+    }
+
+    section {
+      @extend .flex-row_spc-ctr;
+      justify-content: flex-end;
+      gap: 5px;
+      margin-top: 10px;
+      padding: 10px 0;
+      border-radius: 10px;
+      background-color: var(--mat-sys-surface);
+    }
+  }
+
+}

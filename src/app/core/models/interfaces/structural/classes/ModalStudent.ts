@@ -26,17 +26,17 @@ import { Modal } from "../interfaces/modal.interface";
 export class ModalStudent implements Modal {
   retrieveData() {
     return {
-      modalCols: ['date', 'state'],
+      modalCols: ['fecha', 'estado'],
       modalData: [
-        { date: '2024-02-15', state: 'Presente' },
-        { date: '2023-07-03', state: 'Ausente' },
-        { date: '2023-11-28', state: 'Justificado' },
-        { date: '2025-01-09', state: 'Presente' },
-        { date: '2024-06-17', state: 'Ausente' },
-        { date: '2023-12-12', state: 'Presente' },
-        { date: '2023-08-30', state: 'Justificado' },
-        { date: '2025-04-04', state: 'Ausente' },
-        { date: '2024-03-21', state: 'Presente' }
+        { fecha: '2024-02-15', estado: 'Presente' },
+        { fecha: '2023-07-03', estado: 'Ausente' },
+        { fecha: '2023-11-28', estado: 'Justificado' },
+        { fecha: '2025-01-09', estado: 'Presente' },
+        { fecha: '2024-06-17', estado: 'Ausente' },
+        { fecha: '2023-12-12', estado: 'Presente' },
+        { fecha: '2023-08-30', estado: 'Justificado' },
+        { fecha: '2025-04-04', estado: 'Ausente' },
+        { fecha: '2024-03-21', estado: 'Presente' }
       ]
     };
   }

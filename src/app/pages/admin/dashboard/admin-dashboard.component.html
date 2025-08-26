@@ -1,1 +1,184 @@
-<p>admin-dashboard works!</p>
+<section class="teacher-dashboard">
+  <article class="teacher-dashboard__content">
+    <div class="teacher-dashboard__content--hero">
+      <!--Hero Background-->
+    </div>
+
+    <mat-card class="teacher-dashboard__card">
+      <!-- Título de Panel de Inicio -->
+      <div class="teacher-dashboard__content--title">
+        <p>Panel de Inicio</p>
+      </div>
+
+      <!-- Contenedor de estadísticas con layout responsivo -->
+      <div class="teacher-dashboard__content--stats-grid">
+        <!-- Sección del gráfico -->
+        <mat-card-content class="chart-content stats-grid__chart">
+          <p>Carreras con menos asistencias</p>
+          <h2>Top 5</h2>
+          <p>Últimos 30 días</p>
+          <div #chartContainer></div>
+        </mat-card-content>
+
+        <!-- Sección de tarjetas -->
+        <mat-card-content class="cards-content stats-grid__cards">
+          <h4>Materia con más asistencias</h4>
+          <app-card [cardTitle]="'Programación III'" [cardSubtitle]="'Software - Año 3 (Com. 1)'" [cardPercentage]="80">
+          </app-card>
+
+          <h4>Materia con menos asistencias</h4>
+          <app-card [cardTitle]="'Bioquímica'" [cardSubtitle]="'Enfermería - Año 2 (Com. 1)'"
+            [cardPercentage]="40"></app-card>
+        </mat-card-content>
+      </div>
+
+      <!-- Título de Notificaciones Rápidas -->
+      <div class="teacher-dashboard__content--title">
+        <p>Notificaciones Rápidas</p>
+      </div>
+
+      <!-- Sección de notificaciones -->
+      <mat-card-content class="notifications-content">
+        <div class="notifications-grid">
+          <!-- Solicitudes de Registro -->
+          <div class="notifications-section">
+            <div class="notifications-section__header">
+              <h4>Solicitudes de Registro</h4>
+              <span class="notification-counter">3</span>
+            </div>
+            <div class="notifications-section__content">
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">María González</p>
+                  <p class="notification-detail">Enfermería - Año 1</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Carlos Rodríguez</p>
+                  <p class="notification-detail">Software - Año 2</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Ana Martínez</p>
+                  <p class="notification-detail">Administración - Año 3</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Justificaciones de Inasistencia -->
+          <div class="notifications-section">
+            <div class="notifications-section__header">
+              <h4>Justificaciones de Inasistencia</h4>
+              <span class="notification-counter">5</span>
+            </div>
+            <div class="notifications-section__content">
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Pedro Silva</p>
+                  <p class="notification-detail">Programación III - 15/08</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Lucía Fernández</p>
+                  <p class="notification-detail">Bioquímica - 14/08</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Roberto Castro</p>
+                  <p class="notification-detail">Matemática II - 13/08</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Sofía López</p>
+                  <p class="notification-detail">Historia - 12/08</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <p class="notification-name">Diego Morales</p>
+                  <p class="notification-detail">Física I - 11/08</p>
+                </div>
+                <div class="notification-actions">
+                  <button mat-icon-button class="action-accept" aria-label="Aceptar">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button class="action-reject" aria-label="Rechazar">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </article>
+</section>

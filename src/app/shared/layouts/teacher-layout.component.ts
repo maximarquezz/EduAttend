@@ -33,7 +33,7 @@ import { FooterComponent } from "../components/footer/footer.component";
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
-    <!--<app-footer></app-footer>-->
+    <app-footer></app-footer>
   `,
   styles: `
     @use '../styles/breakpoints.scss' as *;
@@ -68,6 +68,7 @@ import { FooterComponent } from "../components/footer/footer.component";
 
       app-footer {
         grid-area: footer;
+        display: flex;
       }
     }
   `

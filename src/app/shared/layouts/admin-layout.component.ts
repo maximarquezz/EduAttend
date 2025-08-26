@@ -43,7 +43,7 @@ import { FooterComponent } from "../components/footer/footer.component";
       :host {
         display: grid;
         grid-template-rows: auto 1fr auto; // header - main - footer
-        grid-template-columns: 1fr 3fr; // sidebar - main
+        grid-template-columns: 1fr 4fr; // sidebar - main
         grid-template-areas:
           "header header"
           "sidebar main"

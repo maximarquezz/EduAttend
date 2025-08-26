@@ -25,6 +25,7 @@ export class CardComponent {
   modalFactory = inject(ModalFactory);
 
   role = environment.userRole as Role;
+  Role = Role;
   tableCols: any;
   tableData: any;
   isMinimumAttendance = false;

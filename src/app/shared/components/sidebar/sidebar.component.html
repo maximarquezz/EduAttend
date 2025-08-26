@@ -7,12 +7,16 @@
     </header>
     <nav>
       <div>
-        <mat-card-header>
-          <img src="https://avatars.githubusercontent.com/u/107851137?v=4" alt="" mat-card-avatar>
+        <mat-card>
+          <mat-card-header>
+            <img src="https://avatars.githubusercontent.com/u/107851137?v=4" alt="" mat-card-avatar>
 
-          <mat-card-title>Maximiliano Marquez</mat-card-title>
-          <mat-card-subtitle>{{ role }}</mat-card-subtitle>
-        </mat-card-header>
+            <mat-card-title>Maximiliano Marquez</mat-card-title>
+            <mat-card-subtitle>
+              {{ role | RoleDisplay }}
+            </mat-card-subtitle>
+          </mat-card-header>
+      </mat-card>
         <mat-icon (click)="toggle.isToggled = !toggle.isToggled">close</mat-icon>
       </div>
 
@@ -72,14 +76,7 @@
           </span>
         </mat-list-item>
 
-        <mat-list-item>
-          <span matListItemTitle>
-            <mat-icon>groups</mat-icon>
-            <a routerLink="/private/">Comisiones</a>
-          </span>
-        </mat-list-item>
-
-        <mat-list-item routerLink="/private/admin/take-attendance" routerLinkActive="active-link">
+        <mat-list-item routerLink="/private/admin/attendance-overview" routerLinkActive="active-link">
           <span matListItemTitle>
             <mat-icon>assignment_turned_in</mat-icon>
             <a>Asistencias</a>
@@ -104,6 +101,13 @@
           <span matListItemTitle>
             <mat-icon>assignment_ind</mat-icon>
             <a>Solicitudes</a>
+          </span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="/private/admin/user-list" routerLinkActive="active-link">
+          <span matListItemTitle>
+            <mat-icon>groups</mat-icon>
+            <a>Usuarios</a>
           </span>
         </mat-list-item>
         }

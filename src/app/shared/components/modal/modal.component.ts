@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment.development';
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from '@angular/material/button';
@@ -6,6 +7,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { TitleCasePipe } from '@angular/common';
+import { Role } from '../../../core/models/enums/role.enum';
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: 'app-modal',
@@ -15,12 +18,16 @@ import { TitleCasePipe } from '@angular/common';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    TitleCasePipe
-  ],
+    TitleCasePipe,
+    MatIconModule
+],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
+  Role = Role;
+  role = environment.userRole as Role;
+
   tableCols: string[];
   tableData: MatTableDataSource<any>;
 

@@ -59,5 +59,7 @@ export class RouterLinksService {
   }
 
   // Rutas de Admin
-
+  goToAdminDashboard(){
+    this.router.navigate(['private/admin/dashboard']);
+  }
 }

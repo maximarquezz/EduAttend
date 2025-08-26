@@ -1,0 +1,50 @@
+@use '../../../shared/styles/layout.scss' as *;
+@use '../../../shared/styles/breakpoints.scss' as *;
+@use 'sass:map';
+
+.user-management {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-height: 100dvh;
+  height: 100%;
+
+  mat-card {
+    box-sizing: border-box;
+    height: 100%;
+
+    mat-card-header {
+      @extend .flex-row_spc-ctr;
+
+      width: 100%;
+      padding: 12px 0;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      margin: 0;
+      flex-shrink: 0;
+
+      span {
+        padding: 5px;
+        margin: 0;
+        border-radius: 20px;
+        width: fit-content;
+        height: 100%;
+        background-color: var(--mat-sys-error);
+        font: var(--mat-sys-label-small);
+        color: #fff;
+      }
+    }
+
+    mat-card-content {
+      box-sizing: border-box;
+      background: var(--mat-sys-surface);
+      width: 100%;
+
+      app-user-request {
+        box-sizing: border-box;
+        margin: 0 10px;
+      }
+    }
+  }
+
+}

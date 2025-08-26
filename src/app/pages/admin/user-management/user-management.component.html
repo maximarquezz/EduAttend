@@ -1,1 +1,22 @@
-<p>user-management works!</p>
+<section class="user-management">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Solicitudes de Registro <span>{{ userRequestsCount }} pendientes</span></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <app-user-request
+        [userName]="'Maximiliano Marquez'"
+        [userDni]="45168933"
+        [userRole]="'Estudiante'"
+        [requestDate]="'22/08/25'"
+        [userAddress]="'Belgrano 1195'"
+        [userCity]="'Nogoyá'"
+        [userCourseReq]="'Software - 3er Año'"
+        [userPhone]="'+54 9 343 541-0439'"
+        [userEmail]="'marquezmaxi122@gmail.com'"
+        ></app-user-request>
+      <app-user-request [userName]="'Ayrton Horst'" [userRole]="'Profesor'" [requestDate]="'22/08/25'"></app-user-request>
+    </mat-card-content>
+  </mat-card>
+</section>

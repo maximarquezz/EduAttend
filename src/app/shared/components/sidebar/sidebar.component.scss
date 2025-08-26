@@ -34,6 +34,11 @@ mat-sidenav-container {
     }
 
     nav {
+      mat-card {
+        background: none;
+        box-shadow: none;
+      }
+
       div {
         @extend .flex-row_spc-btw;
 

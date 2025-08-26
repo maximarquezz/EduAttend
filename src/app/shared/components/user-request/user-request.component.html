@@ -1,0 +1,47 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ userName }}</mat-panel-title>
+      <mat-panel-description>{{ requestDate }}</mat-panel-description>
+      <span>{{ userRole }}</span>
+    </mat-expansion-panel-header>
+    <mat-list>
+      <mat-list-item>
+        <span matListItemTitle>Nombre completo:</span>
+        <span matListItemLine>{{ userName }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>DNI:</span>
+        <span matListItemLine>{{ userDni }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Email:</span>
+        <span matListItemLine>{{ userEmail }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Teléfono:</span>
+        <span matListItemLine>{{ userPhone }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Localidad:</span>
+        <span matListItemLine>{{ userCity }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Dirección:</span>
+        <span matListItemLine>{{ userAddress }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Rol solicitado:</span>
+        <span matListItemLine>{{ userRole }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Curso solicitado:</span>
+        <span matListItemLine>{{ userCourseReq }}</span>
+      </mat-list-item>
+    </mat-list>
+    <section>
+      <button matButton="tonal">Rechazar solicitud</button>
+      <button matButton="filled">Aceptar solicitud</button>
+    </section>
+  </mat-expansion-panel>
+</mat-accordion>

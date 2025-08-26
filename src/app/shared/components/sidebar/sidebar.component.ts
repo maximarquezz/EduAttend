@@ -14,6 +14,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ToggleService } from '../../../core/services/ui/toggle.service';
 import { MatCardModule } from "@angular/material/card";
 
+import { RoleDisplayPipe } from '../../pipes/RoleDisplay.pipe';
+
 @Component({
   selector: 'app-sidebar',
   imports: [
@@ -24,6 +26,7 @@ import { MatCardModule } from "@angular/material/card";
     MatIconModule,
     MatDividerModule,
     MatCardModule,
+    RoleDisplayPipe
 ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'

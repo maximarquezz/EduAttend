@@ -1,37 +1,66 @@
 <mat-card>
   <mat-card-header>
-    <img mat-card-avatar [src]="data.cardImageUrl" width="150px" alt="">
+    @if(role === Role.Student){
+      <img mat-card-avatar [src]="data.cardImageUrl" width="150px" alt="">
+    }
     <mat-card-title>{{ data.cardTitle }}</mat-card-title>
     <mat-card-subtitle>{{ data.cardSubtitle }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <table mat-table matSort [dataSource]="tableData" class="mat-elevation-z8">
+
       @for (col of tableCols; track col) {
-      <ng-container [matColumnDef]="col">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ col | titlecase }}
-        </th>
-        <td mat-cell *matCellDef="let element">
-          @if (col === 'state') {
-          @switch (element[col]) {
-          @case ('Presente') {
-          <div class="circle-present"></div>
-          }
-          @case ('Ausente') {
-          <div class="circle-absent"></div>
-          }
-          @default {
-          <div class="circle-justified"></div>
-          }
-          }
-          <span>{{ element[col] }}</span>
-          } @else {
-          {{ element[col] }}
-          }
-        </td>
-      </ng-container>
+        <ng-container [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ col | titlecase }}
+          </th>
+
+          <td mat-cell *matCellDef="let element">
+            <!-- Columna ALUMNOS -->
+            @if (col === 'alumnos') {
+              <table class="inner-table">
+                @for(alumno of element[col]; track $index){
+                  <tr>
+                    <td>{{ alumno.nombre }}</td>
+                    <td>
+                      @switch (alumno.estado) {
+                        @case ('Presente') { <div class="circle-present"></div> }
+                        @case ('Ausente')  { <div class="circle-absent"></div> }
+                        @default           { <div class="circle-justified"></div> }
+                      }
+                      <span>{{ alumno.estado }}</span>
+                    </td>
+                  </tr>
+                }
+              </table>
+            }
+            <!-- Columna ESTADO (cuando no hay alumnos) -->
+            @else if (col === 'estado') {
+              @switch (element[col]) {
+                @case ('Presente') { <div class="circle-present"></div> }
+                @case ('Ausente')  { <div class="circle-absent"></div> }
+                @default           { <div class="circle-justified"></div> }
+              }
+              <span>{{ element[col] }}</span>
+            }
+            <!-- Columna ACCIONES a nivel fila -->
+            @else if (col === 'acciones') {
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            }
+            <!-- Cualquier otra columna -->
+            @else {
+              {{ element[col] }}
+            }
+          </td>
+        </ng-container>
       }
+
       <tr mat-header-row *matHeaderRowDef="tableCols"></tr>
       <tr mat-row *matRowDef="let row; columns: tableCols;"></tr>
     </table>

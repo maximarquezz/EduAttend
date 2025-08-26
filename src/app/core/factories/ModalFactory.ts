@@ -39,10 +39,10 @@ export class ModalFactory {
       case Role.Student:
         return new ModalStudent();
       case Role.Teacher:
-        // return new ModalTeacher();
+        return new ModalTeacher();
         break;
       case Role.Admin:
-        // return new ModalAdmin();
+        return new ModalAdmin();
         break;
       default:
         throw new Error("Factory Method Error: Invalid enum input");
