@@ -1,7 +1,7 @@
 import { ModalComponent } from './../../shared/components/modal/modal.component';
-import { ModalAdmin } from '../models/interfaces/structural/classes/ModalAdmin';
 import { ModalStudent } from '../models/interfaces/structural/classes/ModalStudent';
 import { ModalTeacher } from '../models/interfaces/structural/classes/ModalTeacher';
+import { ModalAdmin } from '../models/interfaces/structural/classes/ModalAdmin';
 import { Modal } from '../models/interfaces/structural/interfaces/modal.interface';
 import { Role } from './../models/enums/role.enum';
 import { Injectable } from '@angular/core';

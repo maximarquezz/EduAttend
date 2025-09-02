@@ -8,19 +8,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StepperService {
+  public step: number = 1;
 
-  constructor(){}
-
-  step = 1;
-
-  nextStep(){
+  public nextStep(): void {
     this.step++;
   }
 
-  prevStep(){
+  public prevStep(): void {
     if (this.step > 0){
       this.step--;
     }
   }
-
 }

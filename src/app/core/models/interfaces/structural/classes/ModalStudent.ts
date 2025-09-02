@@ -1,7 +1,7 @@
-import { Role } from './../../../enums/role.enum';
-import { environment } from './../../../../../../environments/environment.development';
-import { ModalFactory } from './../../../../factories/ModalFactory';
-import { ModalComponent } from './../../../../../shared/components/modal/modal.component';
+import { Role } from '../../../enums/role.enum';
+import { environment } from '../../../../../../environments/environment.development';
+import { ModalFactory } from '../../../../factories/ModalFactory';
+import { ModalComponent } from '../../../../../shared/components/modal/modal.component';
 import { Modal } from "../interfaces/modal.interface";
 
 /**

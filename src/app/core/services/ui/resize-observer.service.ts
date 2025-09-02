@@ -10,15 +10,15 @@ export class ResizeObserverService {
       startWith(null),
       debounceTime(100),
       map(_=>{
-        if ((window.innerWidth) < BREAKPOINTS.xs)
+        if ((window.innerWidth) < BREAKPOINTS['xs'])
           return 'xs'
-        if ((window.innerWidth) < BREAKPOINTS.sm)
+        if ((window.innerWidth) < BREAKPOINTS['sm'])
           return 'sm'
-        if ((window.innerWidth) < BREAKPOINTS.md)
+        if ((window.innerWidth) < BREAKPOINTS['md'])
           return 'md'
-        if ((window.innerWidth) < BREAKPOINTS.lg)
+        if ((window.innerWidth) < BREAKPOINTS['lg'])
           return 'lg'
-        if ((window.innerWidth) < BREAKPOINTS.xl)
+        if ((window.innerWidth) < BREAKPOINTS['xl'])
           return 'xl'
         return 'xxl'
       }),

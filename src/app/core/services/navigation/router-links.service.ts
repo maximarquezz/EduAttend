@@ -20,46 +20,46 @@ export class RouterLinksService {
   constructor(private router: Router){}
 
   // Rutas de Login
-  goToLogin(){
+  public goToLogin(): void {
     this.router.navigate(['public/auth/login']);
   }
 
-  goToPasswordRecovery() {
+  public goToPasswordRecovery(): void {
     this.router.navigate(['public/auth/password-recovery']);
   }
 
-  goToRegister() {
+  public goToRegister(): void {
     this.router.navigate(['public/auth/register']);
   }
 
   // Rutas de Student
-  goToStudentDashboard() {
+  public goToStudentDashboard(): void {
     this.router.navigate(['private/student/dashboard']);
   }
 
-  goToStudentSubjects(){
+  public goToStudentSubjects(): void {
     this.router.navigate(['private/student/subjects']);
   }
 
-  goToStudentAttendances(){
+  public goToStudentAttendances(): void {
     this.router.navigate(['private/student/attendance-history']);
   }
 
   // Rutas de Teacher
-  goToTeacherDashboard(){
+  public goToTeacherDashboard(): void {
     this.router.navigate(['private/teacher/dashboard']);
   }
 
-  goToTeacherSubjects(){
+  public goToTeacherSubjects(): void {
     this.router.navigate(['private/teacher/subjects']);
   }
 
-  goToTeacherAttendances(){
+  public goToTeacherAttendances(): void {
     this.router.navigate(['private/teacher/attendance-list']);
   }
 
   // Rutas de Admin
-  goToAdminDashboard(){
+  public goToAdminDashboard(): void {
     this.router.navigate(['private/admin/dashboard']);
   }
 }
