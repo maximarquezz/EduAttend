@@ -1,16 +1,17 @@
 <section class="register">
   <nav class="register__navigation">
     <div>
-      <button matButton="text" (click)="routerLinks.goToLogin()"><img src="assets/icons/arrow_left.svg" alt=""></button>
+      <button matButton="text" (click)="routerLinks.goToLogin()">
+        <img src="assets/icons/arrow_left.svg" alt="" />
+      </button>
 
-      <img src="assets/images/logo.png" width="100px" alt="">
+      <img src="assets/images/logo.png" width="100px" alt="" />
     </div>
   </nav>
 
   <article class="register__card">
     <mat-card>
-      @switch (stepper.step) {
-      @case (1) {
+      @switch (stepper.step) { @case (1) {
       <mat-card-header>
         <mat-card-title>Datos personales</mat-card-title>
         <mat-card-subtitle>Crea una cuenta.</mat-card-subtitle>
@@ -19,32 +20,38 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Nombre</mat-label>
-          <input matInput>
+          <input matInput />
           <mat-icon matSuffix>highlight_off</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Apellido</mat-label>
-          <input matInput>
+          <input matInput />
           <mat-icon matSuffix>highlight_off</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>DNI</mat-label>
-          <input matInput>
+          <input matInput />
           <mat-icon matSuffix>highlight_off</mat-icon>
-          <mat-hint>Debe contener solo números, sin puntos ni otros tipos de caracteres.</mat-hint>
+          <mat-hint
+            >Debe contener solo números, sin puntos ni otros tipos de
+            caracteres.</mat-hint
+          >
         </mat-form-field>
       </div>
 
       <div>
         <mat-card-actions>
-          <button matButton="tonal" (click)="routerLinks.goToLogin()">Volver</button>
-          <button matButton="filled" (click)="stepper.nextStep()">Siguiente</button>
+          <button matButton="tonal" (click)="routerLinks.goToLogin()">
+            Volver
+          </button>
+          <button matButton="filled" (click)="stepper.nextStep()">
+            Siguiente
+          </button>
         </mat-card-actions>
       </div>
-      }
-      @case (2) {
+      } @case (2) {
       <mat-card-header>
         <mat-card-title>Datos de contacto</mat-card-title>
         <mat-card-subtitle>Crea una cuenta.</mat-card-subtitle>
@@ -53,13 +60,19 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Correo electrónico</mat-label>
-          <input matInput>
+          <input matInput />
+          <mat-icon matSuffix>highlight_off</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Dirección</mat-label>
+          <input matInput />
           <mat-icon matSuffix>highlight_off</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Teléfono</mat-label>
-          <input matInput>
+          <input matInput />
           <mat-icon matSuffix>highlight_off</mat-icon>
           <mat-hint>Debe poseer solo números, sin puntos ni signos.</mat-hint>
         </mat-form-field>
@@ -68,11 +81,34 @@
       <div>
         <mat-card-actions>
           <button matButton="tonal" (click)="stepper.prevStep()">Volver</button>
-          <button matButton="filled" (click)="stepper.nextStep()">Siguiente</button>
+          <button matButton="filled" (click)="stepper.nextStep()">
+            Siguiente
+          </button>
         </mat-card-actions>
       </div>
-      }
-      }
+      } @case(3){
+      <mat-card-header>
+        <mat-card-title>Datos sensibles</mat-card-title>
+        <mat-card-subtitle>Defina una contraseña.</mat-card-subtitle>
+      </mat-card-header>
+
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input matInput />
+          <mat-icon matSuffix>highlight_off</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-card-actions>
+          <button matButton="tonal" (click)="stepper.prevStep()">Volver</button>
+          <button matButton="filled" (click)="stepper.nextStep()">
+            Siguiente
+          </button>
+        </mat-card-actions>
+      </div>
+      } }
     </mat-card>
   </article>
 </section>

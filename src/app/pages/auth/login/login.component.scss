@@ -1,6 +1,6 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
 
 .login {
   @extend .flex-col_spc-ctr;
@@ -9,7 +9,8 @@
   &__hero {
     position: relative;
     background: linear-gradient(rgba(0, 92, 187, 0.8), rgba(0, 92, 187, 0.8)),
-      url('../../../../../public/assets/images/escuela-sagarna.jpg') center/cover;
+      url("../../../../../public/assets/images/escuela-sagarna.jpg")
+        center/cover;
     flex: 1;
     width: 100%;
   }
@@ -76,9 +77,12 @@
   }
 }
 
+.invalid-feedback {
+  color: var(--mat-sys-error);
+}
+
 // Media Queries
 @media (min-width: map.get($width-breakpoints, md)) {
-
   .login {
     flex-direction: row;
 
@@ -102,15 +106,12 @@
       }
     }
   }
-
 }
 
 @media (min-width: map.get($width-breakpoints, lg)) {
-
   .login {
     &__hero {
       flex: 4;
     }
   }
-
 }

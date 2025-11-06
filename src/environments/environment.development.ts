@@ -1,4 +1,4 @@
-import { Role } from "../app/core/models/enums/role.enum";
+import { Role } from '../app/core/models/enums/role.enum';
 
 /**
  * Variables de entorno públicas y accesibles para desarrollo.
@@ -15,5 +15,5 @@ import { Role } from "../app/core/models/enums/role.enum";
  * @see {@link Role} - El Enum de roles de usuario que define qué tipo de {@link Modal} se instancia.
  */
 export const environment = {
-  userRole: Role.Admin,
+  userRole: Role.Student,
 };
