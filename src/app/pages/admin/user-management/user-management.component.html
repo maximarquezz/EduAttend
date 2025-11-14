@@ -1,22 +1,96 @@
 <section class="user-management">
-  <mat-card>
+  <mat-card class="requests-card">
+    <!-- Header con diseño mejorado -->
     <mat-card-header>
-      <mat-card-title>Solicitudes de Registro <span>{{ userRequestsCount }} pendientes</span></mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
+      <div class="header-content">
+        <div class="title-section">
+          <mat-icon class="header-icon">people_outline</mat-icon>
+          <div class="title-wrapper">
+            <mat-card-title>Solicitudes de Registro</mat-card-title>
+            <mat-card-subtitle>
+              Gestiona las solicitudes pendientes de aprobación
+            </mat-card-subtitle>
+          </div>
+        </div>
+
+        <div class="badge-section">
+          <mat-chip-set aria-label="Estado de solicitudes">
+            <mat-chip class="pending-chip" highlighted>
+              <mat-icon>schedule</mat-icon>
+              {{ userRequestsCount }} pendiente{{
+                userRequestsCount !== 1 ? "s" : ""
+              }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </div>
     </mat-card-header>
+
     <mat-card-content>
-      <app-user-request
-        [userName]="'Maximiliano Marquez'"
-        [userDni]="45168933"
-        [userRole]="'Estudiante'"
-        [requestDate]="'22/08/25'"
-        [userAddress]="'Belgrano 1195'"
-        [userCity]="'Nogoyá'"
-        [userCourseReq]="'Software - 3er Año'"
-        [userPhone]="'+54 9 343 541-0439'"
-        [userEmail]="'marquezmaxi122@gmail.com'"
+      <!-- Estado de carga -->
+      @if (isLoading) {
+      <div class="loading-state">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Cargando solicitudes...</p>
+      </div>
+      }
+
+      <!-- Estado de error -->
+      @if (hasError && !isLoading) {
+      <div class="error-state">
+        <mat-icon>error_outline</mat-icon>
+        <p>No se pudieron cargar las solicitudes</p>
+        <button mat-raised-button color="primary" (click)="retry()">
+          <mat-icon>refresh</mat-icon>
+          Reintentar
+        </button>
+      </div>
+      }
+
+      <!-- Estado vacío -->
+      @if (!isLoading && !hasError && userRequestsCount === 0) {
+      <div class="empty-state">
+        <mat-icon>inbox</mat-icon>
+        <p class="empty-title">No hay solicitudes pendientes</p>
+        <p class="empty-subtitle">Todas las solicitudes han sido procesadas</p>
+      </div>
+      }
+
+      <!-- Lista de usuarios -->
+      @if (!isLoading && !hasError && pendingUsers.length > 0) {
+      <div class="requests-container">
+        @for(pendingUser of pendingUsers; track $index) {
+        <app-user-request
+          [userName]="pendingUser.name"
+          [userDni]="pendingUser.dni"
+          [userRole]="pendingUser.role"
+          [requestDate]="'22/08/25'"
+          [userAddress]="pendingUser.address"
+          [userProvince]="pendingUser.province_name"
+          [userCity]="pendingUser.city_name"
+          [userCourseReq]="'Por ahora Software - 3er Año'"
+          [userPhone]="pendingUser.phone"
+          [userEmail]="pendingUser.email"
+          class="request-item"
         ></app-user-request>
-      <app-user-request [userName]="'Ayrton Horst'" [userRole]="'Profesor'" [requestDate]="'22/08/25'"></app-user-request>
+        }
+      </div>
+      }
+
+      <!-- Paginador -->
+      @if (!isLoading && !hasError && userRequestsCount > 0) {
+      <mat-paginator
+        [length]="userRequestsCount"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+        aria-label="Seleccionar página de solicitudes"
+        class="requests-paginator"
+      >
+      </mat-paginator>
+      }
     </mat-card-content>
   </mat-card>
 </section>

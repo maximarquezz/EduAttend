@@ -14,11 +14,8 @@
               alt=""
               mat-card-avatar
             />
-
-            <mat-card-title>Maximiliano Marquez</mat-card-title>
-            <mat-card-subtitle>
-              {{ role | RoleDisplay }}
-            </mat-card-subtitle>
+            <mat-card-title>{{ userName }}</mat-card-title>
+            <mat-card-subtitle>{{ role | uppercase }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
         <mat-icon (click)="toggle.isToggled = !toggle.isToggled"
@@ -30,7 +27,8 @@
 
       <mat-list>
         <div mat-subheader>Tus Secciones</div>
-        @if(role === Role.Student){
+
+        @if(role === 'estudiante'){
         <mat-list-item
           routerLink="/private/student/dashboard"
           routerLinkActive="active-link"
@@ -40,7 +38,6 @@
             <a>Dashboard</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/student/subjects"
           routerLinkActive="active-link"
@@ -50,7 +47,6 @@
             <a>Materias</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/student/attendance-history"
           routerLinkActive="active-link"
@@ -60,7 +56,7 @@
             <a>Asistencias</a>
           </span>
         </mat-list-item>
-        } @if (role === Role.Teacher){
+        } @if (role === 'profesor'){
         <mat-list-item
           routerLink="/private/teacher/dashboard"
           routerLinkActive="active-link"
@@ -70,7 +66,6 @@
             <a>Dashboard</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/teacher/subjects"
           routerLinkActive="active-link"
@@ -80,7 +75,6 @@
             <a>Materias</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/teacher/attendance-list"
           routerLinkActive="active-link"
@@ -90,7 +84,7 @@
             <a>Asistencias</a>
           </span>
         </mat-list-item>
-        } @if (role === Role.Admin){
+        } @if (role === 'administrador'){
         <mat-list-item
           routerLink="/private/admin/dashboard"
           routerLinkActive="active-link"
@@ -100,7 +94,6 @@
             <a>Dashboard</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/admin/attendance-overview"
           routerLinkActive="active-link"
@@ -110,7 +103,6 @@
             <a>Asistencias</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/admin/justify-absence"
           routerLinkActive="active-link"
@@ -120,7 +112,6 @@
             <a>Inasistencias</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/admin/generate-report"
           routerLinkActive="active-link"
@@ -130,7 +121,6 @@
             <a>Reportes</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/admin/user-management"
           routerLinkActive="active-link"
@@ -140,7 +130,6 @@
             <a>Solicitudes</a>
           </span>
         </mat-list-item>
-
         <mat-list-item
           routerLink="/private/admin/user-list"
           routerLinkActive="active-link"
@@ -151,8 +140,8 @@
           </span>
         </mat-list-item>
         }
-        <mat-divider></mat-divider>
 
+        <mat-divider></mat-divider>
         <mat-list-item routerLink="/public/auth/login">
           <span matListItemTitle>
             <mat-icon>logout</mat-icon>

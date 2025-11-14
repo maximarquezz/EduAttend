@@ -1,10 +1,8 @@
 <section class="login">
   <article class="login__hero"></article>
-
   <article class="login__form">
     <mat-card>
       <img src="/assets/images/logo.png" width="150px" alt="" />
-
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <mat-form-field>
           <mat-label>Correo electrónico</mat-label>
@@ -13,7 +11,6 @@
             placeholder="Ej: johndoe@gmail.com"
             formControlName="email"
           />
-          <mat-icon matSuffix>highlight_off</mat-icon>
           @if (loginForm.get('email')?.invalid &&
           loginForm.get('email')?.touched) {
           <mat-hint class="invalid-feedback"
@@ -24,22 +21,21 @@
           }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label>Contraseña</mat-label>
           <input
             matInput
-            placeholder="Ej: mzOjKxK1-"
             formControlName="password"
+            [type]="hidePassword ? 'password' : 'text'"
           />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-          @if (loginForm.get('password')?.invalid &&
-          loginForm.get('password')?.touched) {
-          <mat-hint class="invalid-feedback"
-            >Contraseña mínimo 8 caracteres.</mat-hint
+          <mat-icon
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            style="cursor: pointer"
           >
-          } @else {
-          <mat-hint>Ingrese su contraseña.</mat-hint>
-          }
+            {{ hidePassword ? "visibility_off" : "visibility" }}
+          </mat-icon>
+          <mat-hint>Mínimo 8 caracteres</mat-hint>
         </mat-form-field>
 
         <div class="checkbox-container">
@@ -47,19 +43,7 @@
         </div>
 
         <mat-card-actions>
-          @if(role === Role.Student){
           <button type="submit" matButton="filled">Iniciar sesión</button>
-          } @else if (role === Role.Teacher) {
-          <button
-            type="submit"
-            matButton="filled"
-            (click)="routerLinks.goToTeacherDashboard()"
-          >
-            Iniciar sesión
-          </button>
-          } @else if (role === Role.Admin){
-          <button type="submit" matButton="filled">Iniciar sesión</button>
-          }
           <button
             type="button"
             matButton="tonal"

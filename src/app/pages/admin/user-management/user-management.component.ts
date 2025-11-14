@@ -1,10 +1,16 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
-import { MatListModule } from "@angular/material/list";
-import { MatCardModule } from "@angular/material/card";
+import { Component, inject, QueryList, ViewChildren } from '@angular/core';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { Role } from '../../../core/models/enums/role.enum';
 import { environment } from '../../../../environments/environment.development';
-import { UserRequestComponent } from "../../../shared/components/user-request/user-request.component";
-import { MatBadgeModule } from "@angular/material/badge";
+import { UserRequestComponent } from '../../../shared/components/user-request/user-request.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import { UsersService } from '../../../core/services/data/users.service';
 
 @Component({
   selector: 'app-user-management',
@@ -12,19 +18,78 @@ import { MatBadgeModule } from "@angular/material/badge";
     MatListModule,
     MatCardModule,
     MatBadgeModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatIconModule,
+    MatButtonModule,
     UserRequestComponent
   ],
   templateUrl: './user-management.component.html',
-  styleUrl: './user-management.component.scss'
+  styleUrl: './user-management.component.scss',
 })
 export class UserManagementComponent {
   Role = Role;
   role = environment.userRole;
-
-  @ViewChildren(UserRequestComponent) userRequestComponent!: QueryList<UserRequestComponent>;
-  userRequestsCount = 0;
-
-  ngAfterViewInit(){
-    this.userRequestsCount = this.userRequestComponent.length;
+  
+  // Datos
+  pendingUsers: any[] = [];
+  allPendingUsers: any[] = [];
+  
+  // Paginación
+  pageSize = 5;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25, 50];
+  
+  // Estado
+  isLoading = true;
+  hasError = false;
+  
+  private usersService = inject(UsersService);
+  
+  @ViewChildren(UserRequestComponent)
+  userRequestComponent!: QueryList<UserRequestComponent>;
+  
+  get userRequestsCount(): number {
+    return this.allPendingUsers.length;
+  }
+  
+  ngOnInit() {
+    this.loadPendingUsers();
+  }
+  
+  loadPendingUsers() {
+    this.isLoading = true;
+    this.hasError = false;
+    
+    this.usersService.pendingUsers().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.allPendingUsers = Array.isArray(data) ? data : [data];
+        this.updatePaginatedUsers();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error cargando usuarios pendientes:', error);
+        this.hasError = true;
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  updatePaginatedUsers() {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.pendingUsers = this.allPendingUsers.slice(startIndex, endIndex);
+  }
+  
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePaginatedUsers();
+  }
+  
+  retry() {
+    this.loadPendingUsers();
   }
 }

@@ -1,7 +1,6 @@
-@use '../../../shared/styles/layout.scss' as *;
+@use "../../../shared/styles/layout.scss" as *;
 
 .register {
-
   @extend .container-full_dv;
   @extend .flex-col_spc-ctr;
 
@@ -26,7 +25,6 @@
         filter: brightness(0) invert(1);
       }
     }
-
   }
 
   &__card {
@@ -34,23 +32,27 @@
     @extend .flex-col_spc-ctr;
 
     flex: 9;
+    height: 100%;
 
     mat-card {
-      @extend .flex-col_spc-btw;
-
       width: 90%;
       height: 90%;
 
+      form {
+        @extend .flex-col_spc-btw;
+        @extend .container-full;
+      }
+
       img {
         width: 150px;
-        position: absolute
+        position: absolute;
       }
 
       mat-card-header {
         @extend .flex-col_spc-ctr;
 
-        margin-top: 50px;
         text-align: center;
+        margin-top: 10px;
       }
 
       div {
@@ -60,6 +62,7 @@
 
         mat-form-field {
           width: 90%;
+          margin: 3px 0;
         }
       }
 
@@ -73,7 +76,5 @@
         }
       }
     }
-
   }
-
 }

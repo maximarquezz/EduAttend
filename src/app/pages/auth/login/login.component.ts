@@ -43,9 +43,9 @@ export class LoginComponent {
   private snackBar = inject(MatSnackBar);
 
   loginForm!: FormGroup;
-  Role = Role;
-  role = environment.userRole;
   errorMessage: string = '';
+  hidePassword = true;
+  hideConfirmPassword = true;
 
   constructor(public routerLinks: RouterLinksService, private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -79,7 +79,7 @@ export class LoginComponent {
           }
 
           this.snackBar.open(this.errorMessage, 'Cerrar', {
-            duration: 4000,
+            duration: 5000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
             panelClass: ['error-snackbar'],
@@ -92,13 +92,40 @@ export class LoginComponent {
   }
 
   storeData(data: any) {
+    if (data.user.is_acepted === 0) {
+      this.snackBar.open(
+        'Tu solicitud de registro aún no ha sido aceptada.',
+        'Cerrar',
+        {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['warning-snackbar'],
+        }
+      );
+      return;
+    }
+
     sessionStorage.setItem('userData', JSON.stringify(data));
-    if (data.rol === 'estudiante') {
+    const userRole = data.roles[0];
+
+    console.log('🔍 Rol recibido:', userRole);
+    console.log('🔍 Comparación:', userRole === 'administrador');
+
+    if (userRole === 'estudiante') {
+      console.log('✅ Redirigiendo a estudiante');
       this.routerLinks.goToStudentDashboard();
-    } else if (data.rol === 'profesor') {
+    } else if (userRole === 'profesor') {
+      console.log('✅ Redirigiendo a profesor');
       this.routerLinks.goToTeacherDashboard();
-    } else {
+    } else if (userRole === 'administrador') {
+      console.log('✅ Redirigiendo a administrador');
       this.routerLinks.goToAdminDashboard();
+    } else {
+      console.log('❌ Rol no reconocido:', userRole);
+      this.snackBar.open('Rol no reconocido: ' + userRole, 'Cerrar', {
+        duration: 3000,
+      });
     }
   }
 }

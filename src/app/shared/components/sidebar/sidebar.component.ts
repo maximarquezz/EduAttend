@@ -1,20 +1,15 @@
-// Angular Imports
-import { Component, inject } from '@angular/core';
-import { Role } from './../../../core/models/enums/role.enum';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { environment } from './../../../../environments/environment.development';
-
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 // Material Imports
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { MatCardModule } from '@angular/material/card';
 // Services Imports
 import { ToggleService } from '../../../core/services/ui/toggle.service';
-import { MatCardModule } from '@angular/material/card';
-
-import { RoleDisplayPipe } from '../../pipes/RoleDisplay.pipe';
+import { UpperCasePipe } from '@angular/common';
+import { AuthService } from '../../../core/services/data/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,17 +21,32 @@ import { RoleDisplayPipe } from '../../pipes/RoleDisplay.pipe';
     MatIconModule,
     MatDividerModule,
     MatCardModule,
-    RoleDisplayPipe,
+    UpperCasePipe,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
-  constructor(public toggle: ToggleService) {}
-  Role = Role;
-  role = environment.userRole;
+export class SidebarComponent implements OnInit {
+  constructor(
+    public toggle: ToggleService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  role: string = '';
+  userName: string = '';
+
+  ngOnInit() {
+    const userData = sessionStorage.getItem('userData');
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      this.role = parsedData.roles[0];
+      this.userName = parsedData.user.name;
+      console.log('🔍 Rol cargado:', this.role);
+    }
+  }
 
   closeSession() {
-    sessionStorage.removeItem('userData');
+    this.authService.logout();
   }
 }

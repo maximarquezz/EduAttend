@@ -4,111 +4,287 @@
       <button matButton="text" (click)="routerLinks.goToLogin()">
         <img src="assets/icons/arrow_left.svg" alt="" />
       </button>
-
       <img src="assets/images/logo.png" width="100px" alt="" />
     </div>
   </nav>
 
   <article class="register__card">
     <mat-card>
-      @switch (stepper.step) { @case (1) {
-      <mat-card-header>
-        <mat-card-title>Datos personales</mat-card-title>
-        <mat-card-subtitle>Crea una cuenta.</mat-card-subtitle>
-      </mat-card-header>
+      <form [formGroup]="registerForm">
+        @switch (stepper.step) { @case (1) {
+        <mat-card-header>
+          <mat-card-title>Datos personales</mat-card-title>
+          <mat-card-subtitle>Crea una cuenta.</mat-card-subtitle>
+        </mat-card-header>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="name" />
+            @if (registerForm.get('name')?.value) {
+            <mat-icon
+              matSuffix
+              (click)="clearField('name')"
+              style="cursor: pointer"
+              >highlight_off</mat-icon
+            >
+            } @if (registerForm.get('name')?.invalid &&
+            registerForm.get('name')?.touched) {
+            <mat-error>{{ getErrorMessage("name") }}</mat-error>
+            }
+          </mat-form-field>
 
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Nombre</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="surname" />
+            @if (registerForm.get('surname')?.value) {
+            <mat-icon
+              matSuffix
+              (click)="clearField('surname')"
+              style="cursor: pointer"
+              >highlight_off</mat-icon
+            >
+            } @if (registerForm.get('surname')?.invalid &&
+            registerForm.get('surname')?.touched) {
+            <mat-error>{{ getErrorMessage("surname") }}</mat-error>
+            }
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Apellido</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>DNI</mat-label>
+            <input matInput formControlName="dni" type="text" />
+            @if (registerForm.get('dni')?.value) {
+            <mat-icon
+              matSuffix
+              (click)="clearField('dni')"
+              style="cursor: pointer"
+              >highlight_off</mat-icon
+            >
+            } @if (registerForm.get('dni')?.invalid &&
+            registerForm.get('dni')?.touched) {
+            <mat-error>{{ getErrorMessage("dni") }}</mat-error>
+            }
+          </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>DNI</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-          <mat-hint
-            >Debe contener solo números, sin puntos ni otros tipos de
-            caracteres.</mat-hint
+          <mat-form-field appearance="fill">
+            <mat-label>Provincia</mat-label>
+            <mat-select formControlName="province">
+              @for (province of provinces; track province.id) {
+              <mat-option [value]="province.id">{{
+                province.nombre
+              }}</mat-option>
+              }
+            </mat-select>
+            @if (registerForm.get('province')?.invalid &&
+            registerForm.get('province')?.touched) {
+            <mat-error>{{ getErrorMessage("province") }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad</mat-label>
+            <mat-select
+              formControlName="city"
+              [disabled]="!registerForm.get('province')?.value"
+            >
+              @for (city of availableCities; track city.id) {
+              <mat-option [value]="city.id">{{ city.nombre }}</mat-option>
+              }
+            </mat-select>
+            @if (registerForm.get('city')?.invalid &&
+            registerForm.get('city')?.touched) {
+            <mat-error>{{ getErrorMessage("city") }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-card-actions>
+            <button
+              matButton="tonal"
+              type="button"
+              (click)="routerLinks.goToLogin()"
+            >
+              Volver
+            </button>
+            <button matButton="filled" type="button" (click)="nextStep()">
+              Siguiente
+            </button>
+          </mat-card-actions>
+        </div>
+        } @case (2) {
+        <mat-card-header>
+          <mat-card-title>Datos de contacto</mat-card-title>
+          <mat-card-subtitle>Crea una cuenta.</mat-card-subtitle>
+        </mat-card-header>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput formControlName="email" type="email" />
+            @if (registerForm.get('email')?.value) {
+            <mat-icon
+              matSuffix
+              (click)="clearField('email')"
+              style="cursor: pointer"
+              >highlight_off</mat-icon
+            >
+            } @if (registerForm.get('email')?.invalid &&
+            registerForm.get('email')?.touched) {
+            <mat-error>{{ getErrorMessage("email") }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="address" />
+            @if (registerForm.get('address')?.value) {
+            <mat-icon
+              matSuffix
+              (click)="clearField('address')"
+              style="cursor: pointer"
+              >highlight_off</mat-icon
+            >
+            } @if (registerForm.get('address')?.invalid &&
+            registerForm.get('address')?.touched) {
+            <mat-error>{{ getErrorMessage("address") }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Teléfono</mat-label>
+            <span matTextPrefix>+54 &nbsp;</span>
+            <input matInput formControlName="phone" type="tel" />
+            @if (registerForm.get('phone')?.value) {
+            <mat-icon
+              matSuffix
+              (click)="clearField('phone')"
+              style="cursor: pointer"
+              >highlight_off</mat-icon
+            >
+            }
+            <mat-hint>Debe poseer solo números, sin puntos ni signos.</mat-hint>
+            @if (registerForm.get('phone')?.invalid &&
+            registerForm.get('phone')?.touched) {
+            <mat-error>{{ getErrorMessage("phone") }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-card-actions>
+            <button
+              matButton="tonal"
+              type="button"
+              (click)="stepper.prevStep()"
+            >
+              Volver
+            </button>
+            <button matButton="filled" type="button" (click)="nextStep()">
+              Siguiente
+            </button>
+          </mat-card-actions>
+        </div>
+        } @case(3) {
+        <mat-card-header>
+          <mat-card-title>Datos sensibles</mat-card-title>
+          <mat-card-subtitle>Defina una contraseña.</mat-card-subtitle>
+        </mat-card-header>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hidePassword ? 'password' : 'text'"
+            />
+            <mat-icon
+              matSuffix
+              (click)="hidePassword = !hidePassword"
+              style="cursor: pointer"
+            >
+              {{ hidePassword ? "visibility_off" : "visibility" }}
+            </mat-icon>
+            <mat-hint>Mínimo 8 caracteres</mat-hint>
+            @if (registerForm.get('password')?.invalid &&
+            registerForm.get('password')?.touched) {
+            <mat-error>{{ getErrorMessage("password") }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input
+              matInput
+              formControlName="confirmPassword"
+              [type]="hideConfirmPassword ? 'password' : 'text'"
+            />
+            <mat-icon
+              matSuffix
+              (click)="hideConfirmPassword = !hideConfirmPassword"
+              style="cursor: pointer"
+            >
+              {{ hideConfirmPassword ? "visibility_off" : "visibility" }}
+            </mat-icon>
+            @if (registerForm.hasError('passwordMismatch') &&
+            registerForm.get('confirmPassword')?.touched) {
+            <mat-error>Las contraseñas no coinciden</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-card-actions>
+            <button
+              matButton="tonal"
+              type="button"
+              (click)="stepper.prevStep()"
+            >
+              Volver
+            </button>
+            <button
+              matButton="filled"
+              type="button"
+              (click)="onSubmit()"
+              [disabled]="registerForm.invalid"
+            >
+              Registrarse
+            </button>
+          </mat-card-actions>
+        </div>
+        } @case(4) {
+        <mat-card-header>
+          <mat-card-title>¡Registro exitoso!</mat-card-title>
+        </mat-card-header>
+        <div style="text-align: center; padding: 2rem 1rem">
+          <mat-icon
+            style="font-size: 80px; width: 80px; height: 80px; color: #4caf50"
           >
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-card-actions>
-          <button matButton="tonal" (click)="routerLinks.goToLogin()">
-            Volver
-          </button>
-          <button matButton="filled" (click)="stepper.nextStep()">
-            Siguiente
-          </button>
-        </mat-card-actions>
-      </div>
-      } @case (2) {
-      <mat-card-header>
-        <mat-card-title>Datos de contacto</mat-card-title>
-        <mat-card-subtitle>Crea una cuenta.</mat-card-subtitle>
-      </mat-card-header>
-
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Dirección</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Teléfono</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-          <mat-hint>Debe poseer solo números, sin puntos ni signos.</mat-hint>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-card-actions>
-          <button matButton="tonal" (click)="stepper.prevStep()">Volver</button>
-          <button matButton="filled" (click)="stepper.nextStep()">
-            Siguiente
-          </button>
-        </mat-card-actions>
-      </div>
-      } @case(3){
-      <mat-card-header>
-        <mat-card-title>Datos sensibles</mat-card-title>
-        <mat-card-subtitle>Defina una contraseña.</mat-card-subtitle>
-      </mat-card-header>
-
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Contraseña</mat-label>
-          <input matInput />
-          <mat-icon matSuffix>highlight_off</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div>
-        <mat-card-actions>
-          <button matButton="tonal" (click)="stepper.prevStep()">Volver</button>
-          <button matButton="filled" (click)="stepper.nextStep()">
-            Siguiente
-          </button>
-        </mat-card-actions>
-      </div>
-      } }
+            check_circle
+          </mat-icon>
+          <p
+            style="
+              font-size: 16px;
+              color: #666;
+              margin-top: 1.5rem;
+              line-height: 1.6;
+            "
+          >
+            ¡Listo! Tu registro estará pendiente hasta que un administrador lo
+            apruebe.
+            <br /><br />
+            Recibirás un correo electrónico cuando tu cuenta sea activada.
+          </p>
+        </div>
+        <div>
+          <mat-card-actions>
+            <button
+              matButton="filled"
+              type="button"
+              (click)="routerLinks.goToLogin()"
+              style="width: 100%"
+            >
+              Ir al inicio de sesión
+            </button>
+          </mat-card-actions>
+        </div>
+        } }
+      </form>
     </mat-card>
   </article>
 </section>
