@@ -4,12 +4,8 @@
     <mat-card-header>
       <div class="header-content">
         <div class="title-section">
-          <mat-icon class="header-icon">people_outline</mat-icon>
           <div class="title-wrapper">
             <mat-card-title>Solicitudes de Registro</mat-card-title>
-            <mat-card-subtitle>
-              Gestiona las solicitudes pendientes de aprobación
-            </mat-card-subtitle>
           </div>
         </div>
 
@@ -61,6 +57,7 @@
       <div class="requests-container">
         @for(pendingUser of pendingUsers; track $index) {
         <app-user-request
+          [userId]="pendingUser.id"
           [userName]="pendingUser.name"
           [userDni]="pendingUser.dni"
           [userRole]="pendingUser.role"
@@ -71,6 +68,7 @@
           [userCourseReq]="'Por ahora Software - 3er Año'"
           [userPhone]="pendingUser.phone"
           [userEmail]="pendingUser.email"
+          (accept)="acceptUser($event)"
           class="request-item"
         ></app-user-request>
         }

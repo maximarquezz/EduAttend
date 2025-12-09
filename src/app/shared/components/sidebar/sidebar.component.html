@@ -10,12 +10,12 @@
         <mat-card>
           <mat-card-header>
             <img
-              src="https://avatars.githubusercontent.com/u/107851137?v=4"
+              src="assets/images/blank-profile.webp"
               alt=""
               mat-card-avatar
             />
             <mat-card-title>{{ userName }}</mat-card-title>
-            <mat-card-subtitle>{{ role | uppercase }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ role | titlecase }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
         <mat-icon (click)="toggle.isToggled = !toggle.isToggled"

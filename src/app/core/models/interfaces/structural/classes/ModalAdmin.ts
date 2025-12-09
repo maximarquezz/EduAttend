@@ -26,49 +26,8 @@ import { Modal } from '../interfaces/modal.interface';
 export class ModalAdmin {
   retrieveData() {
     return {
-      modalCols: ['fecha', 'alumnos', 'acciones'],
-      modalData: [
-        {
-          fecha: '2025-08-01',
-          alumnos: [
-            { nombre: 'Maxi', estado: 'Presente' },
-            { nombre: 'Laura', estado: 'Ausente' },
-            { nombre: 'Pedro', estado: 'Justificado' }
-          ]
-        },
-        {
-          fecha: '2025-07-31',
-          alumnos: [
-            { nombre: 'Ana', estado: 'Presente' },
-            { nombre: 'Lucía', estado: 'Presente' },
-            { nombre: 'Tomás', estado: 'Ausente' }
-          ]
-        },
-        {
-          fecha: '2025-07-30',
-          alumnos: [
-            { nombre: 'Julián', estado: 'Presente' },
-            { nombre: 'Camila', estado: 'Justificado' },
-            { nombre: 'Mateo', estado: 'Presente' }
-          ]
-        },
-        {
-          fecha: '2025-07-29',
-          alumnos: [
-            { nombre: 'Florencia', estado: 'Ausente' },
-            { nombre: 'Sofía', estado: 'Justificado' },
-            { nombre: 'Bruno', estado: 'Presente' }
-          ]
-        },
-        {
-          fecha: '2025-07-28',
-          alumnos: [
-            { nombre: 'Damián', estado: 'Presente' },
-            { nombre: 'Carla', estado: 'Presente' },
-            { nombre: 'Iván', estado: 'Ausente' }
-          ]
-        }
-      ]
+      modalCols: ['attendance_date', 'attendance_status', 'attendance_notes'],
+      modalData: [], // Ya no usamos datos mock, vienen del backend
     };
   }
 }

@@ -5,139 +5,135 @@
     </mat-card-header>
 
     <mat-card-content>
-      <app-card [cardImageUrl]="'https://avatars.githubusercontent.com/u/122392675?v=4'"
-        [cardTitle]="'Programación III'" [cardSubtitle]="'Vanegas Brian'"
-        [cardPercentageLabel]="'Porcentaje de asistencias'" [cardPercentage]="80" [cardDateLabel]="'Última asistencia'"
-        [cardDate]="'01/01/12ac'">
-      </app-card>
-
-      <app-card [cardTitle]="'Probabilidad y Estadística'" [cardSubtitle]="'Traverso Carolina'"
-        [cardPercentage]="71"></app-card>
-
-      <app-card [cardTitle]="'Análisis y Diseño de Sistemas II'" [cardSubtitle]="'Steven Verónica'"
-        [cardPercentage]="22">
-      </app-card>
-
-      <app-card [cardTitle]="'Derechos Humanos y Ciudadanía'" [cardSubtitle]="'Toledo María Angélica'"
-        [cardPercentage]="87"></app-card>
-
-      <app-card [cardTitle]="'UDI III'" [cardSubtitle]="'Jaqueline Diaz Carla'" [cardPercentage]="36">
-      </app-card>
-
-      <app-card [cardTitle]="'Auditoría de Sistemas'" [cardSubtitle]="'Hereñu Daian'" [cardPercentage]="12">
-      </app-card>
-
-      <app-card [cardTitle]="'Ingeniería del Software'" [cardSubtitle]="'Hereñu Daian'" [cardPercentage]="96">
-      </app-card>
-
-      <app-card [cardTitle]="'Legislación Informática'" [cardSubtitle]="'Jalil Román'" [cardPercentage]="79">
-      </app-card>
-
-      <app-card [cardTitle]="'Prácticas Profesionalizantes III'" [cardSubtitle]="'Hereñu Daian'" [cardPercentage]="61">
-      </app-card>
+      @if(enrolledSubjects.length > 0){
+      <div class="enrolled-subjects">
+        @for(enrollment of enrolledSubjects; track $index){
+        <app-card
+          [cardTitle]="
+            enrollment.mid_comission_subject?.subject?.subject_name ||
+            'Sin nombre'
+          "
+          [cardSubtitle]="
+            'Comisión: ' +
+            (enrollment.mid_comission_subject?.comission?.comission_name ||
+              'N/A')
+          "
+          [cardPercentageLabel]="'Porcentaje de asistencias'"
+          [cardPercentage]="enrollment.attendance_percentage || 0"
+          [cardDateLabel]="'Estado'"
+          [cardDate]="enrollment.enrollment_status || 'ACTIVO'"
+          [enrollmentId]="enrollment.id"
+        >
+        </app-card>
+        }
+      </div>
+      } @else {
+      <div class="empty-state">
+        <mat-icon>school</mat-icon>
+        <p>Aún no estás inscrito en ninguna materia.</p>
+        <p>Utiliza el formulario de la derecha para inscribirte.</p>
+      </div>
+      }
     </mat-card-content>
-
   </mat-card>
 
   <aside>
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Mi Carrera</mat-card-title>
+        <mat-card-title>Inscripción a Materias</mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
-        <mat-list>
-          <mat-list-item>
-            <span matListItemTitle>Nombre:</span>
-            <span matListItemLine>Análisis y Desarrollo de Software</span>
-          </mat-list-item>
+        <div class="enrollment-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona tu carrera</mat-label>
+            <mat-select
+              [(value)]="selectedDegree"
+              (selectionChange)="onDegreeChange($event.value)"
+            >
+              <mat-option *ngFor="let degree of degrees" [value]="degree.id">
+                {{ degree.degree_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-          <mat-list-item>
-            <span matListItemTitle>Tipo:</span>
-            <span matListItemLine>Tecnicatura</span>
-          </mat-list-item>
+          <mat-form-field appearance="outline" *ngIf="selectedDegree">
+            <mat-label>Selecciona tu comisión</mat-label>
+            <mat-select
+              [(value)]="selectedComission"
+              (selectionChange)="onComissionChange($event.value)"
+            >
+              @for(comission of comissions; track $index){
+              <mat-option [value]="comission.id">
+                Comisión {{ comission.comission_name }} -
+                {{ comission.comission_year }}
+              </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
 
-          <mat-list-item>
-            <span matListItemTitle>Duración:</span>
-            <span matListItemLine>3 años</span>
-          </mat-list-item>
-
-          <mat-list-item>
-            <span matListItemTitle>Cant. Materias:</span>
-            <span matListItemLine>24</span>
-          </mat-list-item>
-
-          <mat-list-item>
-            <span matListItemTitle>Ciclo Lectivo:</span>
-            <span matListItemLine>2025</span>
-          </mat-list-item>
-        </mat-list>
+          @if(selectedComission && availableSubjects.length > 0){
+          <div class="subjects-list">
+            <h3>Materias disponibles:</h3>
+            <mat-list>
+              @for(midComSubject of availableSubjects; track $index){
+              <mat-list-item>
+                <div matListItemTitle>
+                  {{ midComSubject.subject.subject_name }}
+                </div>
+                <div matListItemLine>
+                  Año: {{ midComSubject.subject.subject_year }}
+                </div>
+                <button
+                  matButton="tonal"
+                  (click)="enrollSubject(midComSubject.id)"
+                  [disabled]="isEnrolled(midComSubject.id)"
+                >
+                  {{
+                    isEnrolled(midComSubject.id) ? "Inscrito" : "Inscribirse"
+                  }}
+                </button>
+              </mat-list-item>
+              }
+            </mat-list>
+          </div>
+          } @else if(selectedComission && availableSubjects.length === 0){
+          <p class="no-subjects">
+            No hay materias disponibles en esta comisión.
+          </p>
+          } @else if(!selectedDegree) {
+          <p class="hint">Selecciona una carrera para comenzar.</p>
+          }
+        </div>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Plan de Estudios</mat-card-title>
+        <mat-card-title>Información</mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title> 1er año </mat-panel-title>
-              <mat-panel-description> Lista de Materias </mat-panel-description>
-            </mat-expansion-panel-header>
-            <ul>
-              <li>Problemáticas Sociales, Económicas y Políticas</li>
-              <li>Matemática I</li>
-              <li>Lógica</li>
-              <li>Idioma Extranjero: Inglés Técnico I</li>
-              <li>Administración y Gestión I</li>
-              <li>Tecnología de la Información</li>
-              <li>Programación I</li>
-              <li>Base de Datos</li>
-              <li>Prácticas Profesionalizantes I</li>
-            </ul>
-          </mat-expansion-panel>
-        </mat-accordion>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title> 2do año </mat-panel-title>
-              <mat-panel-description> Lista de Materias </mat-panel-description>
-            </mat-expansion-panel-header>
-            <ul>
-              <li>Problemáticas Sociales, Económicas y Políticas</li>
-              <li>Matemática I</li>
-              <li>Lógica</li>
-              <li>Idioma Extranjero: Inglés Técnico I</li>
-              <li>Administración y Gestión I</li>
-              <li>Tecnología de la Información</li>
-              <li>Programación I</li>
-              <li>Base de Datos</li>
-              <li>Prácticas Profesionalizantes I</li>
-            </ul>
-          </mat-expansion-panel>
-        </mat-accordion>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title> 3er año </mat-panel-title>
-              <mat-panel-description> Lista de Materias </mat-panel-description>
-            </mat-expansion-panel-header>
-            <ul>
-              <li>Problemáticas Sociales, Económicas y Políticas</li>
-              <li>Matemática I</li>
-              <li>Lógica</li>
-              <li>Idioma Extranjero: Inglés Técnico I</li>
-              <li>Administración y Gestión I</li>
-              <li>Tecnología de la Información</li>
-              <li>Programación I</li>
-              <li>Base de Datos</li>
-              <li>Prácticas Profesionalizantes I</li>
-            </ul>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>Carrera seleccionada:</span>
+            <span matListItemLine>{{
+              getDegreeName(selectedDegree) || "Ninguna"
+            }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Comisión:</span>
+            <span matListItemLine>{{
+              getComissionName(selectedComission) || "Ninguna"
+            }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Materias inscritas:</span>
+            <span matListItemLine>{{ enrolledSubjects.length }}</span>
+          </mat-list-item>
+        </mat-list>
       </mat-card-content>
     </mat-card>
 
@@ -166,5 +162,4 @@
       </mat-card-content>
     </mat-card>
   </aside>
-
 </section>

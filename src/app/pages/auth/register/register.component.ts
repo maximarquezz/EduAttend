@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 // Services Imports
 import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
 import { StepperService } from '../../../core/services/ui/stepper.service';
@@ -46,6 +47,7 @@ interface City {
     MatCheckboxModule,
     MatStepperModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -54,6 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   private registerService = inject(RegisterService);
   private localitiesService = inject(LocalitiesService);
+  private snackBar = inject(MatSnackBar);
 
   provinces: Province[] = [];
   availableCities: City[] = [];
@@ -105,6 +108,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error al cargar provincias:', error);
+        this.showErrorSnackbar('Error al cargar las provincias');
       },
     });
   }
@@ -119,6 +123,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         error: (error) => {
           console.error('Error al cargar ciudades:', error);
           this.availableCities = [];
+          this.showErrorSnackbar('Error al cargar las ciudades');
         },
       });
     } else {
@@ -246,13 +251,83 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (data) => {
             console.log(data);
+            this.showSuccessSnackbar('¡Registro exitoso!');
             this.stepper.nextStep();
           },
           error: (error) => {
             console.error('Error en el registro:', error);
+            this.handleRegistrationError(error);
           },
         });
     }
+  }
+
+  handleRegistrationError(error: any) {
+    let errorMessage = 'Error al registrar. Intente nuevamente.';
+
+    // Verificar si hay errores específicos de validación del backend
+    if (error.error?.errors) {
+      const errors = error.error.errors;
+
+      // Buscar error de email duplicado
+      if (errors.email) {
+        errorMessage =
+          'El email ya está registrado. Por favor, utilice otro email.';
+        // Opcional: volver al paso 2 donde está el email
+        this.stepper.step = 2;
+        // Marcar el campo email con error
+        this.registerForm.get('email')?.setErrors({ serverError: true });
+      }
+      // Buscar error de DNI duplicado
+      else if (errors.dni) {
+        errorMessage = 'El DNI ya está registrado.';
+        this.stepper.step = 1;
+        this.registerForm.get('dni')?.setErrors({ serverError: true });
+      }
+      // Buscar error de teléfono duplicado
+      else if (errors.phone) {
+        errorMessage = 'El teléfono ya está registrado.';
+        this.stepper.step = 2;
+        this.registerForm.get('phone')?.setErrors({ serverError: true });
+      }
+      // Otros errores
+      else {
+        const firstError = Object.values(errors)[0];
+        if (Array.isArray(firstError) && firstError.length > 0) {
+          errorMessage = firstError[0];
+        }
+      }
+    }
+    // Si hay un mensaje general de error
+    else if (error.error?.message) {
+      errorMessage = error.error.message;
+    }
+    // Errores de red o servidor
+    else if (error.status === 0) {
+      errorMessage = 'No se pudo conectar con el servidor';
+    } else if (error.status === 500) {
+      errorMessage = 'Error del servidor. Intente más tarde.';
+    }
+
+    this.showErrorSnackbar(errorMessage);
+  }
+
+  showErrorSnackbar(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar'],
+    });
+  }
+
+  showSuccessSnackbar(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar'],
+    });
   }
 
   getFormattedData() {

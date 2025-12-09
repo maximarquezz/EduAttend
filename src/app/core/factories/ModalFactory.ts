@@ -40,13 +40,10 @@ export class ModalFactory {
         return new ModalStudent();
       case Role.Teacher:
         return new ModalTeacher();
-        break;
       case Role.Admin:
         return new ModalAdmin();
-        break;
       default:
         throw new Error("Factory Method Error: Invalid enum input");
     }
-    throw new Error("Factory Method Error: Unimplemented role");
   }
 }

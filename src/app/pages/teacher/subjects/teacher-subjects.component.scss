@@ -1,22 +1,15 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
 
-.student-subjects {
+.teacher-subjects {
   @extend .flex-col_spc-evly;
   gap: 20px;
   width: 100%;
 
-  h5 {
-    font: var(--mat-sys-title-medium);
-    box-sizing: border-box;
-    padding: 10px 0;
-    margin: 0;
-  }
-
   mat-card {
     width: 100%;
-    flex: 4;
+    flex: 5;
     gap: 10px;
     background: var(--mat-sys-surface);
 
@@ -34,12 +27,55 @@
       display: grid;
       gap: 1rem;
       grid-template-columns: 1fr;
+
+      .assignment-form {
+        display: flex;
+        flex-direction: column;
+
+        .subjects-list mat-list {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          box-sizing: border-box;
+
+          mat-list-item {
+            display: flex;
+          }
+        }
+      }
+
+      .assigned-subjects {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        text-align: center;
+        color: var(--mat-sys-on-surface-variant);
+
+        mat-icon {
+          font-size: 64px;
+          width: 64px;
+          height: 64px;
+          margin-bottom: 16px;
+          opacity: 0.6;
+        }
+
+        p {
+          margin: 8px 0;
+        }
+      }
     }
   }
 
   aside {
     @extend .flex-col_spc-evly;
-    @extend .container-full;
     gap: 20px;
     flex: 2;
     position: relative;
@@ -47,27 +83,30 @@
     mat-card {
       box-sizing: border-box;
       width: 100%;
-      height: 100%;
       background: var(--mat-sys-surface);
 
-      mat-card-content {
-        mat-form-field {
-          padding: 0;
-          margin: 0;
-          box-sizing: border-box;
+      mat-form-field {
+        margin-top: 5px;
+      }
+    }
+
+    mat-list {
+      background-color: var(--mat-sys-on-primary);
+
+      mat-list-item {
+        height: auto !important;
+        min-height: 56px;
+
+        [matListItemTitle],
+        [matListItemLine] {
+          white-space: normal !important;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          max-width: 100%;
         }
 
-        section {
-          @extend .flex-col_spc-ctr;
-          justify-content: flex-start;
-          gap: 5px;
-          width: 100%;
-          max-height: 400px;
-          overflow-y: auto;
-        }
-
-        footer {
-          @extend .flex-row_spc-btw;
+        .mdc-list-item__content {
+          height: auto !important;
         }
       }
     }
@@ -75,8 +114,7 @@
 }
 
 @media (min-width: map.get($width-breakpoints, lg)) {
-
-  .student-subjects {
+  .teacher-subjects {
     flex-direction: row;
     align-items: flex-start;
   }

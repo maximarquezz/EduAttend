@@ -1,6 +1,6 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
 
 .student-subjects {
   @extend .flex-col_spc-evly;
@@ -9,7 +9,7 @@
 
   mat-card {
     width: 100%;
-    flex: 4;
+    flex: 5;
     gap: 10px;
     background: var(--mat-sys-surface);
 
@@ -27,6 +27,35 @@
       display: grid;
       gap: 1rem;
       grid-template-columns: 1fr;
+
+      .enrollment-form {
+        display: flex;
+        flex-direction: column;
+
+        .subjects-list mat-list {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          box-sizing: border-box;
+
+          mat-list-item {
+            display: flex;
+          }
+        }
+      }
+
+      .enrolled-subjects {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .empty-state {
+        padding: 1rem;
+        text-align: center;
+        font-style: italic;
+        color: var(--mat-sys-on-surface-variant);
+      }
     }
   }
 
@@ -35,19 +64,41 @@
     gap: 20px;
     flex: 2;
     position: relative;
-    height: 100%;
 
     mat-card {
       box-sizing: border-box;
       width: 100%;
-      height: 100%;
       background: var(--mat-sys-surface);
+
+      mat-form-field {
+        margin-top: 5px;
+      }
+    }
+
+    mat-list {
+      background-color: var(--mat-sys-on-primary);
+
+      mat-list-item {
+        height: auto !important;
+        min-height: 56px;
+
+        [matListItemTitle],
+        [matListItemLine] {
+          white-space: normal !important;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          max-width: 100%;
+        }
+
+        .mdc-list-item__content {
+          height: auto !important;
+        }
+      }
     }
   }
 }
 
 @media (min-width: map.get($width-breakpoints, lg)) {
-
   .student-subjects {
     flex-direction: row;
     align-items: flex-start;

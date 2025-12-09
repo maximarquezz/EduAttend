@@ -34,6 +34,7 @@
         <span matListItemTitle>Dirección:</span>
         <span matListItemLine>{{ userAddress }}</span>
       </mat-list-item>
+      <!--
       <mat-list-item>
         <span matListItemTitle>Rol solicitado:</span>
         <span matListItemLine>{{ userRole }}</span>
@@ -42,10 +43,11 @@
         <span matListItemTitle>Curso solicitado:</span>
         <span matListItemLine>{{ userCourseReq }}</span>
       </mat-list-item>
+      -->
     </mat-list>
     <section>
-      <button matButton="tonal">Rechazar solicitud</button>
-      <button matButton="filled">Aceptar solicitud</button>
+      <button matButton="tonal" (click)="onReject()">Rechazar solicitud</button>
+      <button matButton="filled" (click)="onAccept()">Aceptar solicitud</button>
     </section>
   </mat-expansion-panel>
 </mat-accordion>

@@ -8,7 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 // Services Imports
 import { ToggleService } from '../../../core/services/ui/toggle.service';
-import { UpperCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../../core/services/data/auth.service';
 
 @Component({
@@ -21,7 +21,7 @@ import { AuthService } from '../../../core/services/data/auth.service';
     MatIconModule,
     MatDividerModule,
     MatCardModule,
-    UpperCasePipe,
+    TitleCasePipe,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',

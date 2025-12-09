@@ -1,11 +1,12 @@
-@use '../../styles/layout.scss' as *;
-@use '../../styles/attendance.scss' as *;
+@use "../../styles/layout.scss" as *;
+@use "../../styles/attendance.scss" as *;
 
 mat-card {
   @extend .flex-col_spc-btw;
-
   align-items: flex-start;
   height: 100%;
+  width: 100%;
+  background: var(--mat-sys-surface);
 
   mat-card-header {
     box-sizing: border-box;
@@ -16,6 +17,10 @@ mat-card {
     mat-card-subtitle {
       color: var(--mat-sys-on-primary);
     }
+
+    mat-card-subtitle {
+      margin-bottom: 5px;
+    }
   }
 
   mat-card-content {
@@ -24,19 +29,34 @@ mat-card {
     width: 100%;
     flex: 3;
     padding: 10px;
-
     overflow-y: auto;
     max-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    // Contenedor de la tabla con altura fija
+    .table-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%; // Asegurar que ocupe todo el ancho
+      min-height: 0;
+      overflow: auto; // Permitir scroll si es necesario
+    }
 
     table {
-      width: 100%;
+      width: 100% !important; // Forzar ancho completo
       border-collapse: collapse;
-      flex: 1;
+      table-layout: fixed; // Distribuir columnas equitativamente
 
       th,
       td {
-        padding: 8px;
+        padding: 12px 16px; // Más padding para que se vea mejor
         text-align: left;
+        height: 48px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       thead {
@@ -44,13 +64,20 @@ mat-card {
         font-weight: 600;
       }
 
-      tbody tr:nth-child(odd) {
-        background-color: #fafafa;
+      tbody {
+        tr {
+          height: 48px;
+        }
+
+        tr:nth-child(odd) {
+          background-color: #fafafa;
+        }
       }
     }
 
     mat-paginator {
       width: 100%;
+      margin-top: auto;
     }
   }
 
@@ -58,5 +85,61 @@ mat-card {
     @extend .flex-row_spc-btw;
     justify-content: flex-end;
     width: 100%;
+  }
+}
+
+// Círculos de estado de asistencia
+.circle-present,
+.circle-absent,
+.circle-late,
+.circle-justified {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.circle-present {
+  background-color: #4caf50;
+}
+
+.circle-absent {
+  background-color: #f44336;
+}
+
+.circle-late {
+  background-color: #ff9800;
+}
+
+.circle-justified {
+  background-color: #2196f3;
+}
+
+// Estado vacío - centrado vertical y horizontalmente
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  padding: 3rem;
+  text-align: center;
+  color: #666;
+  min-height: 300px;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    color: #999;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
   }
 }

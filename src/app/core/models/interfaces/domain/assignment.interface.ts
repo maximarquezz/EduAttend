@@ -1,7 +1,17 @@
+import { AssignType } from '../../enums/assign-type.enum';
+
+// GET / PUT
 export interface Assignment {
-  id: number,
-  comission_name: string,
-  degree_id: number,
-  created_at: string | Date | null,
-  updated_at: string | Date | null
+  id?: number;
+  user_id: number;
+  mid_comissions_subjects_id: number;
+  assign_type: AssignType;
+  created_at?: string | Date | null;
+  updated_at?: string | Date | null;
 }
+
+// POST
+export type AssignmentPost = Pick<
+  Assignment,
+  'mid_comissions_subjects_id' | 'assign_type'
+>;

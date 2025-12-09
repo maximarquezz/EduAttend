@@ -19,7 +19,7 @@ export class RegisterService {
     city_name: string,
     province_name: string
   ): Observable<Object> {
-    return this.http.post(`http://127.0.0.1:8000/api/register`, {
+    return this.http.post(`${environment.localApiUrl}/register`, {
       name,
       email,
       phone,

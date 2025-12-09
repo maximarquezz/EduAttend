@@ -1,167 +1,170 @@
-<section class="student-subjects">
+<section class="teacher-subjects">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Mis Materias</mat-card-title>
+      <mat-card-title>Mis Materias Asignadas</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
-      <app-card
-        [cardImageUrl]="'https://avatars.githubusercontent.com/u/122392675?v=4'"
-        [cardTitle]="'Programación III'"
-        [cardSubtitle]="'Software - Año 2 (Com. 1)'"
-        [cardPercentageLabel]="'Porcentaje de asistencias'"
-        [cardPercentage]="80"
-        [cardDateLabel]="'Última asistencia'"
-        [cardDate]="'01/01/12ac'">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Bases de Datos Avanzadas'"
-        [cardSubtitle]="'Informática - Año 3 (Com. 2)'"
-        [cardPercentage]="71">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Redes de Computadoras'"
-        [cardSubtitle]="'Telecomunicaciones - Año 1 (Com. 3)'"
-        [cardPercentage]="22">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Ética Profesional'"
-        [cardSubtitle]="'Software - Año 4 (Com. 1)'"
-        [cardPercentage]="87">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Diseño de Interfaces'"
-        [cardSubtitle]="'Multimedia - Año 2 (Com. 2)'"
-        [cardPercentage]="36">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Administración de Servidores'"
-        [cardSubtitle]="'Informática - Año 3 (Com. 1)'"
-        [cardPercentage]="12">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Metodologías Ágiles'"
-        [cardSubtitle]="'Software - Año 2 (Com. 3)'"
-        [cardPercentage]="96">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Derecho Informático'"
-        [cardSubtitle]="'Telecomunicaciones - Año 4 (Com. 2)'"
-        [cardPercentage]="79">
-      </app-card>
-
-      <app-card
-        [cardTitle]="'Proyecto Final de Carrera'"
-        [cardSubtitle]="'Software - Año 5 (Com. 1)'"
-        [cardPercentage]="61">
-      </app-card>
-
+      @if(assignedSubjects.length > 0){
+      <div class="assigned-subjects">
+        @for(assignment of assignedSubjects; track $index){
+        <app-card
+          [cardTitle]="
+            assignment.mid_comission_subject?.subject?.subject_name ||
+            'Sin nombre'
+          "
+          [cardSubtitle]="
+            'Comisión: ' +
+            (assignment.mid_comission_subject?.comission?.comission_name ||
+              'N/A') +
+            ' - Año: ' +
+            (assignment.mid_comission_subject?.comission?.comission_year ||
+              'N/A')
+          "
+          [cardPercentageLabel]="'Año de la materia'"
+          [cardPercentage]="
+            assignment.mid_comission_subject?.subject?.subject_year || 0
+          "
+          [cardDateLabel]="'Tipo de asignación'"
+          [cardDate]="assignment.assign_type || 'DICTA'"
+        >
+        </app-card>
+        }
+      </div>
+      } @else {
+      <div class="empty-state">
+        <mat-icon>school</mat-icon>
+        <p>Aún no tienes materias asignadas.</p>
+        <p>Utiliza el formulario de la derecha para asignarte a materias.</p>
+      </div>
+      }
     </mat-card-content>
-
   </mat-card>
 
   <aside>
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Tomar Asistencia</mat-card-title>
+        <mat-card-title>Asignación a Materias</mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
+        <div class="assignment-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona la carrera</mat-label>
+            <mat-select
+              [(value)]="selectedDegree"
+              (selectionChange)="onDegreeChange($event.value)"
+            >
+              <mat-option *ngFor="let degree of degrees" [value]="degree.id">
+                {{ degree.degree_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <h5>Selección de datos</h5>
+          <mat-form-field appearance="outline" *ngIf="selectedDegree">
+            <mat-label>Selecciona la comisión</mat-label>
+            <mat-select
+              [(value)]="selectedComission"
+              (selectionChange)="onComissionChange($event.value)"
+            >
+              @for(comission of comissions; track $index){
+              <mat-option [value]="comission.id">
+                Comisión {{ comission.comission_name }} -
+                {{ comission.comission_year }}
+              </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field [subscriptSizing]="'dynamic'">
-          <mat-label>Carrera</mat-label>
-          <mat-select>
-            <mat-option>Tecnicatura Superior en Análisis y Desarrollo de Software</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field [subscriptSizing]="'dynamic'">
-          <mat-label>Año</mat-label>
-          <mat-select>
-            <mat-option>1er</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field [subscriptSizing]="'dynamic'">
-          <mat-label>Comisión</mat-label>
-          <mat-select>
-            <mat-option>Com. 2</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field [subscriptSizing]="'dynamic'">
-          <mat-label>Elige una fecha</mat-label>
-          <input matInput [matDatepicker]="picker">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <h5>Lista de alumnos</h5>
-
-        <section>
-          <app-status [name]="'Maximiliano Marquez'"></app-status>
-          <app-status [name]="'Ayrton Horst'"></app-status>
-          <app-status [name]="'Emanuel Paez'"></app-status>
-          <app-status [name]="'Federica Kapp'"></app-status>
-          <app-status [name]="'Yuliana Siré'"></app-status>
-          <app-status [name]="'Estéfano Acevedo'"></app-status>
-          <app-status [name]="'Maxi Aga'"></app-status>
-          <app-status [name]="'Adrián Bracamonte'"></app-status>
-          <app-status [name]="'Juan Quinodoz'"></app-status>
-          <app-status [name]="'Marcos Sanchez'"></app-status>
-        </section>
-
-        <footer>
-          <button type="button" matButton="">Reiniciar</button>
-          <button type="button" matButton="filled">Enviar</button>
-        </footer>
+          @if(selectedComission && availableSubjects.length > 0){
+          <div class="subjects-list">
+            <h3>Materias disponibles:</h3>
+            <mat-list>
+              @for(midComSubject of availableSubjects; track $index){
+              <mat-list-item>
+                <div matListItemTitle>
+                  {{ midComSubject.subject.subject_name }}
+                </div>
+                <div matListItemLine>
+                  Año: {{ midComSubject.subject.subject_year }}
+                </div>
+                <button
+                  matButton="tonal"
+                  (click)="assignSubject(midComSubject.id)"
+                  [disabled]="isAssigned(midComSubject.id)"
+                >
+                  {{ isAssigned(midComSubject.id) ? "Asignado" : "Asignarme" }}
+                </button>
+              </mat-list-item>
+              }
+            </mat-list>
+          </div>
+          } @else if(selectedComission && availableSubjects.length === 0){
+          <p class="no-subjects">
+            No hay materias disponibles en esta comisión.
+          </p>
+          } @else if(!selectedDegree) {
+          <p class="hint">Selecciona una carrera para comenzar.</p>
+          }
+        </div>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Sobre el Docente</mat-card-title>
+        <mat-card-title>Información</mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
         <mat-list>
           <mat-list-item>
-            <span matListItemTitle>Nombre:</span>
-            <span matListItemLine>Vanegas Brian</span>
+            <span matListItemTitle>Carrera seleccionada:</span>
+            <span matListItemLine>{{
+              getDegreeName(selectedDegree) || "Ninguna"
+            }}</span>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Cant. Materias:</span>
-            <span matListItemLine>8</span>
+            <span matListItemTitle>Comisión:</span>
+            <span matListItemLine>{{
+              getComissionName(selectedComission) || "Ninguna"
+            }}</span>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Cant. Comisiones:</span>
-            <span matListItemLine>15</span>
+            <span matListItemTitle>Materias asignadas:</span>
+            <span matListItemLine>{{ assignedSubjects.length }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Tabla de Referencias</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>school</mat-icon>
+            <div matListItemTitle>DICTA</div>
+            <div matListItemLine>Profesor titular de la materia</div>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Ciclo Lectivo:</span>
-            <span matListItemLine>2025</span>
+            <mat-icon matListItemIcon>assignment_ind</mat-icon>
+            <div matListItemTitle>PRECEPTOR</div>
+            <div matListItemLine>Preceptor asignado</div>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Modalidad:</span>
-            <span matListItemLine>Presencial</span>
+            <mat-icon matListItemIcon>person</mat-icon>
+            <div matListItemTitle>CURSA</div>
+            <div matListItemLine>Estudiante que cursa</div>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
     </mat-card>
   </aside>
-
 </section>

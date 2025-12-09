@@ -4,21 +4,33 @@
   @extend .container-full_dv;
   @extend .flex-col_spc-ctr;
 
+  background: linear-gradient(rgba(0, 92, 187, 0.8), rgba(0, 62, 124, 0.8)),
+    url("../../../../../public/assets/images/escuela-sagarna2.jpg");
+
   &__navigation {
     @extend .flex-row_spc-ctr;
 
     flex: 1;
     width: 100%;
     background-color: var(--mat-sys-primary);
+    padding: 0;
+    margin: 0;
+    background: transparent;
 
     div {
       @extend .container-full;
       @extend .flex-row_spc-btw;
 
       width: 90%;
+      height: fit-content;
+      padding: 0;
+      margin: 0;
 
       button {
-        background: var(--mat-sys-secondary);
+        img {
+          width: 30px;
+          filter: invert(1);
+        }
       }
 
       img {
@@ -32,11 +44,13 @@
     @extend .flex-col_spc-ctr;
 
     flex: 9;
-    height: 100%;
+    min-width: 2rem;
+    max-width: 30rem;
 
     mat-card {
-      width: 90%;
-      height: 90%;
+      width: 100%;
+      padding: 1rem;
+      height: 95%;
 
       form {
         @extend .flex-col_spc-btw;

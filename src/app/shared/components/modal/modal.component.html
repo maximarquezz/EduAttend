@@ -1,73 +1,80 @@
 <mat-card>
   <mat-card-header>
-    @if(role === Role.Student){
-      <img mat-card-avatar [src]="data.cardImageUrl" width="150px" alt="">
-    }
     <mat-card-title>{{ data.cardTitle }}</mat-card-title>
     <mat-card-subtitle>{{ data.cardSubtitle }}</mat-card-subtitle>
   </mat-card-header>
-
   <mat-card-content>
-    <table mat-table matSort [dataSource]="tableData" class="mat-elevation-z8">
-
-      @for (col of tableCols; track col) {
+    @if(tableData.data.length > 0) {
+    <div class="table-container">
+      <table
+        mat-table
+        matSort
+        [dataSource]="tableData"
+        class="mat-elevation-z8"
+      >
+        @for (col of tableCols; track col) {
         <ng-container [matColumnDef]="col">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ col | titlecase }}
+            {{ getColumnName(col) }}
           </th>
-
           <td mat-cell *matCellDef="let element">
-            <!-- Columna ALUMNOS -->
-            @if (col === 'alumnos') {
-              <table class="inner-table">
-                @for(alumno of element[col]; track $index){
-                  <tr>
-                    <td>{{ alumno.nombre }}</td>
-                    <td>
-                      @switch (alumno.estado) {
-                        @case ('Presente') { <div class="circle-present"></div> }
-                        @case ('Ausente')  { <div class="circle-absent"></div> }
-                        @default           { <div class="circle-justified"></div> }
-                      }
-                      <span>{{ alumno.estado }}</span>
-                    </td>
-                  </tr>
-                }
-              </table>
+            <!-- Columna FECHA -->
+            @if (col === 'attendance_date') {
+            {{ formatDate(element[col]) }}
             }
-            <!-- Columna ESTADO (cuando no hay alumnos) -->
-            @else if (col === 'estado') {
-              @switch (element[col]) {
-                @case ('Presente') { <div class="circle-present"></div> }
-                @case ('Ausente')  { <div class="circle-absent"></div> }
-                @default           { <div class="circle-justified"></div> }
-              }
-              <span>{{ element[col] }}</span>
+            <!-- Columna ESTADO -->
+            @else if (col === 'attendance_status') { @switch (element[col]) {
+            @case ('PRESENTE') {
+            <div class="circle-present"></div>
+            <span>Presente</span>
+            } @case ('AUSENTE') {
+            <div class="circle-absent"></div>
+            <span>Ausente</span>
+            } @case ('TARDE') {
+            <div class="circle-late"></div>
+            <span>Tarde</span>
+            } @case ('JUSTIFICADO') {
+            <div class="circle-justified"></div>
+            <span>Justificado</span>
+            } @default {
+            <span>{{ element[col] }}</span>
+            } } }
+            <!-- Columna NOTAS -->
+            @else if (col === 'attendance_notes') {
+            {{ element[col] || "-" }}
             }
-            <!-- Columna ACCIONES a nivel fila -->
+            <!-- Columna ACCIONES -->
             @else if (col === 'acciones') {
-              <button mat-icon-button color="primary">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn">
-                <mat-icon>delete</mat-icon>
-              </button>
+            <button mat-icon-button color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
             }
             <!-- Cualquier otra columna -->
             @else {
-              {{ element[col] }}
+            {{ element[col] }}
             }
           </td>
         </ng-container>
-      }
-
-      <tr mat-header-row *matHeaderRowDef="tableCols"></tr>
-      <tr mat-row *matRowDef="let row; columns: tableCols;"></tr>
-    </table>
-
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+        }
+        <tr mat-header-row *matHeaderRowDef="tableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableCols"></tr>
+      </table>
+    </div>
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25]"
+      showFirstLastButtons
+    ></mat-paginator>
+    } @else {
+    <div class="empty-state">
+      <mat-icon>info</mat-icon>
+      <p>No hay asistencias registradas para esta materia.</p>
+    </div>
+    }
   </mat-card-content>
-
   <mat-card-actions>
     <button matButton="filled" (click)="close()">Cerrar</button>
   </mat-card-actions>
