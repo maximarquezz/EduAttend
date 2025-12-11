@@ -1,7 +1,7 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use '../../../shared/styles/attendance.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "../../../shared/styles/attendance.scss" as *;
+@use "sass:map";
 
 .attendance-history {
   mat-card {
@@ -15,4 +15,40 @@
       margin: auto;
     }
   }
+}
+
+.circle-present {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #4caf50; // Verde
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.circle-absent {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #f44336; // Rojo
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.circle-late {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff9800; // Naranja
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.circle-justified {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #2196f3; // Azul
+  display: inline-block;
+  margin-right: 8px;
 }

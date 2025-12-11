@@ -11,11 +11,17 @@ export class AuthService {
   private http = inject(HttpClient);
   private routerLinksService = inject(RouterLinksService);
 
-  login(email: string, password: string): Observable<Object> {
-    return this.http.post(`${environment.localApiUrl}/login`, {
-      email,
-      password,
-    });
+  login(email: string, password: string): Observable<any> {
+    return this.http
+      .post<any>(`${environment.localApiUrl}/login`, {
+        email,
+        password,
+      })
+      .pipe(
+        tap((response) => {
+          sessionStorage.setItem('userData', JSON.stringify(response));
+        })
+      );
   }
 
   logout() {
@@ -25,5 +31,19 @@ export class AuthService {
         this.routerLinksService.goToLogin();
       })
     );
+  }
+
+  getUserData(): any {
+    const userData = sessionStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
+  }
+
+  getUserId(): number | null {
+    const userData = this.getUserData();
+    return userData?.user?.id || userData?.id || null;
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getUserData();
   }
 }

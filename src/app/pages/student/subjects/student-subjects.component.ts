@@ -15,6 +15,7 @@ import { MidComissionSubjectService } from '../../../core/services/data/mid-comi
 import { Degree } from '../../../core/models/interfaces/domain/degree.interface';
 import { Comission } from '../../../core/models/interfaces/domain/comission.interface';
 import { CardComponent } from '../../../shared/components/card/card.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-student-subjects',
@@ -29,6 +30,7 @@ import { CardComponent } from '../../../shared/components/card/card.component';
     MatFormFieldModule,
     MatButtonModule,
     CardComponent,
+    MatTabsModule,
   ],
   templateUrl: './student-subjects.component.html',
   styleUrl: './student-subjects.component.scss',

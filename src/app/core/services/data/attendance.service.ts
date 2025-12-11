@@ -14,4 +14,10 @@ export class AttendanceService {
       `${environment.localApiUrl}/attendances/enrollment/${enrollmentId}`
     );
   }
+
+  getRecentAttendances(limit: number = 10): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.localApiUrl}/attendances/recent?limit=${limit}`
+    );
+  }
 }

@@ -3,95 +3,170 @@
 @use "sass:map";
 
 .student-subjects {
-  @extend .flex-col_spc-evly;
-  gap: 20px;
   width: 100%;
+  background-color: var(--mat-sys-surface-container-low);
 
-  mat-card {
+  &__header {
+    position: relative;
     width: 100%;
-    flex: 5;
-    gap: 10px;
-    background: var(--mat-sys-surface);
+    height: 200px;
+    margin-bottom: 20px;
+  }
 
-    mat-card-header {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      padding: 12px 0;
-      background: var(--mat-sys-primary);
-      color: var(--mat-sys-on-primary);
-      margin: auto;
+  &__hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 47, 94, 0.8), rgba(0, 47, 94, 0.8)),
+      url("../../../../../public/assets/images/escuela-sagarna.jpg")
+        center/cover;
+    border-radius: 10px;
+  }
+
+  &__title {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+
+    h1 {
+      margin: 0;
+      font: var(--mat-sys-headline-large);
+    }
+  }
+
+  &__content {
+    padding: 0 20px 20px 20px;
+
+    mat-tab-group {
+      background: var(--mat-sys-surface);
+      border-radius: 10px;
     }
 
-    mat-card-content {
+    .tab-content {
+      padding: 24px;
+      min-height: 400px;
+    }
+
+    .enrolled-subjects {
       display: grid;
-      gap: 1rem;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--mat-sys-on-surface-variant);
+
+      mat-icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        margin-bottom: 20px;
+        opacity: 0.5;
+      }
+
+      p {
+        margin: 8px 0;
+        font-size: 16px;
+      }
+    }
+
+    .enrollment-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      mat-card {
+        background: var(--mat-sys-surface-container);
+      }
 
       .enrollment-form {
         display: flex;
         flex-direction: column;
+        gap: 20px;
 
-        .subjects-list mat-list {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          box-sizing: border-box;
+        mat-form-field {
+          width: 100%;
+        }
 
-          mat-list-item {
-            display: flex;
+        .subjects-list {
+          h3 {
+            margin: 0 0 16px 0;
+            font: var(--mat-sys-title-large);
           }
+
+          .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+
+            .subject-card {
+              background: var(--mat-sys-surface);
+              border: 1px solid var(--mat-sys-outline-variant);
+
+              mat-card-content {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                h4 {
+                  margin: 0;
+                  font: var(--mat-sys-title-medium);
+                }
+
+                p {
+                  margin: 0;
+                  color: var(--mat-sys-on-surface-variant);
+                }
+
+                button {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+
+        .no-subjects,
+        .hint {
+          text-align: center;
+          padding: 40px 20px;
+          color: var(--mat-sys-on-surface-variant);
+          font-size: 16px;
         }
       }
 
-      .enrolled-subjects {
+      .enrollment-info {
         display: flex;
         flex-direction: column;
         gap: 20px;
-      }
 
-      .empty-state {
-        padding: 1rem;
-        text-align: center;
-        font-style: italic;
-        color: var(--mat-sys-on-surface-variant);
-      }
-    }
-  }
+        mat-card {
+          mat-card-header {
+            background: var(--mat-sys-primary);
+            color: var(--mat-sys-on-primary);
+            padding: 16px;
+            margin: -16px -16px 16px -16px;
+          }
 
-  aside {
-    @extend .flex-col_spc-evly;
-    gap: 20px;
-    flex: 2;
-    position: relative;
+          mat-list {
+            background: transparent;
 
-    mat-card {
-      box-sizing: border-box;
-      width: 100%;
-      background: var(--mat-sys-surface);
+            mat-list-item {
+              height: auto !important;
+              min-height: 56px;
 
-      mat-form-field {
-        margin-top: 5px;
-      }
-    }
-
-    mat-list {
-      background-color: var(--mat-sys-on-primary);
-
-      mat-list-item {
-        height: auto !important;
-        min-height: 56px;
-
-        [matListItemTitle],
-        [matListItemLine] {
-          white-space: normal !important;
-          word-wrap: break-word;
-          overflow-wrap: break-word;
-          max-width: 100%;
-        }
-
-        .mdc-list-item__content {
-          height: auto !important;
+              [matListItemTitle],
+              [matListItemLine] {
+                white-space: normal !important;
+                word-wrap: break-word;
+              }
+            }
+          }
         }
       }
     }
@@ -100,7 +175,18 @@
 
 @media (min-width: map.get($width-breakpoints, lg)) {
   .student-subjects {
-    flex-direction: row;
-    align-items: flex-start;
+    &__content {
+      .enrollment-section {
+        flex-direction: row;
+
+        > mat-card {
+          flex: 2;
+        }
+
+        .enrollment-info {
+          flex: 1;
+        }
+      }
+    }
   }
 }
