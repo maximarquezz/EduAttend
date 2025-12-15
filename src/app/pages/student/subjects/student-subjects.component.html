@@ -1,12 +1,16 @@
 <section class="student-subjects">
   <div class="student-subjects__header">
     <div class="student-subjects__hero"></div>
-    <div class="student-subjects__title">
-      <h1>Gestión de Materias</h1>
-    </div>
   </div>
 
-  <div class="student-subjects__content">
+  <header class="subjects-header">
+    <article>
+      <h1>Gestión de Materias</h1>
+      <p>Administra tus inscripciones y consulta tu estado académico</p>
+    </article>
+  </header>
+
+  <main class="student-subjects__content">
     <mat-tab-group>
       <mat-tab label="Mis Materias">
         <div class="tab-content">
@@ -45,7 +49,7 @@
       <mat-tab label="Inscripción">
         <div class="tab-content">
           <div class="enrollment-section">
-            <mat-card>
+            <mat-card class="enrollment-main-card">
               <mat-card-content>
                 <div class="enrollment-form">
                   <mat-form-field appearance="outline">
@@ -80,7 +84,7 @@
 
                   @if(selectedComission && availableSubjects.length > 0){
                   <div class="subjects-list">
-                    <h3>Materias disponibles:</h3>
+                    <h3>Materias disponibles</h3>
                     <div class="subjects-grid">
                       @for(midComSubject of availableSubjects; track $index){
                       <mat-card class="subject-card">
@@ -173,5 +177,5 @@
         </div>
       </mat-tab>
     </mat-tab-group>
-  </div>
+  </main>
 </section>

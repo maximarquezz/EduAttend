@@ -1,47 +1,79 @@
-<section class="student-dashboard">
-  <article class="student-dashboard__content">
-    <div class="student-dashboard__content--hero">
-      <!--Hero Background-->
-    </div>
+<section class="flex items-center flex-col min-h-dvh">
+  <div class="student-subjects__header">
+    <div class="student-subjects__hero"></div>
+  </div>
 
-    <mat-card>
-      <div class="student-dashboard__content--title">
-        <p>Panel de Inicio</p>
+  <header class="flex items-center justify-between py-3 px-5 w-full">
+    <article class="h-full">
+      <h2>Hola, {{ username }}!</h2>
+      <p>Bienvenido a EduAttend.</p>
+    </article>
+
+    <article class="flex items-center justify-center self-stretch">
+      <button matIconButton class="scale-125 mr-1 notifications-button">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Notifications"
+          fontIcon="notifications"
+        ></mat-icon>
+      </button>
+    </article>
+  </header>
+
+  <main class="flex flex-col min-w-full">
+    <form class="p-3">
+      <mat-form-field
+        appearance="fill"
+        subscriptSizing="dynamic"
+        class="w-full search-form rounded-lg"
+      >
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          type="search"
+          placeholder="Buscar..."
+          class="rounded-lg"
+        />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </form>
+
+    <article class="p-3">
+      <div class="flex flex-col gap-3">
+        <button
+          matButton
+          (click)="routerLinks.goToStudentSubjects()"
+          class="nav-button"
+        >
+          <mat-icon fontIcon="menu_book"></mat-icon>
+          <span>Materias</span>
+        </button>
+        <button
+          matButton
+          (click)="routerLinks.goToStudentAttendances()"
+          class="nav-button"
+        >
+          <mat-icon fontIcon="event_available"></mat-icon>
+          <span>Asistencias</span>
+        </button>
+      </div>
+    </article>
+
+    <article class="attendance-container">
+      <div class="total-attendance-card">
+        <mat-icon>school</mat-icon>
+        <div class="p-2">
+          <h3 class="m-0 p-0">Asistencia Total</h3>
+          <p class="percentage">{{ totalAttendancePercentage }}%</p>
+        </div>
       </div>
 
-      <div>
-        <mat-card-content>
-          <p>Total de Asistencias</p>
-          <h2>90%</h2>
-          <p>Últimos 30 días</p>
-          <div #chartContainer></div>
-        </mat-card-content>
-
-        <mat-card-content>
-          <h4>Materia más asistida</h4>
-          <app-card
-            [cardTitle]="'Programación III'"
-            [cardSubtitle]="'Vanegas Brian'"
-            [cardPercentage]="80"
-          >
-          </app-card>
-
-          <h4>Materia menos asistida</h4>
-          <app-card
-            [cardTitle]="'PHP 4'"
-            [cardSubtitle]="'Werfelli Julián'"
-            [cardPercentage]="40"
-          ></app-card>
-        </mat-card-content>
-      </div>
-
-      <div class="student-dashboard__content--title">
-        <p>Materias Inscritas</p>
-      </div>
-
-      <mat-card-content>
-        <!--Estadísticas quizás-->
-      </mat-card-content>
-    </mat-card>
-  </article>
+      <h3 class="px-3 py-2 my-2">Asistencias por Materia</h3>
+      <div
+        #attendanceChart
+        style="width: 100%; height: 400px"
+        class="chart-container"
+      ></div>
+    </article>
+  </main>
 </section>

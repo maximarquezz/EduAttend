@@ -20,4 +20,10 @@ export class AttendanceService {
       `${environment.localApiUrl}/attendances/recent?limit=${limit}`
     );
   }
+
+  resumePerSubjectByStudentId(id: any): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.localApiUrl}/attendances/resume-per-subject/student/${id}`
+    );
+  }
 }

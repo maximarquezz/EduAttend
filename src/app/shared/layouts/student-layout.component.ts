@@ -2,17 +2,15 @@ import { TeacherLayoutComponent } from './teacher-layout.component';
 import { AdminLayoutComponent } from './admin-layout.component';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from "../components/sidebar/sidebar.component";
-import { FooterComponent } from "../components/footer/footer.component";
-import { HeaderComponent } from "../components/header/header.component";
-
+import { FooterComponent } from '../components/footer/footer.component';
+import { HeaderComponent } from '../components/header/header.component';
+import { TabMenuComponent } from '../components/tab-menu/tab-menu.component';
 /**
  * Componente que funciona como layout para el estudiante.
  *
  * @remarks
  * Este componente genera una estructura y distribución aplicando CSS Grid y los siguientes componentes:
  * - {@link HeaderComponent}.
- * - {@link SidebarComponent}.
  * - {@link RouterOutlet}.
  * - {@link FooterComponent}.
  *
@@ -21,57 +19,61 @@ import { HeaderComponent } from "../components/header/header.component";
  */
 @Component({
   selector: 'app-student-layout',
-  imports: [
-    HeaderComponent,
-    SidebarComponent,
-    RouterOutlet,
-    FooterComponent
-  ],
+  imports: [HeaderComponent, RouterOutlet, FooterComponent, TabMenuComponent],
   template: `
-    <app-header></app-header>
-    <app-sidebar></app-sidebar>
+    <!--<app-header></app-header>-->
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
-   <app-footer></app-footer>
+
+    <nav class="fixed bottom-0 left-0 w-full z-50">
+      <app-tab-menu></app-tab-menu>
+    </nav>
+    <!--<app-footer></app-footer>-->
   `,
   styles: `
-    @use '../styles/breakpoints.scss' as *;
-    @use 'sass:map';
+  @use '../styles/breakpoints.scss' as *;
+  @use 'sass:map';
 
-    @media (min-width: map.get($width-breakpoints, md)) {
-      :host {
-        display: grid;
-        grid-template-rows: auto 1fr auto; // header - main - footer
-        grid-template-columns: 1fr 4fr; // sidebar - main
-        grid-template-areas:
-          "header header"
-          "sidebar main"
-          "footer footer";
-        height: 100vh;
-      }
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
 
-      app-header {
-        grid-area: header;
-      }
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 64px; /* espacio para el tab menu */
+    background: #d4d4d49d;
+  }
 
-      app-sidebar {
-        grid-area: sidebar;
-      }
-
-      .main-content {
-        grid-area: main;
-        overflow-y: auto;
-        padding: 20px;
-        background: #d4d4d49d;
-      }
-
-      app-footer {
-        grid-area: footer;
-      }
+  /* DESKTOP */
+  @media (min-width: map.get($width-breakpoints, md)) {
+    :host {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "header"
+        "main"
+        "footer";
+      height: 100vh;
     }
-  `
-})
-export class StudentLayoutComponent {
 
-}
+    app-header {
+      grid-area: header;
+    }
+
+    .main-content {
+      grid-area: main;
+      padding: 20px;
+    }
+
+    app-footer {
+      grid-area: footer;
+    }
+  }
+`,
+})
+export class StudentLayoutComponent {}

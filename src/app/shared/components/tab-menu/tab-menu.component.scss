@@ -1,0 +1,67 @@
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    font-size: 10px;
+    color: var(--mat-sys-on-surface-variant);
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+}
+
+mat-tab-group {
+  background-color: var(--mat-sys-surface-container);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+
+  ::ng-deep .mat-mdc-tab-header {
+    border-radius: 20px;
+  }
+
+  ::ng-deep .mdc-tab-indicator {
+    display: none;
+  }
+
+  ::ng-deep .mat-mdc-tab.mdc-tab--active {
+    .mat-icon {
+      color: var(--mat-sys-primary);
+    }
+
+    .tab-content span {
+      color: var(--mat-sys-primary);
+      font-weight: 500;
+    }
+  }
+
+  // Último tab (logout) en rojo cuando está activo
+  ::ng-deep .mat-mdc-tab:last-child.mdc-tab--active {
+    .mat-icon {
+      color: var(--mat-sys-error);
+    }
+
+    .tab-content span {
+      color: var(--mat-sys-error);
+    }
+  }
+
+  ::ng-deep .mat-mdc-tab {
+    transition: all 0.3s ease;
+  }
+
+  ::ng-deep .mat-icon {
+    color: var(--mat-sys-on-surface-variant);
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    padding-bottom: 3px;
+    box-sizing: content-box;
+  }
+
+  ::ng-deep .mat-mdc-tab:not(.mdc-tab--active):hover {
+    .mat-icon {
+      background-color: var(--mat-sys-surface-container-high);
+    }
+  }
+}

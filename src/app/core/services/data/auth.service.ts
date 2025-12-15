@@ -20,14 +20,20 @@ export class AuthService {
       .pipe(
         tap((response) => {
           sessionStorage.setItem('userData', JSON.stringify(response));
+          sessionStorage.setItem('username', response.user.name);
         })
       );
+  }
+
+  getUsername(): string | null {
+    return sessionStorage.getItem('username');
   }
 
   logout() {
     return this.http.post(`${environment.localApiUrl}/logout`, {}).pipe(
       tap(() => {
         sessionStorage.removeItem('userData');
+        sessionStorage.removeItem('username');
         this.routerLinksService.goToLogin();
       })
     );

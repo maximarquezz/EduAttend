@@ -1,49 +1,105 @@
 @use "../../styles/layout.scss" as *;
 
 mat-card {
-  background: var(--mat-sys-secondary-container);
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-surface-dim);
+  border-radius: 16px;
   cursor: pointer;
-  transition: 0.2s all;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: none;
+
+  &:hover {
+    border-color: var(--mat-sys-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
 
   mat-card-header {
     @extend .flex-row_spc-ctr;
-
     justify-content: flex-start;
+    padding: 20px 20px 16px 20px;
+    background: var(--mat-sys-surface-container-high);
+    margin: 0;
+
+    mat-card-title {
+      font: var(--mat-sys-title-medium);
+      font-weight: 600;
+      color: var(--mat-sys-on-surface);
+      margin: 0;
+    }
+
+    mat-card-subtitle {
+      font: var(--mat-sys-body-medium);
+      color: var(--mat-sys-outline);
+      margin-top: 4px;
+    }
   }
 
   mat-card-content {
     @extend .flex-row_spc-btw;
-
-    padding: 10px 0;
-    width: 90%;
-    margin: auto;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+    width: 100%; // Cambiar de 90%
+    margin: 0; // Remover margin: auto
+    box-sizing: border-box; // Asegurar que padding no cause overflow
 
     mat-progress-bar {
       flex: 3;
+      min-width: 0; // Evitar overflow del progress bar
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+
+      ::ng-deep {
+        .mdc-linear-progress__bar-inner {
+          border-radius: 4px;
+        }
+      }
     }
 
     p {
-      flex: 1;
+      flex: 0 0 auto;
       margin: 0;
       text-align: right;
       font: var(--mat-sys-title-medium);
+      font-weight: 600;
+      color: var(--mat-sys-on-surface);
+      min-width: 60px;
     }
 
     mat-icon {
-      margin-left: 10px;
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      font-size: 28px;
+      margin-left: 8px;
+
+      &[fontIcon="check_circle"] {
+        color: var(--mat-sys-tertiary);
+      }
+
+      &[fontIcon="schedule"] {
+        color: #f59e0b;
+      }
+
+      &[fontIcon="block"] {
+        color: var(--mat-sys-error);
+      }
     }
   }
 
   mat-card-actions {
     width: 100%;
+    padding: 16px;
+    margin: 0;
+    border-top: 1px solid var(--mat-sys-surface-dim);
 
     button {
       width: 100%;
+      border-radius: 12px;
+      font-weight: 500;
     }
   }
-}
-
-mat-card:hover {
-  background: var(--mat-sys-tertiary-container);
-  scale: 1.03;
 }

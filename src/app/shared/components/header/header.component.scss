@@ -1,24 +1,159 @@
-@use '../../styles/layout.scss' as *;
-@use '../../styles/breakpoints.scss' as *;
-@use 'sass:map';
+// header.component.scss
+.header-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 24px;
+  height: 64px;
+}
 
-mat-toolbar {
-  @extend .flex-row_spc-btw;
+.toolbar-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 24px;
+}
 
-  background: var(--mat-sys-primary);
+.logo-section {
+  display: flex;
+  align-items: center;
+}
 
-  mat-icon,
-  img {
-    filter: invert(1) brightness(999999);
+.nav-section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+
+  a,
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.25px;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   }
 
-  img {
-    width: 100px;
+  .menu-trigger {
+    .dropdown-icon {
+      margin-left: -4px;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .active-link {
+    background-color: rgba(255, 255, 255, 0.15);
   }
 }
 
-@media (min-width: map.get($width-breakpoints, md)) {
-  mat-toolbar {
-    display: none;
+.user-section {
+  margin-left: auto;
+}
+
+.user-button {
+  width: 48px;
+  height: 48px;
+  padding: 4px;
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+  }
+}
+
+::ng-deep .user-menu {
+  margin-top: 8px;
+  min-width: 240px;
+
+  .mat-mdc-menu-content {
+    padding: 0;
+  }
+}
+
+.user-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.02);
+
+  .menu-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+
+  .menu-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .menu-user-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    .menu-user-role {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+::ng-deep .custom-menu {
+  .mat-mdc-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+
+    mat-icon {
+      color: rgba(0, 0, 0, 0.54);
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 960px) {
+  .nav-section {
+    a span,
+    button span {
+      display: none;
+    }
+  }
+
+  .user-info {
+    display: none !important;
   }
 }

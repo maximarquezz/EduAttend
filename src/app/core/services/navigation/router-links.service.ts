@@ -8,16 +8,15 @@ import { Injectable } from '@angular/core';
  * @type {RouterLinksService}
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RouterLinksService {
-
   /**
    * Instancia un objeto de tipo Router que se utilizará para realizar las redirecciones.
    * @param router objeto de tipo Router.
    * @constructor
    */
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
 
   // Rutas de Login
   public goToLogin(): void {
@@ -61,5 +60,17 @@ export class RouterLinksService {
   // Rutas de Admin
   public goToAdminDashboard(): void {
     this.router.navigate(['private/admin/dashboard']);
+  }
+
+  public goToAttendanceOverview() {
+    this.router.navigate(['private/admin/attendance-overview']);
+  }
+
+  public goToJustifyAbsence() {
+    this.router.navigate(['/private/admin/justify-absence']);
+  }
+
+  public goToUserList() {
+    this.router.navigate(['/private/admin/user-list']);
   }
 }
