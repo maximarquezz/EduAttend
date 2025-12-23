@@ -1,7 +1,7 @@
 import { AttendanceStatus } from '../../enums/attendance-status.enum';
 
 // GET / POST / PUT
-export interface AttendanceInterface {
+export interface Attendance {
   id?: number;
   enrollment_id: number;
   attendance_date: string | Date;

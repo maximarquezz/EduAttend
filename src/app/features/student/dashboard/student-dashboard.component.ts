@@ -1,4 +1,3 @@
-// Angular Imports
 import {
   AfterViewInit,
   Component,
@@ -8,7 +7,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-// Material Imports
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,13 +16,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
-// ECharts Imports
 import * as echarts from 'echarts';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
 import { AuthService } from '../../../core/services/data/auth.service';
 import { AttendanceService } from '../../../core/services/data/attendance.service';
 import { mapAttendanceToBarOption } from '../../../core/mappers/attendance-to-chart.mapper';
+import { StudentDashboardFacade } from './student-dashboard.facade';
+import { Attendance } from '../../../core/models/interfaces/domain/attendance.interface';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -49,38 +48,40 @@ export class StudentDashboardComponent
 
   readonly routerLinks = inject(RouterLinksService);
   readonly authService = inject(AuthService);
-  private attendanceService = inject(AttendanceService);
+  private facade = inject(StudentDashboardFacade);
 
   username: string = 'Usuario';
   totalAttendancePercentage: number = 0;
   private chart: any;
 
   ngOnInit() {
-    this.username = this.authService.getUsername() ?? 'Usuario';
+    this.username = this.facade.getUserName();
   }
 
   ngAfterViewInit() {
-    const studentId = this.authService.getUserId();
-
-    if (!studentId) {
-      console.error('No se pudo obtener el ID del estudiante');
-      return;
-    }
-
-    this.attendanceService.resumePerSubjectByStudentId(studentId).subscribe({
+    this.facade.resumePerSubject().subscribe({
       next: (data) => {
-        if (data.length === 0) {
-          console.log('El estudiante no tiene asistencias registradas');
-          return;
-        }
-
-        // Calcular porcentaje total
         this.totalAttendancePercentage = this.calculateTotalPercentage(data);
-
         this.initChart(data);
       },
-      error: (err) => console.error('Error cargando asistencias:', err),
+      error: (err) => console.error(err),
     });
+  }
+
+  ngOnDestroy() {
+    this.killChart();
+  }
+
+  private initChart(data: Attendance[]) {
+    this.chart = echarts.init(this.chartElement.nativeElement);
+    const option = mapAttendanceToBarOption(data);
+    this.chart.setOption(option);
+  }
+
+  private killChart() {
+    if (this.chart) {
+      this.chart.dispose();
+    }
   }
 
   private calculateTotalPercentage(data: any[]): number {
@@ -94,17 +95,5 @@ export class StudentDashboardComponent
     );
 
     return totalClasses > 0 ? Math.round((totalValid / totalClasses) * 100) : 0;
-  }
-
-  private initChart(data: any[]) {
-    this.chart = echarts.init(this.chartElement.nativeElement);
-    const option = mapAttendanceToBarOption(data);
-    this.chart.setOption(option);
-  }
-
-  ngOnDestroy() {
-    if (this.chart) {
-      this.chart.dispose();
-    }
   }
 }

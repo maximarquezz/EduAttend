@@ -17,7 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Importar Snackbar
 // Services Imports
-import { RouterLinksService } from './../../../core/services/navigation/router-links.service';
+import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
 import { environment } from '../../../../environments/environment.development';
 import { Role } from '../../../core/models/enums/role.enum';
 import { AuthService } from '../../../core/services/data/auth.service';
