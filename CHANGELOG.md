@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/maximarquezz/EduAttend/compare/v1.2.0...v1.3.0) (2025-12-25)
+
+
+### Features
+
+* **auth:** finalizar autenticación ([1fa5c42](https://github.com/maximarquezz/EduAttend/commit/1fa5c42d14374ecdab28b473cc37aa34e4c10c94))
+
 # [1.2.0](https://github.com/maximarquezz/EduAttend/compare/v1.1.0...v1.2.0) (2025-12-23)
 
 
@@ -37,6 +44,3 @@
 * **interfaces, docs:** tipado y crear interfaces ([21157f5](https://github.com/maximarquezz/EduAttend/commit/21157f5171d8c02b387cbdd6b73b0a3ab785b7c0))
 * **login:** comienzo a trabajar en el login ([95ca59d](https://github.com/maximarquezz/EduAttend/commit/95ca59d818b1e83ad5d8dc474352641208e53f3d))
 * **role, environment, components:** centralizar el rol en environments ([0d2ad61](https://github.com/maximarquezz/EduAttend/commit/0d2ad616952fb29cfb91a1e16ab3af1a449f7029))
-
-
-
