@@ -16,4 +16,8 @@ export class UsersService {
   putUser(id: number, partialUser: any) {
     return this.http.put(`${environment.localApiUrl}/users/${id}`, partialUser);
   }
+
+  getUserByDni(dni: string): Observable<any> {
+    return this.http.get(`${environment.localApiUrl}/user-by-dni/${dni}`);
+  }
 }

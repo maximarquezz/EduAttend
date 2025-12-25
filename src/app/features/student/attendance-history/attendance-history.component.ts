@@ -12,6 +12,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { AttendanceHistoryFacade } from './attendance-history.facade';
 import { DatePipe } from '@angular/common';
 import { AttendanceTableRow } from '../../../core/models/interfaces/structural/attendance-table-row';
+import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
 
 @Component({
   selector: 'app-attendance-history',
@@ -26,8 +27,9 @@ import { AttendanceTableRow } from '../../../core/models/interfaces/structural/a
   styleUrl: './attendance-history.component.scss',
 })
 export class AttendanceHistoryComponent implements OnInit {
-  private facade = inject(AttendanceHistoryFacade);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly facade = inject(AttendanceHistoryFacade);
+  private readonly cdr = inject(ChangeDetectorRef);
+  readonly routerLinks = inject(RouterLinksService);
 
   tableCols: string[] = ['date', 'subject', 'state'];
   tableData = new MatTableDataSource<AttendanceTableRow>([]);

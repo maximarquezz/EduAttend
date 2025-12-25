@@ -25,6 +25,34 @@ export class AuthService {
       );
   }
 
+  // Nuevos métodos para recuperación de contraseña
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${environment.localApiUrl}/forgot-password`, {
+      email,
+    });
+  }
+
+  verifyCode(email: string, code: string): Observable<any> {
+    return this.http.post(`${environment.localApiUrl}/verify-code`, {
+      email,
+      code,
+    });
+  }
+
+  resetPassword(
+    email: string,
+    code: string,
+    password: string,
+    password_confirmation: string
+  ): Observable<any> {
+    return this.http.post(`${environment.localApiUrl}/reset-password`, {
+      email,
+      code,
+      password,
+      password_confirmation,
+    });
+  }
+
   getUsername(): string | null {
     return sessionStorage.getItem('username');
   }

@@ -3,6 +3,7 @@
 .register {
   @extend .container-full_dv;
   @extend .flex-col_spc-ctr;
+  gap: 5px;
 
   background: linear-gradient(rgba(0, 92, 187, 0.8), rgba(0, 62, 124, 0.8)),
     url("../../../../../public/assets/images/escuela-sagarna2.jpg");
@@ -48,9 +49,9 @@
     max-width: 30rem;
 
     mat-card {
-      width: 100%;
+      width: 90%;
+      height: fit-content;
       padding: 1rem;
-      height: 95%;
 
       form {
         @extend .flex-col_spc-btw;
@@ -66,7 +67,7 @@
         @extend .flex-col_spc-ctr;
 
         text-align: center;
-        margin-top: 10px;
+        margin: 10px 0 20px 0;
       }
 
       div {

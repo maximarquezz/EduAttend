@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -7,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DegreesService } from '../../../core/services/data/degrees.service';
 import { EnrollmentsService } from '../../../core/services/data/enrollments.service';
@@ -16,12 +18,21 @@ import { Degree } from '../../../core/models/interfaces/domain/degree.interface'
 import { Comission } from '../../../core/models/interfaces/domain/comission.interface';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
+
+interface DegreeGroup {
+  degreeId: number;
+  degreeName: string;
+  enrollments: any[];
+}
 
 @Component({
   selector: 'app-student-subjects',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatCardModule,
     MatListModule,
     MatExpansionModule,
@@ -29,14 +40,15 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatInputModule,
     CardComponent,
     MatTabsModule,
+    MatChipsModule,
   ],
   templateUrl: './student-subjects.component.html',
   styleUrl: './student-subjects.component.scss',
 })
 export class StudentSubjectsComponent implements OnInit {
-  // == SERVICES ==
   private readonly degreesService = inject(DegreesService);
   private readonly enrollmentsService = inject(EnrollmentsService);
   private readonly comissionsService = inject(ComissionsService);
@@ -44,20 +56,57 @@ export class StudentSubjectsComponent implements OnInit {
     MidComissionSubjectService
   );
   private readonly snackBar = inject(MatSnackBar);
+  readonly routerLinks = inject(RouterLinksService);
 
-  // == STATE ==
   degrees: Degree[] = [];
   comissions: Comission[] = [];
   availableSubjects: any[] = [];
   enrolledSubjects: any[] = [];
+  groupedEnrollments: DegreeGroup[] = [];
   selectedDegree: number | null = null;
   selectedComission: number | null = null;
+  searchTerm: string = '';
 
   ngOnInit(): void {
     this.loadInitialData();
   }
 
-  // == PUBLIC METHODS ==
+  get filteredGroupedEnrollments(): DegreeGroup[] {
+    if (!this.searchTerm.trim()) {
+      return this.groupedEnrollments;
+    }
+
+    const searchLower = this.searchTerm.toLowerCase().trim();
+
+    return this.groupedEnrollments
+      .map((group) => ({
+        ...group,
+        enrollments: group.enrollments.filter((enrollment) => {
+          const subjectName =
+            enrollment.mid_comission_subject?.subject?.subject_name?.toLowerCase() ||
+            '';
+          const comissionName =
+            enrollment.mid_comission_subject?.comission?.comission_name?.toLowerCase() ||
+            '';
+          const status = enrollment.enrollment_status?.toLowerCase() || '';
+
+          return (
+            subjectName.includes(searchLower) ||
+            comissionName.includes(searchLower) ||
+            status.includes(searchLower)
+          );
+        }),
+      }))
+      .filter((group) => group.enrollments.length > 0);
+  }
+
+  get totalEnrollments(): number {
+    return this.filteredGroupedEnrollments.reduce(
+      (total, group) => total + group.enrollments.length,
+      0
+    );
+  }
+
   onDegreeChange(degreeId: number): void {
     this.resetDegreeSelection();
     this.selectedDegree = degreeId;
@@ -81,7 +130,7 @@ export class StudentSubjectsComponent implements OnInit {
   isEnrolled(midComissionSubjectId: number): boolean {
     return this.enrolledSubjects.some(
       (enrollment) =>
-        enrollment.mid_comissions_subjects_id === midComissionSubjectId
+        enrollment.mid_comission_subject_id === midComissionSubjectId
     );
   }
 
@@ -100,7 +149,10 @@ export class StudentSubjectsComponent implements OnInit {
       : '';
   }
 
-  // == PRIVATE METHODS ==
+  clearSearch(): void {
+    this.searchTerm = '';
+  }
+
   private loadInitialData(): void {
     this.loadEnrollments();
     this.loadDegrees();
@@ -138,13 +190,16 @@ export class StudentSubjectsComponent implements OnInit {
     });
   }
 
-  // == EVENT HANDLERS ==
   private handleEnrollmentsLoaded(data: any): void {
     this.enrolledSubjects = this.ensureArray(data);
+    this.groupEnrollmentsByDegree();
+    console.log(this.enrolledSubjects);
+    console.log('Grouped:', this.groupedEnrollments);
   }
 
   private handleEnrollmentsError(): void {
     this.enrolledSubjects = [];
+    this.groupedEnrollments = [];
     this.showError('No se pudieron cargar tus inscripciones actuales.');
   }
 
@@ -177,7 +232,29 @@ export class StudentSubjectsComponent implements OnInit {
     this.showError(`Error al inscribirse: ${message}`);
   }
 
-  // == HELPER METHODS ==
+  private groupEnrollmentsByDegree(): void {
+    const grouped = new Map<number, DegreeGroup>();
+
+    this.enrolledSubjects.forEach((enrollment) => {
+      const degreeId = enrollment.mid_comission_subject?.subject?.degree_id;
+      const degreeName =
+        enrollment.mid_comission_subject?.subject?.degree?.degree_name;
+
+      if (degreeId && degreeName) {
+        if (!grouped.has(degreeId)) {
+          grouped.set(degreeId, {
+            degreeId,
+            degreeName,
+            enrollments: [],
+          });
+        }
+        grouped.get(degreeId)!.enrollments.push(enrollment);
+      }
+    });
+
+    this.groupedEnrollments = Array.from(grouped.values());
+  }
+
   private createEnrollmentData(midComissionSubjectId: number) {
     return {
       mid_comission_subject_id: midComissionSubjectId,

@@ -1,12 +1,13 @@
 <section class="student-subjects">
-  <div class="student-subjects__header">
-    <div class="student-subjects__hero"></div>
-  </div>
-
   <header class="subjects-header">
-    <article>
-      <h1>Gestión de Materias</h1>
-      <p>Administra tus inscripciones y consulta tu estado académico</p>
+    <article class="flex items-center justify-center">
+      <img
+        src="assets/icons/arrow_left.svg"
+        alt="Arrow left"
+        class="invert"
+        (click)="routerLinks.goToStudentDashboard()"
+      />
+      <h1 class="flex-1 text-center">Materias</h1>
     </article>
   </header>
 
@@ -15,28 +16,79 @@
       <mat-tab label="Mis Materias">
         <div class="tab-content">
           @if(enrolledSubjects.length > 0){
-          <div class="enrolled-subjects">
-            @for(enrollment of enrolledSubjects; track $index){
-            <app-card
-              [cardTitle]="
-                enrollment.mid_comission_subject?.subject?.subject_name ||
-                'Sin nombre'
-              "
-              [cardSubtitle]="
-                'Comisión: ' +
-                (enrollment.mid_comission_subject?.comission?.comission_name ||
-                  'N/A')
-              "
-              [cardPercentageLabel]="'Porcentaje de asistencias'"
-              [cardPercentage]="enrollment.attendance_percentage || 0"
-              [cardDateLabel]="'Estado'"
-              [cardDate]="enrollment.enrollment_status || 'ACTIVO'"
-              [enrollmentId]="enrollment.id"
+          <div class="w-full">
+            <mat-form-field
+              appearance="fill"
+              subscriptSizing="dynamic"
+              class="search-field w-full search-section rounded-lg mb-5"
             >
-            </app-card>
+              <mat-label>Buscar materias</mat-label>
+              <input
+                matInput
+                [(ngModel)]="searchTerm"
+                placeholder="Nombre, comisión o estado..."
+                autocomplete="off"
+                subscriptSizing="dynamic"
+                class="rounded-lg"
+              />
+              <mat-icon matPrefix>search</mat-icon>
+              @if(searchTerm) {
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="clearSearch()"
+                aria-label="Limpiar búsqueda"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+              }
+            </mat-form-field>
+
+            @if(searchTerm && totalEnrollments === 0) {
+            <div class="no-results">
+              <mat-icon>search_off</mat-icon>
+              <p>No se encontraron materias con "{{ searchTerm }}"</p>
+            </div>
             }
           </div>
-          } @else {
+
+          @if(filteredGroupedEnrollments.length > 0) {
+          <div class="enrolled-subjects">
+            @for(degreeGroup of filteredGroupedEnrollments; track
+            degreeGroup.degreeId){
+            <div class="degree-group">
+              <h2 class="degree-title">
+                {{ degreeGroup.degreeName }}
+                <mat-chip disabled class="m-1">{{
+                  degreeGroup.enrollments.length
+                }}</mat-chip>
+              </h2>
+              <div class="degree-subjects">
+                @for(enrollment of degreeGroup.enrollments; track
+                enrollment.id){
+                <app-card
+                  [cardTitle]="
+                    enrollment.mid_comission_subject?.subject?.subject_name ||
+                    'Sin nombre'
+                  "
+                  [cardSubtitle]="
+                    'Comisión: ' +
+                    (enrollment.mid_comission_subject?.comission
+                      ?.comission_name || 'N/A')
+                  "
+                  [cardPercentageLabel]="'Porcentaje de asistencias'"
+                  [cardPercentage]="enrollment.attendance_percentage || 0"
+                  [cardDateLabel]="'Estado'"
+                  [cardDate]="enrollment.enrollment_status || 'ACTIVO'"
+                  [enrollmentId]="enrollment.id"
+                >
+                </app-card>
+                }
+              </div>
+            </div>
+            }
+          </div>
+          } } @else {
           <div class="empty-state">
             <mat-icon>school</mat-icon>
             <p>Aún no estás inscrito en ninguna materia.</p>
@@ -92,8 +144,7 @@
                           <h4>{{ midComSubject.subject.subject_name }}</h4>
                           <p>Año: {{ midComSubject.subject.subject_year }}</p>
                           <button
-                            mat-raised-button
-                            color="primary"
+                            matButton="filled"
                             (click)="enrollSubject(midComSubject.id)"
                             [disabled]="isEnrolled(midComSubject.id)"
                           >

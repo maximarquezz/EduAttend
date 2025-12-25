@@ -1,54 +1,152 @@
 @use "../../../shared/styles/layout.scss" as *;
 @use "../../../shared/styles/breakpoints.scss" as *;
-@use "../../../shared/styles/attendance.scss" as *;
 @use "sass:map";
 
 .attendance-history {
-  mat-card {
-    mat-card-header {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--mat-sys-surface-container);
+
+  .attendance-header {
+    padding: 20px 16px 12px 16px;
+
+    article {
+      padding: 3px;
+      h1 {
+        margin: 0;
+        font: var(--mat-sys-headline-small);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 0 16px 24px 16px;
+
+    .history-card {
+      background: var(--mat-sys-surface);
+      border-radius: 16px;
+      border: 1px solid var(--mat-sys-surface-dim);
+      box-shadow: none;
+      overflow: hidden;
+
+      mat-card-content {
+        padding: 0;
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      width: 100%;
-      padding: 12px 0;
-      background: var(--mat-sys-primary);
-      color: var(--mat-sys-on-primary);
-      margin: auto;
+      flex-direction: column;
+      justify-content: space-between;
+
+      table {
+        width: 100%;
+        background: var(--mat-sys-surface);
+        flex: 1;
+
+        th {
+          background: var(--mat-sys-surface-container-low);
+          color: var(--mat-sys-on-surface);
+          font-weight: 600;
+          padding: 16px;
+          border-bottom: 1px solid var(--mat-sys-surface-dim);
+        }
+
+        td {
+          padding: 16px;
+          color: var(--mat-sys-on-surface);
+          border-bottom: 1px solid var(--mat-sys-surface-dim);
+        }
+
+        tr.mat-mdc-row {
+          &:last-child td {
+            border-bottom: none;
+          }
+        }
+
+        .state-cell {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+      }
+
+      ::ng-deep mat-paginator {
+        background: var(--mat-sys-surface-container-low);
+        border-top: 1px solid var(--mat-sys-surface-dim);
+
+        .mat-mdc-paginator-container {
+          padding: 12px 16px;
+        }
+
+        .mat-mdc-paginator-range-label {
+          color: var(--mat-sys-on-surface);
+        }
+
+        .mat-mdc-form-field {
+          margin: 0;
+        }
+      }
     }
   }
 }
 
-.circle-present {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #4caf50; // Verde
-  display: inline-block;
-  margin-right: 8px;
-}
-
-.circle-absent {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #f44336; // Rojo
-  display: inline-block;
-  margin-right: 8px;
-}
-
-.circle-late {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #ff9800; // Naranja
-  display: inline-block;
-  margin-right: 8px;
-}
-
+.circle-present,
+.circle-absent,
+.circle-late,
 .circle-justified {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #2196f3; // Azul
-  display: inline-block;
-  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.circle-present {
+  background-color: #4caf50;
+}
+
+.circle-absent {
+  background-color: #f44336;
+}
+
+.circle-late {
+  background-color: #ff9800;
+}
+
+.circle-justified {
+  background-color: #2196f3;
+}
+
+@media (min-width: map.get($width-breakpoints, md)) {
+  .attendance-history {
+    .attendance-header {
+      padding: 24px 24px 12px 24px;
+
+      article {
+        h1 {
+          font: var(--mat-sys-headline-large);
+        }
+      }
+    }
+
+    &__content {
+      padding: 0 24px 32px 24px;
+    }
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, lg)) {
+  .attendance-history {
+    &__content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
 }

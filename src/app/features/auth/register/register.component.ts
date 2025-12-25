@@ -7,6 +7,9 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 // Material Imports
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 // Services Imports
 import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
 import { StepperService } from '../../../core/services/ui/stepper.service';
@@ -48,9 +52,28 @@ interface City {
     MatStepperModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
+  animations: [
+    trigger('slideStep', [
+      transition(':increment', [
+        style({ transform: 'translateX(50%)', opacity: 0 }),
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateX(0)', opacity: 1 })
+        ),
+      ]),
+      transition(':decrement', [
+        style({ transform: 'translateX(-50%)', opacity: 0 }),
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateX(0)', opacity: 1 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
@@ -60,6 +83,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   provinces: Province[] = [];
   availableCities: City[] = [];
+  filteredProvinces!: Observable<Province[]>;
+  filteredCities!: Observable<City[]>;
+
   hidePassword = true;
   hideConfirmPassword = true;
 
@@ -75,7 +101,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
         surname: ['', [Validators.required, Validators.minLength(2)]],
         dni: ['', [Validators.required, Validators.pattern(/^\d{7,8}$/)]],
         province: ['', Validators.required],
+        provinceInput: [''],
         city: ['', Validators.required],
+        cityInput: [''],
 
         // Step 2: Datos de contacto
         email: ['', [Validators.required, Validators.email]],
@@ -90,6 +118,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
         validators: this.passwordMatchValidator,
       }
     );
+  }
+
+  ngOnInit() {
+    this.loadProvinces();
+    this.setupAutocomplete();
+  }
+
+  setupAutocomplete() {
+    // Filtro de provincias
+    this.filteredProvinces = this.registerForm
+      .get('provinceInput')!
+      .valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filterProvinces(value || ''))
+      );
+
+    // Filtro de ciudades
+    this.filteredCities = this.registerForm.get('cityInput')!.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterCities(value || ''))
+    );
 
     // Escuchar cambios en province para actualizar ciudades
     this.registerForm.get('province')?.valueChanges.subscribe((provinceId) => {
@@ -97,8 +146,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-    this.loadProvinces();
+  private _filterProvinces(value: string): Province[] {
+    const filterValue = value.toLowerCase();
+    return this.provinces.filter((province) =>
+      province.nombre.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private _filterCities(value: string): City[] {
+    const filterValue = value.toLowerCase();
+    return this.availableCities.filter((city) =>
+      city.nombre.toLowerCase().includes(filterValue)
+    );
   }
 
   loadProvinces() {
@@ -115,7 +174,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onProvinceChange(provinceId: string) {
     if (provinceId) {
-      this.registerForm.patchValue({ city: '' });
+      this.registerForm.patchValue({ city: '', cityInput: '' });
       this.localitiesService.getCities(provinceId).subscribe({
         next: (response: any) => {
           this.availableCities = response.localidades || [];
@@ -129,6 +188,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
     } else {
       this.availableCities = [];
     }
+  }
+
+  onProvinceSelected(provinceId: string) {
+    this.registerForm.patchValue({ province: provinceId });
+  }
+
+  onCitySelected(cityId: number) {
+    this.registerForm.patchValue({ city: cityId });
+  }
+
+  displayProvince(provinceId: string): string {
+    if (!provinceId) return '';
+    const province = this.provinces.find((p) => p.id === provinceId);
+    return province ? province.nombre : '';
+  }
+
+  displayCity(cityId: number): string {
+    if (!cityId) return '';
+    const city = this.availableCities.find((c) => c.id === cityId);
+    return city ? city.nombre : '';
   }
 
   passwordMatchValidator(form: FormGroup) {
@@ -265,45 +344,31 @@ export class RegisterComponent implements OnInit, OnDestroy {
   handleRegistrationError(error: any) {
     let errorMessage = 'Error al registrar. Intente nuevamente.';
 
-    // Verificar si hay errores específicos de validación del backend
     if (error.error?.errors) {
       const errors = error.error.errors;
 
-      // Buscar error de email duplicado
       if (errors.email) {
         errorMessage =
           'El email ya está registrado. Por favor, utilice otro email.';
-        // Opcional: volver al paso 2 donde está el email
         this.stepper.step = 2;
-        // Marcar el campo email con error
         this.registerForm.get('email')?.setErrors({ serverError: true });
-      }
-      // Buscar error de DNI duplicado
-      else if (errors.dni) {
+      } else if (errors.dni) {
         errorMessage = 'El DNI ya está registrado.';
         this.stepper.step = 1;
         this.registerForm.get('dni')?.setErrors({ serverError: true });
-      }
-      // Buscar error de teléfono duplicado
-      else if (errors.phone) {
+      } else if (errors.phone) {
         errorMessage = 'El teléfono ya está registrado.';
         this.stepper.step = 2;
         this.registerForm.get('phone')?.setErrors({ serverError: true });
-      }
-      // Otros errores
-      else {
+      } else {
         const firstError = Object.values(errors)[0];
         if (Array.isArray(firstError) && firstError.length > 0) {
           errorMessage = firstError[0];
         }
       }
-    }
-    // Si hay un mensaje general de error
-    else if (error.error?.message) {
+    } else if (error.error?.message) {
       errorMessage = error.error.message;
-    }
-    // Errores de red o servidor
-    else if (error.status === 0) {
+    } else if (error.status === 0) {
       errorMessage = 'No se pudo conectar con el servidor';
     } else if (error.status === 500) {
       errorMessage = 'Error del servidor. Intente más tarde.';
@@ -333,12 +398,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   getFormattedData() {
     const formValue = this.registerForm.value;
 
-    // Buscar el nombre de la provincia seleccionada
     const selectedProvince = this.provinces.find(
       (p) => p.id === formValue.province
     );
 
-    // Buscar el nombre de la ciudad seleccionada
     const selectedCity = this.availableCities.find(
       (c) => c.id === formValue.city
     );

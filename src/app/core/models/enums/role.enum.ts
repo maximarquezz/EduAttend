@@ -1,4 +1,4 @@
-import { LoginComponent } from './../../../pages/auth/login/login.component';
+import { LoginComponent } from '../../../features/auth/login/login.component';
 import { SidebarComponent } from './../../../shared/components/sidebar/sidebar.component';
 import { Modal } from './../interfaces/structural/interfaces/modal.interface';
 /**

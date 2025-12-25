@@ -67,7 +67,6 @@ import { TabMenuComponent } from '../components/tab-menu/tab-menu.component';
 
     .main-content {
       grid-area: main;
-      padding: 20px;
     }
 
     app-footer {

@@ -24,7 +24,6 @@ mat-card {
 
     mat-card-title {
       font: var(--mat-sys-title-medium);
-      font-weight: 600;
       color: var(--mat-sys-on-surface);
       margin: 0;
     }
@@ -64,7 +63,6 @@ mat-card {
       margin: 0;
       text-align: right;
       font: var(--mat-sys-title-medium);
-      font-weight: 600;
       color: var(--mat-sys-on-surface);
       min-width: 60px;
     }
