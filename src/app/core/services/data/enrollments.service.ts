@@ -14,11 +14,11 @@ export class EnrollmentsService {
 
   myEnrollments() {
     return this.http.get<Enrollment[]>(
-      `${environment.localApiUrl}/my-enrollments`
+      `${environment.prodApiUrl}/my-enrollments`
     );
   }
 
   postEnroll(enrollment: EnrollmentPost) {
-    return this.http.post(`${environment.localApiUrl}/enroll`, enrollment);
+    return this.http.post(`${environment.prodApiUrl}/enroll`, enrollment);
   }
 }

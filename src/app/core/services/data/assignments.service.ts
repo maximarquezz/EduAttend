@@ -14,15 +14,15 @@ export class AssignmentsService {
 
   myAssignments() {
     return this.http.get<Assignment[]>(
-      `${environment.localApiUrl}/my-assignments`
+      `${environment.prodApiUrl}/my-assignments`
     );
   }
 
   getAssignments() {
-    return this.http.get<Assignment[]>(`${environment.localApiUrl}/assignment`);
+    return this.http.get<Assignment[]>(`${environment.prodApiUrl}/assignment`);
   }
 
   postAssignment(assignment: AssignmentPost) {
-    return this.http.post(`${environment.localApiUrl}/assignment`, assignment);
+    return this.http.post(`${environment.prodApiUrl}/assignment`, assignment);
   }
 }

@@ -10,6 +10,6 @@ export class ComissionsService {
   private http = inject(HttpClient);
 
   getComissions() {
-    return this.http.get<Comission[]>(`${environment.localApiUrl}/comission`);
+    return this.http.get<Comission[]>(`${environment.prodApiUrl}/comission`);
   }
 }

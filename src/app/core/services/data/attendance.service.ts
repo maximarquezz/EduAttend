@@ -11,19 +11,19 @@ export class AttendanceService {
 
   getAttendancesByEnrollment(enrollmentId: number): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/enrollment/${enrollmentId}`
+      `${environment.prodApiUrl}/attendances/enrollment/${enrollmentId}`
     );
   }
 
   getRecentAttendances(limit: number = 10): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/recent?limit=${limit}`
+      `${environment.prodApiUrl}/attendances/recent?limit=${limit}`
     );
   }
 
   resumePerSubjectByStudentId(id: any): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/resume-per-subject/student/${id}`
+      `${environment.prodApiUrl}/attendances/resume-per-subject/student/${id}`
     );
   }
 }

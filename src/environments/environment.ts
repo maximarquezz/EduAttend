@@ -1,3 +1,3 @@
 export const environment = {
-  localApiUrl: 'http://127.0.0.1:8000/api',
+  prodApiUrl: 'https://eduattend-back-production.up.railway.app/api',
 };

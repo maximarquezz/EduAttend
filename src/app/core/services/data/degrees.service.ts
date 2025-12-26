@@ -10,12 +10,12 @@ export class DegreesService {
   private http = inject(HttpClient);
 
   getDegrees() {
-    return this.http.get<Degree[]>(`${environment.localApiUrl}/degree`);
+    return this.http.get<Degree[]>(`${environment.prodApiUrl}/degree`);
   }
 
   degreeWithSubjects() {
     return this.http.get<Degree[]>(
-      `${environment.localApiUrl}/degree-with-subjects`
+      `${environment.prodApiUrl}/degree-with-subjects`
     );
   }
 }
