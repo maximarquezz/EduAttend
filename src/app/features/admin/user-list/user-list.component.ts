@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatListModule } from "@angular/material/list";
-import { MatCardModule } from "@angular/material/card";
-import { UserComponent } from "../../../shared/components/user/user.component";
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { UserComponent } from '../../../shared/components/user/user.component';
 import { Role } from '../../../core/models/enums/role.enum';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TitleCasePipe } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -20,10 +20,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
-    TitleCasePipe
+    TitleCasePipe,
   ],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
   Role = Role;
@@ -34,9 +34,9 @@ export class UserListComponent {
 
   // registros estáticos (sin cambios)
   tableData = new MatTableDataSource([
-    { nombre: 'Maximiliano Márquez', rol: 'Estudiante', documento: '45168933'},
-    { nombre: 'Juan Pérez', rol: 'Profesor', documento: '45168933'},
-    { nombre: 'Ana Gómez', rol: 'Administrador', documento: '45168933'},
+    { nombre: 'Maximiliano Márquez', rol: 'Estudiante', documento: '45168933' },
+    { nombre: 'Juan Pérez', rol: 'Profesor', documento: '45168933' },
+    { nombre: 'Ana Gómez', rol: 'Administrador', documento: '45168933' },
   ]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

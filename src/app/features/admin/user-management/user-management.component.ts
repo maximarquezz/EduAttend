@@ -7,7 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Role } from '../../../core/models/enums/role.enum';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { UserRequestComponent } from '../../../shared/components/user-request/user-request.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { UsersService } from '../../../core/services/data/users.service';

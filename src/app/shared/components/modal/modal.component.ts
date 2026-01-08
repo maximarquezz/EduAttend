@@ -1,4 +1,4 @@
-import { environment } from './../../../../environments/environment.development';
+import { environment } from './../../../../environments/environment';
 import { Component, inject, Inject, ViewChild, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
