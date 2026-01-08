@@ -13,12 +13,10 @@ export class EnrollmentsService {
   private http = inject(HttpClient);
 
   myEnrollments() {
-    return this.http.get<Enrollment[]>(
-      `${environment.localApiUrl}/my-enrollments`
-    );
+    return this.http.get<Enrollment[]>(`${environment.apiUrl}/my-enrollments`);
   }
 
   postEnroll(enrollment: EnrollmentPost) {
-    return this.http.post(`${environment.localApiUrl}/enroll`, enrollment);
+    return this.http.post(`${environment.apiUrl}/enroll`, enrollment);
   }
 }

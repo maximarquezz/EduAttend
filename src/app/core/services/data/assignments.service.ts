@@ -13,16 +13,14 @@ export class AssignmentsService {
   private http = inject(HttpClient);
 
   myAssignments() {
-    return this.http.get<Assignment[]>(
-      `${environment.localApiUrl}/my-assignments`
-    );
+    return this.http.get<Assignment[]>(`${environment.apiUrl}/my-assignments`);
   }
 
   getAssignments() {
-    return this.http.get<Assignment[]>(`${environment.localApiUrl}/assignment`);
+    return this.http.get<Assignment[]>(`${environment.apiUrl}/assignment`);
   }
 
   postAssignment(assignment: AssignmentPost) {
-    return this.http.post(`${environment.localApiUrl}/assignment`, assignment);
+    return this.http.post(`${environment.apiUrl}/assignment`, assignment);
   }
 }

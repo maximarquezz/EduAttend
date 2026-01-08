@@ -11,7 +11,7 @@ export class MidComissionSubjectService {
 
   getComissionAndSubject() {
     return this.http.get<MidComissionSubject[]>(
-      `${environment.localApiUrl}/comission-subject`
+      `${environment.apiUrl}/comission-subject`
     );
   }
 }

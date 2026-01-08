@@ -14,7 +14,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${environment.localApiUrl}/login`, {
+      .post<any>(`${environment.apiUrl}/login`, {
         email,
         password,
       })
@@ -28,13 +28,13 @@ export class AuthService {
 
   // Nuevos métodos para recuperación de contraseña
   forgotPassword(email: string): Observable<any> {
-    return this.http.post(`${environment.localApiUrl}/forgot-password`, {
+    return this.http.post(`${environment.apiUrl}/forgot-password`, {
       email,
     });
   }
 
   verifyCode(email: string, code: string): Observable<any> {
-    return this.http.post(`${environment.localApiUrl}/verify-code`, {
+    return this.http.post(`${environment.apiUrl}/verify-code`, {
       email,
       code,
     });
@@ -46,7 +46,7 @@ export class AuthService {
     password: string,
     password_confirmation: string
   ): Observable<any> {
-    return this.http.post(`${environment.localApiUrl}/reset-password`, {
+    return this.http.post(`${environment.apiUrl}/reset-password`, {
       email,
       code,
       password,
@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post(`${environment.localApiUrl}/logout`, {}).pipe(
+    return this.http.post(`${environment.apiUrl}/logout`, {}).pipe(
       tap(() => {
         sessionStorage.removeItem('userData');
         sessionStorage.removeItem('username');

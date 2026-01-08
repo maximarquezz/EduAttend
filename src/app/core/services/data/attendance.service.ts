@@ -11,36 +11,36 @@ export class AttendanceService {
 
   getAttendancesByEnrollment(enrollmentId: number): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/enrollment/${enrollmentId}`
+      `${environment.apiUrl}/attendances/enrollment/${enrollmentId}`
     );
   }
 
   getRecentAttendances(limit: number = 10): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/recent?limit=${limit}`
+      `${environment.apiUrl}/attendances/recent?limit=${limit}`
     );
   }
 
   resumePerSubjectByStudentId(id: any): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/resume-per-subject/student/${id}`
+      `${environment.apiUrl}/attendances/resume-per-subject/student/${id}`
     );
   }
 
   getMyAttendances(): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/my-attendances`
+      `${environment.apiUrl}/attendances/my-attendances`
     );
   }
 
   getTeacherAttendances(): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/attendances/teacher/my-courses`
+      `${environment.apiUrl}/attendances/teacher/my-courses`
     );
   }
 
   storeBulkAttendances(attendances: any[]): Observable<any> {
-    return this.http.post<any>(`${environment.localApiUrl}/attendances/bulk`, {
+    return this.http.post<any>(`${environment.apiUrl}/attendances/bulk`, {
       attendances,
     });
   }
@@ -49,17 +49,17 @@ export class AttendanceService {
     midComissionSubjectId: number
   ): Observable<any[]> {
     return this.http.get<any[]>(
-      `${environment.localApiUrl}/my-comission-subject/${midComissionSubjectId}/enrollments`
+      `${environment.apiUrl}/my-comission-subject/${midComissionSubjectId}/enrollments`
     );
   }
 
   deleteAttendance(id: number) {
-    return this.http.delete(`${environment.localApiUrl}/attendances/${id}`);
+    return this.http.delete(`${environment.apiUrl}/attendances/${id}`);
   }
 
   updateAttendance(attendanceId: number, data: any): Observable<any> {
     return this.http.put(
-      `${environment.localApiUrl}/attendances/${attendanceId}`,
+      `${environment.apiUrl}/attendances/${attendanceId}`,
       data
     );
   }
@@ -68,7 +68,7 @@ export class AttendanceService {
 
   getSubjectsAtRisk(studentId: number): Observable<any> {
     return this.http.get<any>(
-      `${environment.localApiUrl}/attendances/subjects-at-risk/${studentId}`
+      `${environment.apiUrl}/attendances/subjects-at-risk/${studentId}`
     );
   }
 }

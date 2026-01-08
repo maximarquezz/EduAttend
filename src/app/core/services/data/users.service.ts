@@ -10,14 +10,14 @@ export class UsersService {
   private http = inject(HttpClient);
 
   pendingUsers(): Observable<Object> {
-    return this.http.get(`${environment.localApiUrl}/pending-users`);
+    return this.http.get(`${environment.apiUrl}/pending-users`);
   }
 
   putUser(id: number, partialUser: any) {
-    return this.http.put(`${environment.localApiUrl}/users/${id}`, partialUser);
+    return this.http.put(`${environment.apiUrl}/users/${id}`, partialUser);
   }
 
   getUserByDni(dni: string): Observable<any> {
-    return this.http.get(`${environment.localApiUrl}/user-by-dni/${dni}`);
+    return this.http.get(`${environment.apiUrl}/user-by-dni/${dni}`);
   }
 }
