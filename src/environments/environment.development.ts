@@ -17,5 +17,4 @@ import { Role } from '../app/core/models/enums/role.enum';
 export const environment = {
   userRole: Role.Teacher,
   apiUrl: 'http://127.0.0.1:8000/api',
-  apiUrl: 'https://eduattend-back-production.up.railway.app/api',
 };
