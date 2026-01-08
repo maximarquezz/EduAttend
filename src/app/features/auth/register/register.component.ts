@@ -381,7 +381,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, 'Cerrar', {
       duration: 5000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: ['error-snackbar'],
     });
   }
@@ -390,7 +390,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: ['success-snackbar'],
     });
   }

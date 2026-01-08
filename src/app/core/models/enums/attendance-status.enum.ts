@@ -12,7 +12,8 @@
  * ```
  */
 export enum AttendanceStatus {
-  PRESENT = 'PRESENTE',
+  PRESENTE = 'PRESENTE',
   AUSENTE = 'AUSENTE',
   JUSTIFICADO = 'JUSTIFICADO',
+  TARDE = 'TARDE',
 }

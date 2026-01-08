@@ -15,10 +15,13 @@ import { AssignmentsService } from '../../../core/services/data/assignments.serv
 import { ComissionsService } from '../../../core/services/data/comissions.service';
 import { MidComissionSubjectService } from '../../../core/services/data/mid-comission-subject.service';
 import { AssignType } from '../../../core/models/enums/assign-type.enum';
+import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-teacher-subjects',
-  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -29,6 +32,9 @@ import { AssignType } from '../../../core/models/enums/assign-type.enum';
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatTabsModule,
+    MatChipsModule,
+    EmptyStateComponent,
   ],
   templateUrl: './teacher-subjects.component.html',
   styleUrl: './teacher-subjects.component.scss',
@@ -39,6 +45,7 @@ export class TeacherSubjectsComponent implements OnInit {
   private comissionsService = inject(ComissionsService);
   private midComissionSubjectService = inject(MidComissionSubjectService);
   private snackBar = inject(MatSnackBar);
+  routerLinks = inject(RouterLinksService);
 
   degrees: any[] = [];
   comissions: any[] = [];
@@ -46,10 +53,11 @@ export class TeacherSubjectsComponent implements OnInit {
   selectedDegree: number | null = null;
   selectedComission: number | null = null;
   assignedSubjects: any[] = [];
+  groupedAssignments: any[] = [];
 
   ngOnInit(): void {
-    this.loadAssignments();
     this.loadDegrees();
+    this.loadAssignments();
   }
 
   private openSnackBar(
@@ -60,7 +68,7 @@ export class TeacherSubjectsComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 5000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: isError ? ['error-snackbar'] : ['success-snackbar'],
     });
   }
@@ -68,14 +76,11 @@ export class TeacherSubjectsComponent implements OnInit {
   loadAssignments(): void {
     this.assignmentsService.myAssignments().subscribe({
       next: (data) => {
-        console.log('DATA CRUDA:', data); // <-- ACÁ
-
         const allAssignments = Array.isArray(data) ? data : [];
         this.assignedSubjects = allAssignments.filter(
           (assignment: any) => assignment.assign_type === 'DICTA'
         );
-
-        console.log('ASSIGNED SUBJECTS:', this.assignedSubjects); // <-- Y ACÁ
+        this.groupAssignmentsByDegree();
       },
       error: (error) => {
         this.openSnackBar(
@@ -84,8 +89,33 @@ export class TeacherSubjectsComponent implements OnInit {
           true
         );
         this.assignedSubjects = [];
+        this.groupedAssignments = [];
       },
     });
+  }
+
+  groupAssignmentsByDegree(): void {
+    const grouped = new Map();
+
+    this.assignedSubjects.forEach((assignment) => {
+      const degreeId = assignment.mid_comission_subject?.subject?.degree_id;
+
+      if (degreeId) {
+        const degree = this.degrees.find((d) => d.id === degreeId);
+        const degreeName = degree?.degree_name || 'Sin carrera';
+
+        if (!grouped.has(degreeId)) {
+          grouped.set(degreeId, {
+            degreeId,
+            degreeName,
+            assignments: [],
+          });
+        }
+        grouped.get(degreeId).assignments.push(assignment);
+      }
+    });
+
+    this.groupedAssignments = Array.from(grouped.values());
   }
 
   loadDegrees(): void {

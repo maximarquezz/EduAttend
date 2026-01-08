@@ -1,13 +1,3 @@
-@if(status === Status.Justified){
-  <section class="justifiedBg" (click)="toggleStatus()">
-    <p>{{ name }}</p>
-  </section>
-} @else if (status === Status.Present){
-  <section class="presentBg" (click)="toggleStatus()">
-    <p>{{ name }}</p>
-  </section>
-} @else {
-  <section class="absentBg" (click)="toggleStatus()">
-    <p>{{ name }}</p>
-  </section>
-}
+<section [class]="statusClass" (click)="toggleStatus()">
+  <p>{{ statusName }}</p>
+</section>

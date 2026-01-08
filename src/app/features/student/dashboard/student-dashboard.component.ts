@@ -16,18 +16,18 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CommonModule } from '@angular/common';
 import * as echarts from 'echarts';
-import { CardComponent } from '../../../shared/components/card/card.component';
 import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
 import { AuthService } from '../../../core/services/data/auth.service';
-import { AttendanceService } from '../../../core/services/data/attendance.service';
 import { mapAttendanceToBarOption } from '../../../core/mappers/attendance-to-chart.mapper';
 import { StudentDashboardFacade } from './student-dashboard.facade';
-import { Attendance } from '../../../core/models/interfaces/domain/attendance.interface';
+import { Attendance } from '../../../core/models/interfaces/attendance.interface';
 
 @Component({
   selector: 'app-student-dashboard',
   imports: [
+    CommonModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -52,6 +52,8 @@ export class StudentDashboardComponent
 
   username: string = 'Usuario';
   totalAttendancePercentage: number = 0;
+  subjectsAtRisk: any[] = [];
+  riskSummary: any = null;
   private chart: any;
 
   ngOnInit() {
@@ -66,10 +68,22 @@ export class StudentDashboardComponent
       },
       error: (err) => console.error(err),
     });
+
+    this.loadSubjectsAtRisk();
   }
 
   ngOnDestroy() {
     this.killChart();
+  }
+
+  private loadSubjectsAtRisk() {
+    this.facade.getSubjectsAtRisk().subscribe({
+      next: (data: any) => {
+        this.riskSummary = data.summary;
+        this.subjectsAtRisk = data.subjects;
+      },
+      error: (err) => console.error(err),
+    });
   }
 
   private initChart(data: Attendance[]) {
@@ -93,7 +107,14 @@ export class StudentDashboardComponent
       (sum, subject) => sum + subject.presentes + subject.tarde,
       0
     );
-
     return totalClasses > 0 ? Math.round((totalValid / totalClasses) * 100) : 0;
+  }
+
+  getStatusColor(status: string): string {
+    return status === 'CRITICO' ? 'error' : 'warn';
+  }
+
+  getStatusIcon(status: string): string {
+    return status === 'CRITICO' ? 'error' : 'warning';
   }
 }

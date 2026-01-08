@@ -3,64 +3,78 @@
     <mat-card-title>{{ data.cardTitle }}</mat-card-title>
     <mat-card-subtitle>{{ data.cardSubtitle }}</mat-card-subtitle>
   </mat-card-header>
+
   <mat-card-content>
-    @if(tableData.data.length > 0) {
+    @if (!showAttendanceForm && !isEditingAttendance) {
+    @if(modalData.data.length > 0) {
     <div class="table-container">
       <table
         mat-table
         matSort
-        [dataSource]="tableData"
+        [dataSource]="modalData"
         class="mat-elevation-z8"
       >
-        @for (col of tableCols; track col) {
+        @for (col of modalCols; track col) {
         <ng-container [matColumnDef]="col">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ getColumnName(col) }}
           </th>
           <td mat-cell *matCellDef="let element">
-            <!-- Columna FECHA -->
             @if (col === 'attendance_date') {
             {{ formatDate(element[col]) }}
-            }
-            <!-- Columna ESTADO -->
-            @else if (col === 'attendance_status') { @switch (element[col]) {
-            @case ('PRESENTE') {
-            <div class="circle-present"></div>
-            <span>Presente</span>
-            } @case ('AUSENTE') {
-            <div class="circle-absent"></div>
-            <span>Ausente</span>
-            } @case ('TARDE') {
-            <div class="circle-late"></div>
-            <span>Tarde</span>
-            } @case ('JUSTIFICADO') {
-            <div class="circle-justified"></div>
-            <span>Justificado</span>
-            } @default {
-            <span>{{ element[col] }}</span>
-            } } }
-            <!-- Columna NOTAS -->
-            @else if (col === 'attendance_notes') {
-            {{ element[col] || "-" }}
-            }
-            <!-- Columna ACCIONES -->
-            @else if (col === 'acciones') {
-            <button mat-icon-button color="primary">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn">
-              <mat-icon>delete</mat-icon>
-            </button>
-            }
-            <!-- Cualquier otra columna -->
-            @else {
+            } @else if (col === 'students' && role === Role.Teacher) {
+            <div class="students-cell">
+              @for (student of element.students; track student.student_id) {
+              <div class="student-row">
+                {{ student.student_name }}
+              </div>
+              }
+            </div>
+            } @else if (col === 'attendance_status' && role === Role.Teacher) {
+            <div class="students-status">
+              @for (student of element.students; track student.student_id) {
+              <div class="student-status-row">
+                <app-attendance-status
+                  [status]="student.attendance_status"
+                ></app-attendance-status>
+              </div>
+              }
+            </div>
+            } @else if (col === 'attendance_status' && role === Role.Student) {
+            <app-attendance-status
+              [status]="element.attendance_status"
+            ></app-attendance-status>
+            } @else if (col === 'attendance_notes') {
+            {{ element[col] || "Sin notas." }}
+            } @else if (col === 'acciones' && role === Role.Teacher) {
+            <div class="students-actions">
+              @for (student of element.students; track student.student_id) {
+              <div class="student-action-row">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="editAttendance(student, element.attendance_date)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteAttendance(student, element)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              }
+            </div>
+            } @else {
             {{ element[col] }}
             }
           </td>
         </ng-container>
         }
-        <tr mat-header-row *matHeaderRowDef="tableCols"></tr>
-        <tr mat-row *matRowDef="let row; columns: tableCols"></tr>
+        <tr mat-header-row *matHeaderRowDef="modalCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: modalCols"></tr>
       </table>
     </div>
     <mat-paginator
@@ -73,9 +87,119 @@
       <mat-icon>info</mat-icon>
       <p>No hay asistencias registradas para esta materia.</p>
     </div>
+    } } @if (role === Role.Teacher && showAttendanceForm) { @if
+    (isLoadingStudents) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando estudiantes...</p>
+    </div>
+    } @else if (students.length > 0 && attendanceForm) {
+    <div class="attendance-form">
+      <h3>Registrar Asistencia - {{ data.cardTitle }}</h3>
+      <form [formGroup]="attendanceForm">
+        <mat-form-field appearance="outline" class="date-field">
+          <mat-label>Fecha de asistencia</mat-label>
+          <input matInput type="date" formControlName="attendance_date" />
+        </mat-form-field>
+
+        @for (student of students; track student.enrollment_id) {
+        <div class="student-attendance-row">
+          <div class="student-info">
+            <span class="student-name">{{ student.student_name }}</span>
+            <span class="student-dni">DNI: {{ student.dni }}</span>
+          </div>
+
+          <app-status
+            [initialStatus]="student.attendance_status"
+            (statusChange)="updateStudentStatus(student.enrollment_id, $event)"
+          ></app-status>
+
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Notas</mat-label>
+            <input
+              matInput
+              [formControlName]="'notes_' + student.enrollment_id"
+              placeholder="Observaciones..."
+            />
+          </mat-form-field>
+        </div>
+        }
+      </form>
+    </div>
+    } } @if (role === Role.Teacher && isEditingAttendance && editingAttendance)
+    {
+    <div class="edit-attendance-form">
+      <h3>Editar Asistencia</h3>
+      <div class="edit-student-info">
+        <p><strong>Estudiante:</strong> {{ editingAttendance.student_name }}</p>
+        <p>
+          <strong>Fecha:</strong>
+          {{ formatDate(editingAttendance.attendance_date) }}
+        </p>
+      </div>
+
+      <form [formGroup]="editAttendanceForm">
+        <div class="edit-form-row">
+          <app-status
+            [initialStatus]="editingAttendance.attendance_status"
+            (statusChange)="updateEditStatus($event)"
+          ></app-status>
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+            class="notes-field"
+          >
+            <mat-label>Notas</mat-label>
+            <input
+              matInput
+              formControlName="attendance_notes"
+              placeholder="Observaciones..."
+            />
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
     }
   </mat-card-content>
+
   <mat-card-actions>
-    <button matButton="filled" (click)="close()">Cerrar</button>
+    @if (!showAttendanceForm && !isEditingAttendance) { @for(modalAction of
+    modalActions; track $index) { @if(modalAction.accent === 'tonal') {
+    <button mat-button (click)="handleAction(modalAction.action)" class="m-1">
+      {{ modalAction.label }}
+    </button>
+    } @else {
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="handleAction(modalAction.action)"
+      class="m-1"
+    >
+      {{ modalAction.label }}
+    </button>
+    } } } @else if (showAttendanceForm) {
+    <button mat-button (click)="toggleAttendanceForm()" class="m-1">
+      Cancelar
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="submitAttendance()"
+      class="m-1"
+    >
+      Guardar asistencias
+    </button>
+    } @else if (isEditingAttendance) {
+    <button mat-button (click)="cancelEdit()" class="m-1">Cancelar</button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="saveEditedAttendance()"
+      class="m-1"
+    >
+      Guardar cambios
+    </button>
+    }
   </mat-card-actions>
 </mat-card>

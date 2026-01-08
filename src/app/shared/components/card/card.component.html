@@ -5,15 +5,12 @@
   </mat-card-header>
 
   <mat-card-content>
-    @if(role !== Role.Admin){
-    <mat-progress-bar value="{{ cardPercentage }}"></mat-progress-bar>
+    @if (showAttendance) {
+    <mat-progress-bar [value]="cardPercentage"></mat-progress-bar>
     <p>{{ cardPercentage }}%</p>
-    @if(role === Role.Student){ @if(cardPercentage > 70){
-    <mat-icon fontIcon="check_circle"></mat-icon>
-    } @else if (cardPercentage > 60 && cardPercentage < 70) {
-    <mat-icon fontIcon="schedule"></mat-icon>
-    } @else if (cardPercentage < 60) {
-    <mat-icon fontIcon="block"></mat-icon>
-    } } }
+
+    @if (attendanceIcon) {
+    <mat-icon [fontIcon]="attendanceIcon"></mat-icon>
+    } }
   </mat-card-content>
 </mat-card>

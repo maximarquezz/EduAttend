@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment.development';
 import {
   Assignment,
   AssignmentPost,
-} from '../../models/interfaces/domain/assignment.interface';
+} from '../../models/interfaces/assignment.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,15 +14,15 @@ export class AssignmentsService {
 
   myAssignments() {
     return this.http.get<Assignment[]>(
-      `${environment.prodApiUrl}/my-assignments`
+      `${environment.localApiUrl}/my-assignments`
     );
   }
 
   getAssignments() {
-    return this.http.get<Assignment[]>(`${environment.prodApiUrl}/assignment`);
+    return this.http.get<Assignment[]>(`${environment.localApiUrl}/assignment`);
   }
 
   postAssignment(assignment: AssignmentPost) {
-    return this.http.post(`${environment.prodApiUrl}/assignment`, assignment);
+    return this.http.post(`${environment.localApiUrl}/assignment`, assignment);
   }
 }

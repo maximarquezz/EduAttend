@@ -14,12 +14,13 @@ import { DegreesService } from '../../../core/services/data/degrees.service';
 import { EnrollmentsService } from '../../../core/services/data/enrollments.service';
 import { ComissionsService } from '../../../core/services/data/comissions.service';
 import { MidComissionSubjectService } from '../../../core/services/data/mid-comission-subject.service';
-import { Degree } from '../../../core/models/interfaces/domain/degree.interface';
-import { Comission } from '../../../core/models/interfaces/domain/comission.interface';
+import { Degree } from '../../../core/models/interfaces/degree.interface';
+import { Comission } from '../../../core/models/interfaces/comission.interface';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
+import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
 
 interface DegreeGroup {
   degreeId: number;
@@ -44,6 +45,7 @@ interface DegreeGroup {
     CardComponent,
     MatTabsModule,
     MatChipsModule,
+    EmptyStateComponent,
   ],
   templateUrl: './student-subjects.component.html',
   styleUrl: './student-subjects.component.scss',
@@ -293,7 +295,7 @@ export class StudentSubjectsComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 5000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: isError ? ['error-snackbar'] : ['success-snackbar'],
     });
   }

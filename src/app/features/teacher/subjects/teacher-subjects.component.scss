@@ -3,119 +3,446 @@
 @use "sass:map";
 
 .teacher-subjects {
-  @extend .flex-col_spc-evly;
-  gap: 20px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--mat-sys-surface-container);
 
-  mat-card {
-    width: 100%;
-    flex: 5;
-    gap: 10px;
-    background: var(--mat-sys-surface);
+  .subjects-header {
+    padding: 20px 16px 12px 16px;
 
-    mat-card-header {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      padding: 12px 0;
-      background: var(--mat-sys-primary);
-      color: var(--mat-sys-on-primary);
-      margin: auto;
-    }
-
-    mat-card-content {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: 1fr;
-
-      .assignment-form {
-        display: flex;
-        flex-direction: column;
-
-        .subjects-list mat-list {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          box-sizing: border-box;
-
-          mat-list-item {
-            display: flex;
-          }
-        }
-      }
-
-      .assigned-subjects {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .empty-state {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 20px;
-        text-align: center;
-        color: var(--mat-sys-on-surface-variant);
-
-        mat-icon {
-          font-size: 64px;
-          width: 64px;
-          height: 64px;
-          margin-bottom: 16px;
-          opacity: 0.6;
-        }
-
-        p {
-          margin: 8px 0;
-        }
+    article {
+      padding: 3px;
+      h1 {
+        margin: 0;
+        font: var(--mat-sys-headline-small);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
       }
     }
   }
 
-  aside {
-    @extend .flex-col_spc-evly;
-    gap: 20px;
-    flex: 2;
-    position: relative;
+  &__content {
+    flex: 1;
+    padding: 20px 16px 24px 16px;
 
-    mat-card {
-      box-sizing: border-box;
-      width: 100%;
+    .page-header {
       background: var(--mat-sys-surface);
+      padding: 20px 24px 16px 24px;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-bottom: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
 
-      mat-form-field {
-        margin-top: 5px;
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        padding: 8px;
+        margin: -8px;
+        border-radius: 50%;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: var(--mat-sys-surface-container-highest);
+        }
+
+        &:active {
+          background: var(--mat-sys-surface-container);
+        }
+      }
+
+      h1 {
+        margin: 0;
+        font: var(--mat-sys-headline-small);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        flex: 1;
+        text-align: left;
+      }
+
+      h5 {
+        color: var(--mat-sys-outline);
+        margin: 0;
       }
     }
 
-    mat-list {
-      background-color: var(--mat-sys-on-primary);
+    mat-tab-group {
+      background: var(--mat-sys-surface);
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-top: none;
 
-      mat-list-item {
-        height: auto !important;
-        min-height: 56px;
-
-        [matListItemTitle],
-        [matListItemLine] {
-          white-space: normal !important;
-          word-wrap: break-word;
-          overflow-wrap: break-word;
-          max-width: 100%;
+      ::ng-deep {
+        .mat-mdc-tab-header {
+          border-bottom: 1px solid var(--mat-sys-surface-dim);
         }
 
-        .mdc-list-item__content {
-          height: auto !important;
+        .mat-mdc-tab-labels {
+          background: var(--mat-sys-surface-container-low);
+          padding: 0 8px;
+        }
+
+        .mat-mdc-tab {
+          min-width: 140px;
+          height: 56px;
+          font-weight: 500;
+          letter-spacing: 0.1px;
+        }
+
+        .mat-mdc-tab-body-wrapper {
+          background: var(--mat-sys-surface-low);
+        }
+      }
+    }
+
+    .tab-content {
+      padding: 24px;
+      min-height: 500px;
+    }
+
+    // Estilos para materias agrupadas por carrera
+    .assigned-subjects {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .degree-group {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .degree-title {
+        font: var(--mat-sys-title-medium);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        margin: 0;
+        padding-bottom: 12px;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 80px;
+          height: 2px;
+          background: var(--mat-sys-primary);
+          opacity: 0.4;
+        }
+      }
+
+      .degree-subjects {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding-left: 4px;
+      }
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+      text-align: center;
+      background: var(--mat-sys-surface-container-low);
+      border-radius: 16px;
+      border: 2px dashed var(--mat-sys-surface-dim);
+
+      mat-icon {
+        font-size: 72px;
+        width: 72px;
+        height: 72px;
+        margin-bottom: 24px;
+        color: var(--mat-sys-primary);
+        opacity: 0.5;
+      }
+
+      p {
+        margin: 8px 0;
+        color: var(--mat-sys-on-surface-variant);
+
+        &:first-of-type {
+          font: var(--mat-sys-title-large);
+          font-weight: 500;
+          color: var(--mat-sys-on-surface);
+          margin-bottom: 12px;
+        }
+
+        &:last-of-type {
+          font: var(--mat-sys-body-medium);
+        }
+      }
+    }
+
+    .assignment-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .assignment-main-card {
+        border-radius: 16px;
+        border: 1px solid var(--mat-sys-surface-dim);
+        box-shadow: none;
+        overflow: hidden;
+
+        mat-card-content {
+          padding: 24px;
+        }
+      }
+
+      .assignment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        mat-form-field {
+          width: 100%;
+
+          ::ng-deep {
+            .mat-mdc-text-field-wrapper {
+              background: var(--mat-sys-surface);
+              border-radius: 12px;
+            }
+
+            .mat-mdc-form-field-focus-overlay {
+              background-color: transparent;
+            }
+          }
+        }
+
+        .subjects-list {
+          margin-top: 8px;
+
+          h3 {
+            margin: 0 0 20px 0;
+            font: var(--mat-sys-title-large);
+            font-weight: 600;
+            color: var(--mat-sys-on-surface);
+          }
+
+          mat-list {
+            background: transparent;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            mat-list-item {
+              height: auto !important;
+              min-height: 80px;
+              padding: 20px;
+              border-radius: 12px;
+              background: var(--mat-sys-surface);
+              border: 1px solid var(--mat-sys-surface-dim);
+              transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+              &:hover {
+                border-color: var(--mat-sys-primary);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+              }
+
+              [matListItemTitle] {
+                white-space: normal !important;
+                word-wrap: break-word;
+                font: var(--mat-sys-title-medium);
+                font-weight: 600;
+                color: var(--mat-sys-on-surface);
+                margin-bottom: 4px;
+              }
+
+              [matListItemLine] {
+                white-space: normal !important;
+                word-wrap: break-word;
+                font: var(--mat-sys-body-medium);
+                color: var(--mat-sys-outline);
+              }
+
+              button {
+                margin-top: 8px;
+                height: 44px;
+                border-radius: 12px;
+                font-weight: 500;
+                letter-spacing: 0.1px;
+              }
+            }
+          }
+        }
+
+        .no-subjects,
+        .hint {
+          text-align: center;
+          padding: 60px 24px;
+          color: var(--mat-sys-on-surface-variant);
+          font: var(--mat-sys-body-large);
+          background: #fff;
+          border-radius: 16px;
+          border: 1px solid var(--mat-sys-surface-dim);
+        }
+      }
+
+      .assignment-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        mat-card {
+          background: var(--mat-sys-surface-container-high);
+          border-radius: 16px;
+          border: 1px solid var(--mat-sys-surface-dim);
+          box-shadow: none;
+          overflow: hidden;
+
+          mat-card-header {
+            background: var(--mat-sys-primary-container);
+            color: var(--mat-sys-on-primary-container);
+            padding: 20px;
+            margin: 0;
+
+            mat-card-title {
+              font: var(--mat-sys-title-medium);
+              font-weight: 600;
+              margin: 0;
+            }
+          }
+
+          mat-card-content {
+            padding: 16px;
+          }
+
+          mat-list {
+            background: transparent;
+            padding: 0;
+
+            mat-list-item {
+              height: auto !important;
+              min-height: 64px;
+              padding: 16px;
+              border-radius: 12px;
+              margin-bottom: 12px;
+              background: var(--mat-sys-surface);
+              border: 1px solid var(--mat-sys-surface-dim);
+              transition: background 0.2s ease;
+
+              &:hover {
+                background: var(--mat-sys-surface-container);
+              }
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+
+              [matListItemTitle] {
+                white-space: normal !important;
+                word-wrap: break-word;
+                font: var(--mat-sys-label-large);
+                font-weight: 600;
+                color: var(--mat-sys-on-surface);
+                margin-bottom: 4px;
+              }
+
+              [matListItemLine] {
+                white-space: normal !important;
+                word-wrap: break-word;
+                font: var(--mat-sys-body-medium);
+                color: var(--mat-sys-outline);
+              }
+
+              mat-icon[matListItemIcon] {
+                color: var(--mat-sys-primary);
+                margin-right: 12px;
+              }
+            }
+          }
         }
       }
     }
   }
 }
 
+@media (min-width: map.get($width-breakpoints, md)) {
+  .teacher-subjects {
+    .subjects-header {
+      padding: 24px 24px 12px 24px;
+
+      article {
+        h1 {
+          font: var(--mat-sys-headline-large);
+        }
+      }
+    }
+
+    &__content {
+      padding: 32px 24px 32px 24px;
+
+      .tab-content {
+        padding: 32px;
+      }
+
+      // Mejor espaciado en tablets
+      .assigned-subjects {
+        gap: 48px;
+      }
+
+      .degree-group {
+        .degree-title {
+          font: var(--mat-sys-headline-medium);
+        }
+      }
+    }
+  }
+}
+
+/* CHIP COMO BADGE (SIN OUTLINE) */
+:host ::ng-deep .mat-mdc-standard-chip {
+  background-color: var(--mat-sys-primary) !important;
+  border-radius: 999px;
+}
+
+/* TEXTO BLANCO */
+:host ::ng-deep .mat-mdc-chip-action-label {
+  color: white !important;
+  font-weight: bold;
+}
+
+/* ELIMINAR CONTORNO DEFINITIVO (FOCUS OVERLAY) */
+:host ::ng-deep .mat-mdc-chip-focus-overlay {
+  display: none !important;
+}
+
 @media (min-width: map.get($width-breakpoints, lg)) {
   .teacher-subjects {
-    flex-direction: row;
-    align-items: flex-start;
+    &__content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+
+      // Mejor espaciado en desktop
+      .assigned-subjects {
+        gap: 56px;
+      }
+
+      .assignment-section {
+        flex-direction: row;
+        align-items: flex-start;
+
+        .assignment-main-card {
+          flex: 2;
+        }
+
+        .assignment-info {
+          flex: 1;
+          position: sticky;
+          top: 24px;
+        }
+      }
+    }
   }
 }

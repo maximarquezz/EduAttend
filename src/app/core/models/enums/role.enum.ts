@@ -1,6 +1,6 @@
 import { LoginComponent } from '../../../features/auth/login/login.component';
 import { SidebarComponent } from './../../../shared/components/sidebar/sidebar.component';
-import { Modal } from './../interfaces/structural/interfaces/modal.interface';
+import { Modal } from '../../../shared/components/modal/modal.interface';
 /**
  * Enum que define los tipos de roles del usuario.
  *
@@ -18,7 +18,7 @@ import { Modal } from './../interfaces/structural/interfaces/modal.interface';
  * @see {@link LoginComponent} - Componente que utiliza la distinción entre roles.
  */
 export enum Role {
-  Student = 'STUDENT',
-  Teacher = 'TEACHER',
-  Admin = 'ADMIN',
+  Student = 'estudiante',
+  Teacher = 'profesor',
+  Admin = 'administrador',
 }

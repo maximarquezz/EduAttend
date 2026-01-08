@@ -5,10 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { MatIconModule } from '@angular/material/icon';
-import { environment } from '../../../../environments/environment.development';
-import { ModalFactory } from '../../../core/factories/ModalFactory';
+import { ModalFactory } from '../modal/modal.factory';
 import { Role } from '../../../core/models/enums/role.enum';
-import { AttendanceService } from '../../../core/services/data/attendance.service';
+import { AuthService } from '../../../core/services/data/auth.service';
+import { CardFacade } from './card.facade';
 
 @Component({
   selector: 'app-card',
@@ -22,97 +22,50 @@ import { AttendanceService } from '../../../core/services/data/attendance.servic
   styleUrl: './card.component.scss',
 })
 export class CardComponent implements OnInit {
-  dialog = inject(MatDialog);
-  modalFactory = inject(ModalFactory);
-  attendanceService = inject(AttendanceService);
-
-  role = environment.userRole as Role;
-  Role = Role;
-  tableCols: any;
-  tableData: any[] = [];
-  isMinimumAttendance = false;
+  private readonly dialog = inject(MatDialog);
+  private readonly modalFactory = inject(ModalFactory);
+  private readonly authService = inject(AuthService);
+  private readonly facade = inject(CardFacade);
 
   @Input() cardTitle: string = 'Título';
   @Input() cardSubtitle: string = 'Subtítulo';
   @Input() cardPercentageLabel: string = 'Porcentaje de asistencias';
-  @Input() cardPercentage: number = 100;
+  @Input() cardPercentage: number = 0;
   @Input() cardDateLabel: string = 'Última asistencia';
   @Input() cardDate: Date | string = '01/01/1999';
-  @Input() enrollmentId!: number; // ¡Nuevo! Recibe el enrollment_id
+  @Input() enrollmentId!: number;
+  @Input() subjectId?: number; // Para estudiantes (subject_id real)
+  @Input() midComissionSubjectId?: number; // Para profesores (mid_comission_subject_id)
 
-  constructor() {
-    const modal = this.modalFactory.createModalData(this.role);
-    const { modalCols } = modal.retrieveData();
-    this.tableCols = modalCols;
+  Role = Role;
+  role!: Role;
+  modalCols: string[] = [];
+  modalActions!: {
+    label: string;
+    action: string;
+    accent: string;
+  }[];
+  modalData: any[] = [];
+
+  get attendanceIcon(): string | null {
+    if (this.role !== Role.Student) return null;
+    if (this.cardPercentage > 70) return 'check_circle';
+    if (this.cardPercentage > 60) return 'schedule';
+    return 'block';
+  }
+
+  get showAttendance(): boolean {
+    return this.role !== Role.Admin;
   }
 
   ngOnInit(): void {
-    // Cargar las asistencias cuando se inicializa el componente
-    if (this.enrollmentId) {
-      this.loadAttendances();
-    }
-  }
-
-  loadAttendances(): void {
-    this.attendanceService
-      .getAttendancesByEnrollment(this.enrollmentId)
-      .subscribe({
-        next: (response) => {
-          console.log('Respuesta del backend:', response);
-          if (Array.isArray(response)) {
-            this.tableData = response;
-            // Calcular el porcentaje después de cargar los datos
-            this.calculateAttendancePercentage();
-          } else {
-            this.tableData = [];
-            this.cardPercentage = 0;
-          }
-          console.log('Asistencias cargadas:', this.tableData);
-        },
-        error: (error) => {
-          console.error('Error al cargar asistencias:', error);
-          this.tableData = [];
-          this.cardPercentage = 0;
-        },
-      });
-  }
-
-  calculateAttendancePercentage(): void {
-    const total = this.tableData.length;
-
-    if (total === 0) {
-      this.cardPercentage = 0;
-      return;
-    }
-
-    // Contar asistencias con sus respectivos valores
-    let validAttendances = 0;
-
-    this.tableData.forEach((attendance) => {
-      switch (attendance.attendance_status) {
-        case 'PRESENTE':
-        case 'JUSTIFICADO':
-          validAttendances += 1; // Vale 1 punto completo
-          break;
-        case 'TARDE':
-          validAttendances += 0.5; // Vale medio punto
-          break;
-        case 'AUSENTE':
-          validAttendances += 0; // No suma nada
-          break;
-      }
-    });
-
-    // Calcular porcentaje y redondear a 2 decimales
-    this.cardPercentage = Math.round((validAttendances / total) * 100);
-
-    console.log(
-      `Porcentaje calculado: ${this.cardPercentage}% (${validAttendances}/${total})`
-    );
+    this.initUserRole();
+    this.createModalData();
+    this.loadAttendances();
   }
 
   openModal() {
-    this.dialog.open(ModalComponent, {
+    const dialogRef = this.dialog.open(ModalComponent, {
       data: {
         cardTitle: this.cardTitle,
         cardSubtitle: this.cardSubtitle,
@@ -120,11 +73,71 @@ export class CardComponent implements OnInit {
         cardPercentage: this.cardPercentage,
         cardDateLabel: this.cardDateLabel,
         cardDate: this.cardDate,
-        tableCols: this.tableCols,
-        tableData: this.tableData, // Ahora contiene las asistencias específicas
+        modalCols: this.modalCols,
+        modalActions: this.modalActions,
+        modalData: this.modalData,
+        role: this.role,
+        midComissionSubjectId: this.midComissionSubjectId,
       },
       width: '600px',
       height: '600px',
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.shouldRefresh) {
+        this.loadAttendances();
+      }
+    });
+  }
+
+  createModalData() {
+    const modal = this.modalFactory.createModalData(this.role);
+    const { modalCols, modalActions } = modal.retrieveData();
+    this.modalCols = modalCols;
+    this.modalActions = modalActions;
+  }
+
+  private loadAttendances(): void {
+    if (this.role === Role.Teacher) {
+      this.facade.getAttendancesForUser().subscribe({
+        next: (data) => {
+          if (this.midComissionSubjectId) {
+            const subjectData = data.find(
+              (item) =>
+                item.mid_comission_subject_id === this.midComissionSubjectId
+            );
+
+            if (subjectData && Array.isArray(subjectData.attendances)) {
+              this.modalData = subjectData.attendances;
+            } else {
+              this.modalData = [];
+            }
+          } else {
+            this.modalData = data
+              .filter((item) => {
+                return Array.isArray(item.attendances);
+              })
+              .flatMap((item) => item.attendances);
+          }
+        },
+        error: (err) => {
+          this.modalData = [];
+        },
+      });
+    } else if (this.role === Role.Student && this.enrollmentId) {
+      this.facade.getAttendancesByEnrollment(this.enrollmentId).subscribe({
+        next: (data) => {
+          this.modalData = data;
+          this.cardPercentage = this.facade.calculateAttendancePercentage(data);
+        },
+        error: (err) => {
+          this.modalData = [];
+        },
+      });
+    }
+  }
+
+  private initUserRole(): void {
+    this.role = this.authService.getUserRole();
   }
 }

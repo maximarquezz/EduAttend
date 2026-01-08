@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../components/footer/footer.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { TabMenuComponent } from '../components/tab-menu/tab-menu.component';
+import { SidebarComponent } from '../components/sidebar/sidebar.component';
 /**
  * Componente que funciona como layout para el estudiante.
  *
@@ -19,60 +20,66 @@ import { TabMenuComponent } from '../components/tab-menu/tab-menu.component';
  */
 @Component({
   selector: 'app-student-layout',
-  imports: [HeaderComponent, RouterOutlet, FooterComponent, TabMenuComponent],
+  imports: [RouterOutlet, SidebarComponent, TabMenuComponent],
   template: `
-    <!--<app-header></app-header>-->
+    <app-sidebar></app-sidebar>
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
-
-    <nav class="fixed bottom-0 left-0 w-full z-50">
+    <nav class="tab-menu-container">
       <app-tab-menu></app-tab-menu>
     </nav>
-    <!--<app-footer></app-footer>-->
   `,
   styles: `
-  @use '../styles/breakpoints.scss' as *;
-  @use 'sass:map';
+    @use '../styles/breakpoints.scss' as *;
+    @use 'sass:map';
 
-  :host {
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-  }
-
-  .main-content {
-    flex: 1;
-    overflow-y: auto;
-    margin-bottom: 64px; /* espacio para el tab menu */
-    background: #d4d4d49d;
-  }
-
-  /* DESKTOP */
-  @media (min-width: map.get($width-breakpoints, md)) {
+    /* MOBILE */
     :host {
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "header"
-        "main"
-        "footer";
-      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
     }
 
-    app-header {
-      grid-area: header;
+    app-sidebar {
+      display: none;
     }
 
     .main-content {
-      grid-area: main;
+      flex: 1;
+      overflow-y: auto;
+      background: var(--mat-sys-background);
+      margin-bottom: 64px;
     }
 
-    app-footer {
-      grid-area: footer;
+    .tab-menu-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
     }
-  }
-`,
+
+    /* DESKTOP */
+    @media (min-width: map.get($width-breakpoints, md)) {
+      :host {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        height: 100vh;
+      }
+
+      app-sidebar {
+        display: block;
+      }
+
+      .main-content {
+        margin-bottom: 0;
+      }
+
+      .tab-menu-container {
+        display: none;
+      }
+    }
+  `,
 })
 export class StudentLayoutComponent {}

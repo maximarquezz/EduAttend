@@ -1,52 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-// Material Imports
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-// Services Imports
 import { ToggleService } from '../../../core/services/ui/toggle.service';
-import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../../core/services/data/auth.service';
+import { mapSidebarMenu } from './sidebar.mapper';
+import { SidebarMenuItem } from './sidebar.model';
+import { Role } from '../../../core/models/enums/role.enum';
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,
+    TitleCasePipe,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
     MatDividerModule,
     MatCardModule,
-    TitleCasePipe,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit {
-  constructor(
-    public toggle: ToggleService,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  private readonly authService = inject(AuthService);
+  toggle = inject(ToggleService);
 
-  role: string = '';
-  userName: string = '';
+  role!: Role;
+  userName: string | null = '';
+  menu: SidebarMenuItem[] = [];
 
-  ngOnInit() {
-    const userData = sessionStorage.getItem('userData');
-    if (userData) {
-      const parsedData = JSON.parse(userData);
-      this.role = parsedData.roles[0];
-      this.userName = parsedData.user.name;
-      console.log('🔍 Rol cargado:', this.role);
-    }
+  ngOnInit(): void {
+    this.initUserName();
+    this.initUserRole();
+    this.initMenu();
   }
 
-  closeSession() {
-    this.authService.logout();
+  closeSession(): void {
+    this.authService.logout().subscribe();
+  }
+
+  private initUserRole() {
+    this.role = this.authService.getUserRole();
+  }
+
+  private initUserName() {
+    this.userName = this.authService.getUsername();
+  }
+
+  private initMenu(): void {
+    this.menu = mapSidebarMenu(this.role);
   }
 }

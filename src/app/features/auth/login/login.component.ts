@@ -1,4 +1,3 @@
-// Angular Imports
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -7,7 +6,6 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-// Material Imports
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,11 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSnackBar } from '@angular/material/snack-bar'; // Importar Snackbar
-// Services Imports
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLinksService } from '../../../core/services/navigation/router-links.service';
-import { environment } from '../../../../environments/environment.development';
-import { Role } from '../../../core/models/enums/role.enum';
 import { AuthService } from '../../../core/services/data/auth.service';
 
 @Component({
@@ -81,7 +76,7 @@ export class LoginComponent {
           this.snackBar.open(this.errorMessage, 'Cerrar', {
             duration: 5000,
             horizontalPosition: 'center',
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
             panelClass: ['error-snackbar'],
           });
         },
@@ -99,7 +94,7 @@ export class LoginComponent {
         {
           duration: 5000,
           horizontalPosition: 'center',
-          verticalPosition: 'top',
+          verticalPosition: 'bottom',
           panelClass: ['warning-snackbar'],
         }
       );

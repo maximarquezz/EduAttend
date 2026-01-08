@@ -6,31 +6,62 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  background-color: var(--mat-sys-surface-container);
 
-  .subjects-header {
-    padding: 20px 16px 12px 16px;
+  &__content {
+    flex: 1;
+    padding: 20px 16px 24px 16px;
+    background-color: var(--mat-sys-surface-container);
 
-    article {
-      padding: 3px;
+    .page-header {
+      background: var(--mat-sys-surface);
+      padding: 20px 24px 16px 24px;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-bottom: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        padding: 8px;
+        margin: -8px;
+        border-radius: 50%;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: var(--mat-sys-surface-container-highest);
+        }
+
+        &:active {
+          background: var(--mat-sys-surface-container);
+        }
+      }
+
       h1 {
         margin: 0;
         font: var(--mat-sys-headline-small);
         font-weight: 600;
         color: var(--mat-sys-on-surface);
+        flex: 1;
+        text-align: left;
+      }
+
+      h5 {
+        color: var(--mat-sys-outline);
+        margin: 0;
       }
     }
-  }
-
-  &__content {
-    flex: 1;
-    padding: 0 16px 24px 16px;
 
     mat-tab-group {
       background: var(--mat-sys-surface);
-      border-radius: 16px;
+      border-radius: 0 0 16px 16px;
       overflow: hidden;
       border: 1px solid var(--mat-sys-surface-dim);
+      border-top: none;
 
       ::ng-deep {
         .mat-mdc-tab-header {
@@ -326,38 +357,6 @@
   }
 }
 
-@media (min-width: map.get($width-breakpoints, md)) {
-  .student-subjects {
-    .subjects-header {
-      padding: 24px 24px 12px 24px;
-
-      article {
-        h1 {
-          font: var(--mat-sys-headline-large);
-        }
-      }
-    }
-
-    &__content {
-      padding: 0 24px 32px 24px;
-
-      .tab-content {
-        padding: 32px;
-      }
-
-      // Mejor espaciado en tablets
-      .enrolled-subjects {
-        gap: 48px;
-      }
-
-      .degree-group {
-        .degree-title {
-          font: var(--mat-sys-headline-medium);
-        }
-      }
-    }
-  }
-}
 /* CHIP COMO BADGE (SIN OUTLINE) */
 :host ::ng-deep .mat-mdc-standard-chip {
   background-color: var(--mat-sys-primary) !important;
@@ -380,6 +379,10 @@
   border-radius: 100px !important;
   outline: none !important;
   border: none !important;
+
+  mat-icon {
+    color: var(--mat-sys-primary);
+  }
 
   ::ng-deep .mat-mdc-text-field-wrapper {
     background-color: transparent;
@@ -419,6 +422,40 @@
   }
 }
 
+@media (min-width: map.get($width-breakpoints, md)) {
+  .student-subjects {
+    &__content {
+      padding: 32px 24px 32px 24px;
+
+      .page-header {
+        padding: 24px 32px 20px 32px;
+
+        img {
+          display: none;
+        }
+
+        h1 {
+          font: var(--mat-sys-headline-large);
+        }
+      }
+
+      .tab-content {
+        padding: 32px;
+      }
+
+      .enrolled-subjects {
+        gap: 48px;
+      }
+
+      .degree-group {
+        .degree-title {
+          font: var(--mat-sys-title-large);
+        }
+      }
+    }
+  }
+}
+
 @media (min-width: map.get($width-breakpoints, lg)) {
   .student-subjects {
     &__content {
@@ -426,7 +463,6 @@
       margin: 0 auto;
       width: 100%;
 
-      // Mejor espaciado en desktop
       .enrolled-subjects {
         gap: 56px;
       }

@@ -60,7 +60,7 @@ export class UserManagementComponent {
     this.snackBar.open(message, action, {
       duration: 5000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: isError ? ['error-snackbar'] : ['success-snackbar'],
     });
   }

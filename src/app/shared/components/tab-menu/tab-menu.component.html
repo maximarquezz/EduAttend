@@ -1,107 +1,16 @@
-<!-- ================= ESTUDIANTE ================= -->
-<!--@if (role === 'estudiante') {-->
-<!-- ================= ESTUDIANTE ================= -->
 <mat-tab-group
   headerPosition="below"
   class="fixed bottom-2 left-2 right-4 z-50"
-  (selectedIndexChange)="onTabChange($event, 'estudiante')"
+  (selectedIndexChange)="onTabChange($event)"
 >
+  @for(tab of tabMenu; track $index){
   <mat-tab>
     <ng-template mat-tab-label>
       <div class="tab-content">
-        <mat-icon>home</mat-icon>
-        <span>Inicio</span>
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        <span>{{ tab.label }}</span>
       </div>
     </ng-template>
   </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <div class="tab-content">
-        <mat-icon>menu_book</mat-icon>
-        <span>Materias</span>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <div class="tab-content">
-        <mat-icon>event_available</mat-icon>
-        <span>Asistencias</span>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <div class="tab-content">
-        <mat-icon>logout</mat-icon>
-        <span>Salir</span>
-      </div>
-    </ng-template>
-  </mat-tab>
+  }
 </mat-tab-group>
-<!--}-->
-
-<!-- ================= PROFESOR ================= -->
-@if (role === 'profesor') {
-<mat-tab-group
-  headerPosition="below"
-  class="fixed bottom-0 left-0 w-full z-50"
-  (selectedIndexChange)="onTabChange($event, 'profesor')"
->
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>home</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>groups</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>assignment_turned_in</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>logout</mat-icon>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group>
-}
-
-<!-- ================= ADMINISTRADOR ================= -->
-@if (role === 'administrador') {
-<mat-tab-group
-  headerPosition="below"
-  class="fixed bottom-0 left-0 w-full z-50"
-  (selectedIndexChange)="onTabChange($event, 'administrador')"
->
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>home</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>assignment_turned_in</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>event_busy</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>groups</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>logout</mat-icon>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group>
-}

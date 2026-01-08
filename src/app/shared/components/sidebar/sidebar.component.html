@@ -1,26 +1,27 @@
 @if (toggle.isToggled) {
 <mat-sidenav-container>
   <mat-sidenav>Start</mat-sidenav>
+
   <mat-sidenav-content>
     <header>
-      <img src="assets/images/logo.png" width="150px" alt="" />
+      <img src="assets/images/logo.png" width="150" alt="Logo" />
     </header>
+
     <nav>
       <div>
         <mat-card>
           <mat-card-header>
             <img
-              src="assets/images/blank-profile.webp"
-              alt=""
               mat-card-avatar
+              src="assets/images/blank-profile.webp"
+              alt="Profile"
             />
             <mat-card-title>{{ userName }}</mat-card-title>
             <mat-card-subtitle>{{ role | titlecase }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
-        <mat-icon (click)="toggle.isToggled = !toggle.isToggled"
-          >close</mat-icon
-        >
+
+        <mat-icon (click)="toggle.isToggled = false">close</mat-icon>
       </div>
 
       <mat-divider></mat-divider>
@@ -28,124 +29,21 @@
       <mat-list>
         <div mat-subheader>Tus Secciones</div>
 
-        @if(role === 'estudiante'){
-        <mat-list-item
-          routerLink="/private/student/dashboard"
-          routerLinkActive="active-link"
-        >
+        @for (item of menu; track item.route) {
+        <mat-list-item [routerLink]="item.route" routerLinkActive="active-link">
           <span matListItemTitle>
-            <mat-icon>home</mat-icon>
-            <a>Dashboard</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/student/subjects"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>menu_book</mat-icon>
-            <a>Materias</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/student/attendance-history"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>event_available</mat-icon>
-            <a>Asistencias</a>
-          </span>
-        </mat-list-item>
-        } @if (role === 'profesor'){
-        <mat-list-item
-          routerLink="/private/teacher/dashboard"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>home</mat-icon>
-            <a>Dashboard</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/teacher/subjects"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>groups</mat-icon>
-            <a>Materias</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/teacher/attendance-list"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>assignment_turned_in</mat-icon>
-            <a>Asistencias</a>
-          </span>
-        </mat-list-item>
-        } @if (role === 'administrador'){
-        <mat-list-item
-          routerLink="/private/admin/dashboard"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>home</mat-icon>
-            <a>Dashboard</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/admin/attendance-overview"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>assignment_turned_in</mat-icon>
-            <a>Asistencias</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/admin/justify-absence"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>event_busy</mat-icon>
-            <a>Inasistencias</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/admin/generate-report"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>bar_chart</mat-icon>
-            <a>Reportes</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/admin/user-management"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>assignment_ind</mat-icon>
-            <a>Solicitudes</a>
-          </span>
-        </mat-list-item>
-        <mat-list-item
-          routerLink="/private/admin/user-list"
-          routerLinkActive="active-link"
-        >
-          <span matListItemTitle>
-            <mat-icon>groups</mat-icon>
-            <a>Usuarios</a>
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <a>{{ item.label }}</a>
           </span>
         </mat-list-item>
         }
 
         <mat-divider></mat-divider>
-        <mat-list-item routerLink="/public/auth/login">
+
+        <mat-list-item (click)="closeSession()">
           <span matListItemTitle>
             <mat-icon>logout</mat-icon>
-            <a (click)="closeSession()">Cerrar Sesión</a>
+            <a>Cerrar Sesión</a>
           </span>
         </mat-list-item>
       </mat-list>

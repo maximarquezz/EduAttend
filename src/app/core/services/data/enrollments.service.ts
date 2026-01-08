@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment.development';
 import {
   Enrollment,
   EnrollmentPost,
-} from '../../models/interfaces/domain/enrollment.interface';
+} from '../../models/interfaces/enrollment.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +14,11 @@ export class EnrollmentsService {
 
   myEnrollments() {
     return this.http.get<Enrollment[]>(
-      `${environment.prodApiUrl}/my-enrollments`
+      `${environment.localApiUrl}/my-enrollments`
     );
   }
 
   postEnroll(enrollment: EnrollmentPost) {
-    return this.http.post(`${environment.prodApiUrl}/enroll`, enrollment);
+    return this.http.post(`${environment.localApiUrl}/enroll`, enrollment);
   }
 }

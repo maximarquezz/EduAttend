@@ -1,0 +1,27 @@
+import { HttpClient } from '@angular/common/http';
+
+/**
+ * Información de usuarios.
+ *
+ * @remarks
+ * Interfaz de lectura, edición y guardado de datos.
+ *
+ * @see {@link HttpClient.get} - Método GET (leer) de HttpClient.
+ * @see {@link HttpClient.put} - Método PUT (editar) de HttpClient.
+ * @see {@link HttpClient.post} - Método POST (guardar) de HttpClient.
+ */
+export interface User {
+  id?: number;
+  name: string;
+  email: string;
+  email_verified_at?: number | null;
+  password: string;
+  phone: number;
+  dni: number;
+  address: string;
+  province_name: string;
+  city_name: string;
+  is_acepted?: boolean | null;
+  created_at?: string | Date | null;
+  updated_at?: string | Date | null;
+}

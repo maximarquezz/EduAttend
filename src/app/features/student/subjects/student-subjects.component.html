@@ -1,17 +1,10 @@
 <section class="student-subjects">
-  <header class="subjects-header">
-    <article class="flex items-center justify-center">
-      <img
-        src="assets/icons/arrow_left.svg"
-        alt="Arrow left"
-        class="invert"
-        (click)="routerLinks.goToStudentDashboard()"
-      />
-      <h1 class="flex-1 text-center">Materias</h1>
-    </article>
-  </header>
-
   <main class="student-subjects__content">
+    <div class="page-header">
+      <h1>Materias</h1>
+      <h5>Inscríbete a materias y realiza el seguimiento de tu asistencia.</h5>
+    </div>
+
     <mat-tab-group>
       <mat-tab label="Mis Materias">
         <div class="tab-content">
@@ -89,11 +82,10 @@
             }
           </div>
           } } @else {
-          <div class="empty-state">
-            <mat-icon>school</mat-icon>
-            <p>Aún no estás inscrito en ninguna materia.</p>
-            <p>Ve a la pestaña "Inscripción" para inscribirte.</p>
-          </div>
+          <app-empty-state
+            [icon]="'school'"
+            [text]="'Aún no estás inscripto en ninguna materia.'"
+          ></app-empty-state>
           }
         </div>
       </mat-tab>
@@ -144,7 +136,8 @@
                           <h4>{{ midComSubject.subject.subject_name }}</h4>
                           <p>Año: {{ midComSubject.subject.subject_year }}</p>
                           <button
-                            matButton="filled"
+                            mat-flat-button
+                            color="primary"
                             (click)="enrollSubject(midComSubject.id)"
                             [disabled]="isEnrolled(midComSubject.id)"
                           >

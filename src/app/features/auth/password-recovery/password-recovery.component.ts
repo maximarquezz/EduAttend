@@ -199,7 +199,7 @@ export class PasswordRecoveryComponent implements OnDestroy {
     this.snackBar.open(message, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 

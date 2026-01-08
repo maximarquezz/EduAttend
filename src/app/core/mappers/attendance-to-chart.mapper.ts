@@ -1,13 +1,30 @@
 export function mapAttendanceToBarOption(data: any[]) {
   const styles = getComputedStyle(document.documentElement);
-  const backgroundColor = styles
-    .getPropertyValue('--mat-sys-surface-dim')
-    .trim();
   const primaryColor = styles.getPropertyValue('--mat-sys-primary').trim();
   const textColor = styles.getPropertyValue('--mat-sys-secondary').trim();
 
+  const isEmptyState =
+    !data || data.length === 0 || data.every((d) => d.porcentaje === 0);
+
+  if (isEmptyState) {
+    return {
+      xAxis: { show: false },
+      yAxis: { show: false },
+      series: [],
+      graphic: {
+        type: 'text',
+        left: 'center',
+        top: 'middle',
+        style: {
+          text: 'No hay datos de asistencia',
+          fill: textColor,
+          fontSize: 14,
+        },
+      },
+    };
+  }
+
   return {
-    //backgroundColor: backgroundColor,
     tooltip: {
       trigger: 'axis',
       formatter: '{b}: {c}%',
@@ -53,11 +70,6 @@ export function mapAttendanceToBarOption(data: any[]) {
         itemStyle: {
           color: primaryColor,
           borderRadius: [8, 8, 0, 0],
-        },
-        emphasis: {
-          itemStyle: {
-            opacity: 0.8,
-          },
         },
       },
     ],

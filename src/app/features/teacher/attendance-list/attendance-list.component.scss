@@ -1,18 +1,291 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use '../../../shared/styles/attendance.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "../../../shared/styles/attendance.scss" as *;
+@use "sass:map";
 
-.attendance-history {
-  mat-card {
-    mat-card-header {
+.attendance-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--mat-sys-surface-container);
+
+  .attendance-header {
+    padding: 20px 16px 12px 16px;
+
+    article {
+      padding: 3px;
+
+      h1 {
+        margin: 0;
+        font: var(--mat-sys-headline-small);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+      }
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 20px 16px 24px 16px;
+
+    .page-header {
+      background: var(--mat-sys-surface);
+      padding: 20px 24px 16px 24px;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-bottom: none;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        padding: 8px;
+        margin: -8px;
+        border-radius: 50%;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: var(--mat-sys-surface-container-highest);
+        }
+
+        &:active {
+          background: var(--mat-sys-surface-container);
+        }
+      }
+
+      h1 {
+        margin: 0;
+        font: var(--mat-sys-headline-small);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        flex: 1;
+        text-align: left;
+      }
+
+      h5 {
+        color: var(--mat-sys-outline);
+        margin: 0;
+      }
+    }
+
+    .history-card {
+      background: var(--mat-sys-surface);
+      border-radius: 0 0 16px 16px;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-top: none;
+      box-shadow: none;
+      overflow: hidden;
+
+      mat-card-content {
+        padding: 0;
+      }
+    }
+
+    /* CONTENEDOR GENERAL */
+    .table-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: auto;
+    }
+
+    /* WRAPPER DE LA TABLA (NO CRECE) */
+    .table-wrapper {
+      flex: 0 0 auto;
+    }
+
+    table {
       width: 100%;
-      padding: 12px 0;
-      background: var(--mat-sys-primary);
-      color: var(--mat-sys-on-primary);
-      margin: auto;
+      background: var(--mat-sys-surface);
+
+      th {
+        background: var(--mat-sys-surface-container-low);
+        color: var(--mat-sys-on-surface);
+        font-weight: 600;
+        padding: 16px;
+        border-bottom: 1px solid var(--mat-sys-surface-dim);
+      }
+
+      td {
+        padding: 16px;
+        color: var(--mat-sys-on-surface);
+        border-bottom: 1px solid var(--mat-sys-surface-dim);
+      }
+
+      tr.mat-mdc-row {
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+
+      .state-cell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    /* PAGINATOR ABAJO */
+    ::ng-deep mat-paginator {
+      margin-top: auto;
+      background: var(--mat-sys-surface-container-low);
+      border-top: 1px solid var(--mat-sys-surface-dim);
+
+      .mat-mdc-paginator-container {
+        padding: 12px 16px;
+      }
+
+      .mat-mdc-paginator-range-label {
+        color: var(--mat-sys-on-surface);
+      }
+
+      .mat-mdc-form-field {
+        margin: 0;
+      }
+    }
+  }
+}
+
+/* CÍRCULOS */
+.circle-present,
+.circle-absent,
+.circle-late,
+.circle-justified {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.circle-present {
+  background-color: #4caf50;
+}
+.circle-absent {
+  background-color: #f44336;
+}
+.circle-late {
+  background-color: #ff9800;
+}
+.circle-justified {
+  background-color: #2196f3;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  min-height: 400px;
+
+  .empty-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--mat-sys-on-surface-variant);
+    opacity: 0.3;
+    margin-bottom: 16px;
+  }
+
+  .empty-text {
+    margin: 0;
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-on-surface-variant);
+    opacity: 0.6;
+  }
+}
+
+.date-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .date-text {
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-on-surface);
+  }
+
+  .time-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+    border-radius: 12px;
+    font: var(--mat-sys-label-small);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+}
+
+.subject-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--mat-sys-primary);
+  font: var(--mat-sys-body-medium);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 8px;
+  transition: all 0.1s ease;
+  text-align: left;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+    transition: opacity 0.1s ease;
+  }
+
+  &:hover {
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+
+    mat-icon {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+/* RESPONSIVE */
+@media (min-width: map.get($width-breakpoints, md)) {
+  .attendance-list {
+    .attendance-header {
+      padding: 24px;
+
+      article h1 {
+        font: var(--mat-sys-headline-large);
+      }
+    }
+
+    &__content {
+      padding: 32px 24px 32px 24px;
+    }
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, lg)) {
+  .attendance-list {
+    &__content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
     }
   }
 }

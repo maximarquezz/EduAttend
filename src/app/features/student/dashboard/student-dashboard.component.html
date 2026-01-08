@@ -1,63 +1,9 @@
 <section class="flex items-center flex-col min-h-dvh">
-  <div class="student-subjects__header">
-    <div class="student-subjects__hero"></div>
-  </div>
-
-  <header class="flex items-center justify-between py-3 px-5 w-full">
-    <article class="h-full">
-      <h2>Hola, {{ username }}!</h2>
-      <p>Bienvenido a EduAttend.</p>
-    </article>
-
-    <article class="flex items-center justify-center self-stretch">
-      <button matIconButton class="scale-125 mr-1 notifications-button">
-        <mat-icon
-          aria-hidden="false"
-          aria-label="Notifications"
-          fontIcon="notifications"
-        ></mat-icon>
-      </button>
-    </article>
-  </header>
-
   <main class="flex flex-col min-w-full">
-    <form class="p-3">
-      <mat-form-field
-        appearance="fill"
-        subscriptSizing="dynamic"
-        class="w-full search-form rounded-lg"
-      >
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          type="search"
-          placeholder="Buscar..."
-          class="rounded-lg"
-        />
-        <mat-icon matPrefix>search</mat-icon>
-      </mat-form-field>
-    </form>
-
-    <article class="p-3">
-      <div class="flex flex-col gap-3">
-        <button
-          matButton
-          (click)="routerLinks.goToStudentSubjects()"
-          class="nav-button"
-        >
-          <mat-icon fontIcon="menu_book"></mat-icon>
-          <span>Materias</span>
-        </button>
-        <button
-          matButton
-          (click)="routerLinks.goToStudentAttendances()"
-          class="nav-button"
-        >
-          <mat-icon fontIcon="event_available"></mat-icon>
-          <span>Asistencias</span>
-        </button>
-      </div>
-    </article>
+    <div class="page-header">
+      <h1>Dashboard</h1>
+      <h5>Estadísticas sobre tus asistencias.</h5>
+    </div>
 
     <article class="attendance-container">
       <div class="total-attendance-card">
@@ -65,6 +11,83 @@
         <div class="p-2">
           <h3 class="m-0 p-0">Asistencia Total</h3>
           <p class="percentage">{{ totalAttendancePercentage }}%</p>
+        </div>
+      </div>
+
+      <!-- Alertas integradas -->
+      <div class="risk-alerts" *ngIf="riskSummary">
+        <h3>Estado de Asistencias</h3>
+
+        <div
+          class="risk-summary"
+          [class.success]="
+            riskSummary.critical === 0 && riskSummary.at_risk === 0
+          "
+        >
+          <mat-icon *ngIf="riskSummary.critical > 0">error</mat-icon>
+          <mat-icon
+            *ngIf="riskSummary.critical === 0 && riskSummary.at_risk > 0"
+            >warning</mat-icon
+          >
+          <mat-icon
+            *ngIf="riskSummary.critical === 0 && riskSummary.at_risk === 0"
+            >check_circle</mat-icon
+          >
+          <div>
+            <h4 *ngIf="riskSummary.critical > 0 || riskSummary.at_risk > 0">
+              Atención necesaria
+            </h4>
+            <h4 *ngIf="riskSummary.critical === 0 && riskSummary.at_risk === 0">
+              Todo en orden
+            </h4>
+            <p *ngIf="riskSummary.critical > 0">
+              {{ riskSummary.critical }} materia{{
+                riskSummary.critical > 1 ? "s" : ""
+              }}
+              en estado crítico
+            </p>
+            <p *ngIf="riskSummary.at_risk > 0 && riskSummary.critical === 0">
+              {{ riskSummary.at_risk }} materia{{
+                riskSummary.at_risk > 1 ? "s" : ""
+              }}
+              en riesgo
+            </p>
+            <p *ngIf="riskSummary.critical === 0 && riskSummary.at_risk === 0">
+              Tus asistencias están al día
+            </p>
+          </div>
+        </div>
+
+        <div class="risk-subjects" *ngIf="subjectsAtRisk.length > 0">
+          <div
+            *ngFor="let subject of subjectsAtRisk"
+            class="risk-card"
+            [class.critical]="subject.status === 'CRITICO'"
+          >
+            <div class="risk-card-header">
+              <mat-icon>{{ getStatusIcon(subject.status) }}</mat-icon>
+              <div class="risk-card-info">
+                <h4>{{ subject.subject_name }}</h4>
+                <p>Comisión {{ subject.comission_name }}</p>
+              </div>
+            </div>
+            <div class="risk-card-stats">
+              <div class="stat">
+                <span class="stat-value">{{ subject.porcentaje }}%</span>
+                <span class="stat-label">Asistencia</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">{{ subject.ausentes }}</span>
+                <span class="stat-label">Ausencias</span>
+              </div>
+              <div class="stat" *ngIf="subject.clases_restantes_minimas > 0">
+                <span class="stat-value">{{
+                  subject.clases_restantes_minimas
+                }}</span>
+                <span class="stat-label">Necesarias</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
