@@ -14,7 +14,7 @@ import { UsersService } from '../../../core/services/data/users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-user-management',
+  selector: 'app-register-requests',
   imports: [
     MatListModule,
     MatCardModule,
@@ -26,10 +26,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     UserRequestComponent,
   ],
-  templateUrl: './user-management.component.html',
-  styleUrl: './user-management.component.scss',
+  templateUrl: './register-requests.component.html',
+  styleUrl: './register-requests.component.scss',
 })
-export class UserManagementComponent {
+export class RegisterRequestsComponent {
   Role = Role;
   role = environment.userRole;
 

@@ -3,7 +3,7 @@ import { AttendanceService } from '../../../core/services/data/attendance.servic
 import { AuthService } from '../../../core/services/data/auth.service';
 import { Attendance } from '../../../core/models/interfaces/attendance.interface';
 import { Role } from '../../../core/models/enums/role.enum';
-import { map, Observable } from 'rxjs';
+import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CardFacade {
@@ -26,6 +26,53 @@ export class CardFacade {
     }
 
     return new Observable((observer) => observer.next([]));
+  }
+
+  getAttendancesForAdmin(midComissionSubjectId: number): Observable<any[]> {
+    return this.attendanceService
+      .getEnrollmentsByComissionSubjectAdmin(midComissionSubjectId)
+      .pipe(
+        switchMap((enrollments) => {
+          if (enrollments.length === 0) return of([]);
+
+          const attendanceRequests = enrollments.map((enrollment: any) =>
+            this.attendanceService
+              .getAttendancesByEnrollment(enrollment.id)
+              .pipe(
+                map((attendances) => ({
+                  enrollment,
+                  attendances,
+                }))
+              )
+          );
+
+          return forkJoin(attendanceRequests);
+        }),
+        map((results) => {
+          const grouped: any = {};
+
+          results.forEach((item: any) => {
+            item.attendances.forEach((att: any) => {
+              const date = att.attendance_date.split('T')[0];
+              if (!grouped[date]) {
+                grouped[date] = {
+                  attendance_date: date,
+                  students: [],
+                };
+              }
+              grouped[date].students.push({
+                id: att.id,
+                student_id: item.enrollment.user_id,
+                student_name: item.enrollment.user.name,
+                attendance_status: att.attendance_status,
+                attendance_notes: att.attendance_notes,
+              });
+            });
+          });
+
+          return Object.values(grouped);
+        })
+      );
   }
 
   calculateAttendancePercentage(attendances: Attendance[]): number {

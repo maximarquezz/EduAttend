@@ -1,53 +1,56 @@
 @if (toggle.isToggled) {
-<mat-sidenav-container>
-  <mat-sidenav>Start</mat-sidenav>
+  <mat-sidenav-container>
+    <mat-sidenav>Start</mat-sidenav>
 
-  <mat-sidenav-content>
-    <header>
-      <img src="assets/images/logo.png" width="150" alt="Logo" />
-    </header>
+    <mat-sidenav-content>
+      <header>
+        <img src="assets/images/logo.png" width="150" alt="Logo" />
+      </header>
 
-    <nav>
-      <div>
-        <mat-card>
-          <mat-card-header>
-            <img
-              mat-card-avatar
-              src="assets/images/blank-profile.webp"
-              alt="Profile"
-            />
-            <mat-card-title>{{ userName }}</mat-card-title>
-            <mat-card-subtitle>{{ role | titlecase }}</mat-card-subtitle>
-          </mat-card-header>
-        </mat-card>
+      <nav>
+        <div>
+          <mat-card>
+            <mat-card-header>
+              <img
+                mat-card-avatar
+                src="assets/images/blank-profile.webp"
+                alt="Profile"
+              />
+              <mat-card-title>{{ userName }}</mat-card-title>
+              <mat-card-subtitle>{{ role | titlecase }}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
 
-        <mat-icon (click)="toggle.isToggled = false">close</mat-icon>
-      </div>
-
-      <mat-divider></mat-divider>
-
-      <mat-list>
-        <div mat-subheader>Tus Secciones</div>
-
-        @for (item of menu; track item.route) {
-        <mat-list-item [routerLink]="item.route" routerLinkActive="active-link">
-          <span matListItemTitle>
-            <mat-icon>{{ item.icon }}</mat-icon>
-            <a>{{ item.label }}</a>
-          </span>
-        </mat-list-item>
-        }
+          <mat-icon (click)="toggle.isToggled = false">close</mat-icon>
+        </div>
 
         <mat-divider></mat-divider>
 
-        <mat-list-item (click)="closeSession()">
-          <span matListItemTitle>
-            <mat-icon>logout</mat-icon>
-            <a>Cerrar Sesión</a>
-          </span>
-        </mat-list-item>
-      </mat-list>
-    </nav>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+        <mat-list>
+          <div mat-subheader>Tus Secciones</div>
+
+          @for (item of menu; track item.route) {
+            <mat-list-item
+              [routerLink]="item.route"
+              routerLinkActive="active-link"
+            >
+              <span matListItemTitle>
+                <mat-icon>{{ item.icon }}</mat-icon>
+                <a>{{ item.label }}</a>
+              </span>
+            </mat-list-item>
+          }
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item (click)="closeSession()">
+            <span matListItemTitle>
+              <mat-icon>logout</mat-icon>
+              <a>Cerrar Sesión</a>
+            </span>
+          </mat-list-item>
+        </mat-list>
+      </nav>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 }

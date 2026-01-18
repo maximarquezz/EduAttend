@@ -12,6 +12,7 @@ import {
 export class AssignmentsService {
   private http = inject(HttpClient);
 
+  //TODO: TIPAR RETORNO DE CADA FUNCIÓN LUEGO DE DOCUMENTAR API.
   myAssignments() {
     return this.http.get<Assignment[]>(
       `${environment.localApiUrl}/my-assignments`

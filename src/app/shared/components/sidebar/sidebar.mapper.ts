@@ -49,19 +49,9 @@ export function mapSidebarMenu(role: string): SidebarMenuItem[] {
           route: '/private/admin/attendance-overview',
         },
         {
-          label: 'Inasistencias',
-          icon: 'event_busy',
-          route: '/private/admin/justify-absence',
-        },
-        {
           label: 'Solicitudes',
           icon: 'assignment_ind',
-          route: '/private/admin/user-management',
-        },
-        {
-          label: 'Usuarios',
-          icon: 'groups',
-          route: '/private/admin/user-list',
+          route: '/private/admin/register-requests',
         },
       ];
 

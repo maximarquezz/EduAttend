@@ -26,7 +26,6 @@ export class AuthService {
       );
   }
 
-  // Nuevos métodos para recuperación de contraseña
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${environment.localApiUrl}/forgot-password`, {
       email,

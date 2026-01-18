@@ -16,6 +16,7 @@ import { AttendanceStatusComponent } from '../../../shared/components/attendance
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 
 import { Role } from '../../../core/models/enums/role.enum';
+import { AttendanceStatus } from '../../../core/models/enums/attendance-status.enum';
 
 @Component({
   selector: 'app-attendance-list',
@@ -64,9 +65,11 @@ export class AttendanceListComponent implements OnInit {
             attendance.students.map((student: any) => ({
               date: attendance.attendance_date,
               subject: subject.subject_name,
+              studentId: student.student_id,
               studentName: student.student_name,
-              // STRING → la tabla lo muestra bien
               status: student.attendance_status,
+              notes: student.attendance_notes,
+              id: student.id,
             }))
           )
         );
@@ -80,12 +83,28 @@ export class AttendanceListComponent implements OnInit {
       (att) => att.subject === subjectName
     );
 
-    // 👇 EXACTAMENTE IGUAL A AttendanceHistoryComponent
-    const modalData = subjectAttendances.map((att) => ({
-      attendance_date: att.date,
-      attendance_status: att.status, // STRING, NO ENUM
-      attendance_notes: '',
-    }));
+    // Agrupar por fecha
+    const groupedByDate = subjectAttendances.reduce((acc, att) => {
+      const dateKey = att.date;
+
+      if (!acc[dateKey]) {
+        acc[dateKey] = {
+          attendance_date: dateKey,
+          students: [],
+        };
+      }
+
+      acc[dateKey].students.push({
+        student_id: att.studentId, // Necesitás agregarlo en loadAttendances()
+        student_name: att.studentName,
+        attendance_status: att.status,
+        attendance_notes: att.notes || '', // Necesitás agregarlo en loadAttendances()
+      });
+
+      return acc;
+    }, {} as Record<string, any>);
+
+    const modalData = Object.values(groupedByDate);
 
     this.dialog.open(ModalComponent, {
       data: {
@@ -95,8 +114,14 @@ export class AttendanceListComponent implements OnInit {
         cardPercentage: this.calculatePercentage(subjectAttendances),
         cardDateLabel: 'Última asistencia',
         cardDate: this.getLastAttendanceDate(subjectAttendances),
-        modalCols: ['attendance_date', 'attendance_status', 'attendance_notes'],
+        modalCols: [
+          'attendance_date',
+          'students',
+          'attendance_status',
+          'acciones',
+        ],
         modalData,
+        modalActions: [{ label: 'Cerrar', action: 'close', accent: 'tonal' }],
         role: this.authService.getUserRole() || Role.Teacher,
       },
       width: '600px',

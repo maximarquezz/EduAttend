@@ -47,8 +47,8 @@ export class ModalAdmin implements Modal {
     return {
       modalCols: [
         'attendance_date',
+        'students', // ✅ Agregado
         'attendance_status',
-        'attendance_notes',
         'acciones',
       ],
       modalActions: [

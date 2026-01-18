@@ -36,6 +36,7 @@ export class CardComponent implements OnInit {
   @Input() enrollmentId!: number;
   @Input() subjectId?: number; // Para estudiantes (subject_id real)
   @Input() midComissionSubjectId?: number; // Para profesores (mid_comission_subject_id)
+  @Input() isAdminView: boolean = false;
 
   Role = Role;
   role!: Role;
@@ -46,6 +47,7 @@ export class CardComponent implements OnInit {
     accent: string;
   }[];
   modalData: any[] = [];
+  isLoadingData = false;
 
   get attendanceIcon(): string | null {
     if (this.role !== Role.Student) return null;
@@ -98,7 +100,13 @@ export class CardComponent implements OnInit {
   }
 
   private loadAttendances(): void {
-    if (this.role === Role.Teacher) {
+    // TEACHER Y ADMIN usan la misma lógica cuando están en vista de materias
+    if (
+      this.role === Role.Teacher ||
+      (this.role === Role.Admin &&
+        this.midComissionSubjectId &&
+        !this.isAdminView)
+    ) {
       this.facade.getAttendancesForUser().subscribe({
         next: (data) => {
           if (this.midComissionSubjectId) {
@@ -106,32 +114,45 @@ export class CardComponent implements OnInit {
               (item) =>
                 item.mid_comission_subject_id === this.midComissionSubjectId
             );
-
-            if (subjectData && Array.isArray(subjectData.attendances)) {
-              this.modalData = subjectData.attendances;
-            } else {
-              this.modalData = [];
-            }
+            this.modalData = subjectData?.attendances || [];
           } else {
             this.modalData = data
-              .filter((item) => {
-                return Array.isArray(item.attendances);
-              })
+              .filter((item) => Array.isArray(item.attendances))
               .flatMap((item) => item.attendances);
           }
         },
-        error: (err) => {
+        error: () => {
           this.modalData = [];
         },
       });
-    } else if (this.role === Role.Student && this.enrollmentId) {
+    }
+    // STUDENT
+    else if (this.role === Role.Student && this.enrollmentId) {
       this.facade.getAttendancesByEnrollment(this.enrollmentId).subscribe({
         next: (data) => {
           this.modalData = data;
           this.cardPercentage = this.facade.calculateAttendancePercentage(data);
         },
-        error: (err) => {
+        error: () => {
           this.modalData = [];
+        },
+      });
+    }
+    // ADMIN en vista administrativa (con isAdminView = true)
+    else if (
+      this.role === Role.Admin &&
+      this.isAdminView &&
+      this.midComissionSubjectId
+    ) {
+      this.isLoadingData = true;
+      this.facade.getAttendancesForAdmin(this.midComissionSubjectId).subscribe({
+        next: (data) => {
+          this.modalData = data;
+          this.isLoadingData = false;
+        },
+        error: () => {
+          this.modalData = [];
+          this.isLoadingData = false;
         },
       });
     }

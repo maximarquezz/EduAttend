@@ -110,18 +110,61 @@ export class ModalComponent implements OnInit {
 
   ngOnInit() {
     console.log('🎬 ngOnInit ejecutado');
+    console.log('🔍 midComissionSubjectId:', this.data.midComissionSubjectId);
+    console.log('🔍 Rol:', this.role);
 
-    if (this.data.midComissionSubjectId && this.role === Role.Teacher) {
+    // CARGAR ESTUDIANTES para formulario (Teacher y Admin)
+    if (
+      this.data.midComissionSubjectId &&
+      (this.role === Role.Teacher || this.role === Role.Admin)
+    ) {
       this.loadStudents();
     }
 
-    if (this.modalData.data.length > 0) {
-      console.log(
-        '✅ ngOnInit - Hay asistencias registradas:',
-        this.modalData.data
-      );
-    } else {
-      console.log('⚠️ ngOnInit - No hay asistencias para mostrar');
+    // CARGAR ASISTENCIAS según el rol
+    this.loadAttendancesData();
+  }
+
+  // ✅ NUEVO MÉTODO para cargar asistencias
+  private loadAttendancesData() {
+    console.log('📊 Cargando asistencias...');
+
+    // TEACHER y ADMIN
+    if (
+      (this.role === Role.Teacher || this.role === Role.Admin) &&
+      this.data.midComissionSubjectId
+    ) {
+      this.attendanceService.getTeacherAttendances().subscribe({
+        next: (data) => {
+          console.log('✅ Datos de profesor recibidos:', data);
+
+          // Filtrar por la materia actual
+          const subjectData = data.find(
+            (item: any) =>
+              item.mid_comission_subject_id === this.data.midComissionSubjectId
+          );
+
+          if (subjectData && subjectData.attendances) {
+            console.log('✅ Asistencias encontradas:', subjectData.attendances);
+            this.modalData.data = subjectData.attendances;
+          } else {
+            console.log('⚠️ No hay asistencias para esta materia');
+            this.modalData.data = [];
+          }
+
+          // Forzar actualización de la tabla
+          this.modalData._updateChangeSubscription();
+        },
+        error: (err) => {
+          console.error('❌ Error al cargar asistencias:', err);
+          this.modalData.data = [];
+        },
+      });
+    }
+    // STUDENT
+    else if (this.role === Role.Student) {
+      console.log('👨‍🎓 Modo estudiante - datos ya pasados por card component');
+      // Los datos ya vienen en this.modalData del constructor
     }
   }
 
@@ -298,17 +341,21 @@ export class ModalComponent implements OnInit {
         null,
     }));
 
+    console.log('📤 Enviando asistencias:', attendances);
+
     this.attendanceService.storeBulkAttendances(attendances).subscribe({
       next: (response) => {
+        console.log('✅ Asistencias guardadas:', response);
         this.openSnackBar('Asistencia tomada correctamente.', 'Cerrar', false);
 
-        this.dialogRef.close({
-          success: true,
-          data: response,
-          shouldRefresh: true,
-        });
+        // Recargar asistencias después de guardar
+        this.loadAttendancesData();
+
+        // Ocultar formulario
+        this.showAttendanceForm = false;
       },
       error: (err) => {
+        console.error('❌ Error al guardar asistencias:', err);
         let errorMsg = 'Error al registrar asistencias.';
 
         if (err.error?.message) {

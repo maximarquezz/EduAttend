@@ -1,4 +1,4 @@
-<mat-card (click)="openModal()">
+<mat-card (click)="!isLoadingData && openModal()">
   <mat-card-header>
     <mat-card-title>{{ cardTitle }}</mat-card-title>
     <mat-card-subtitle>{{ cardSubtitle }}</mat-card-subtitle>

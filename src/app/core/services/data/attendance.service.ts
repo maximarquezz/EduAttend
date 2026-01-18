@@ -64,11 +64,33 @@ export class AttendanceService {
     );
   }
 
-  // Agregar este método en AttendanceService
-
   getSubjectsAtRisk(studentId: number): Observable<any> {
     return this.http.get<any>(
       `${environment.localApiUrl}/attendances/subjects-at-risk/${studentId}`
+    );
+  }
+
+  getSubjectsByComission(comissionId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.localApiUrl}/mid-comission-subjects/comission/${comissionId}`
+    );
+  }
+
+  getDegrees(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.localApiUrl}/degree`);
+  }
+
+  getComissionsByDegree(degreeId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.localApiUrl}/comissions/degree/${degreeId}`
+    );
+  }
+
+  getEnrollmentsByComissionSubjectAdmin(
+    midComissionSubjectId: number
+  ): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.localApiUrl}/enrollments/mid-comission-subject/${midComissionSubjectId}`
     );
   }
 }

@@ -1,6 +1,6 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
 
 mat-accordion {
   box-sizing: border-box;
@@ -36,5 +36,4 @@ mat-accordion {
       background-color: var(--mat-sys-surface);
     }
   }
-
 }

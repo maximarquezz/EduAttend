@@ -30,7 +30,6 @@ interface DegreeGroup {
 
 @Component({
   selector: 'app-student-subjects',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,

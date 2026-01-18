@@ -1,77 +1,125 @@
-@use '../../../shared/styles/layout.scss' as *;
-@use '../../../shared/styles/breakpoints.scss' as *;
-@use 'sass:map';
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
 
 .attendance-overview {
-  mat-card {
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 
-    mat-card-header {
-      box-sizing: border-box;
+  &__content {
+    flex: 1;
+    padding: 20px 16px 24px 16px;
+    background-color: var(--mat-sys-surface-container);
+
+    .page-header {
+      background: var(--mat-sys-surface);
+      padding: 20px 24px 16px 24px;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-bottom: none;
       display: flex;
-      justify-content: center;
-      width: 100%;
-      padding: 12px 0;
-      background: var(--mat-sys-primary);
-      color: var(--mat-sys-on-primary);
-      margin: auto;
-    }
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
 
-    mat-card-content {
-      box-sizing: border-box;
-      padding: 0;
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        padding: 8px;
+        margin: -8px;
+        border-radius: 50%;
+        transition: background 0.2s ease;
 
-      header {
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        background: var(--mat-sys-tertiary-container);
-
-        .filters {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 12px;
+        &:hover {
+          background: var(--mat-sys-surface-container-highest);
         }
 
-        .controls {
-          @extend .flex-row_spc-btw;
-        }
-
-        .actions {
-          display: flex;
-          gap: 8px;
+        &:active {
+          background: var(--mat-sys-surface-container);
         }
       }
 
-      h5,
-      h6 {
+      h1 {
         margin: 0;
-        background: var(--mat-sys-surface);
+        font: var(--mat-sys-headline-small);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        flex: 1;
+        text-align: left;
       }
 
       h5 {
+        color: var(--mat-sys-outline);
+        margin: 0;
+      }
+    }
+
+    .filter-card {
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      border: 1px solid var(--mat-sys-surface-dim);
+      border-top: none;
+
+      .filters-row {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+
+        mat-form-field {
+          flex: 1;
+        }
+
+        button {
+          height: 56px;
+          border-radius: 12px;
+        }
+      }
+    }
+
+    .subjects-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .year-group {
+      .year-title {
         font: var(--mat-sys-title-medium);
-        padding: 15px 10px 0 10px;
-      }
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        margin: 0 0 20px 0;
+        padding-bottom: 12px;
+        position: relative;
 
-      h6 {
-        font: var(--mat-sys-body-large);
-        padding: 0 10px 15px 10px;
-      }
-
-      section {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 10px;
-
-        div {
-          background-color: gray;
-          height: 100px;
-          width: 100%;
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 80px;
+          height: 2px;
+          background: var(--mat-sys-primary);
+          opacity: 0.4;
         }
       }
 
+      .year-subjects {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
     }
   }
+}
+
+:host ::ng-deep .mat-mdc-standard-chip {
+  background-color: var(--mat-sys-primary) !important;
+  border-radius: 999px;
+}
+
+:host ::ng-deep .mat-mdc-chip-action-label {
+  color: white !important;
+  font-weight: bold;
 }

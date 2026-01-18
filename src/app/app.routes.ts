@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: PUBLIC_ROUTES,
   },
   {
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     path: 'private',
     children: PRIVATE_ROUTES,
   },
