@@ -2,7 +2,8 @@
 <mat-toolbar color="primary" class="header-toolbar">
   <div class="toolbar-content">
     <nav class="nav-section">
-      <h4>Dashboard</h4>
+      <h4>{{ sectionTitle }}</h4>
+      <p>{{ sectionDescription }}</p>
     </nav>
 
     <div class="user-section">
@@ -11,31 +12,19 @@
         [matMenuTriggerFor]="userMenu"
         class="user-button"
       >
-        <img
-          src="assets/images/blank-profile.webp"
-          alt="Avatar"
-          class="user-avatar"
-        />
+        <img [src]="userAvatar" alt="Avatar" class="user-avatar" />
       </button>
 
       <mat-menu #userMenu="matMenu" class="user-menu">
         <div class="user-menu-header">
-          <img
-            src="assets/images/blank-profile.webp"
-            alt="Avatar"
-            class="menu-avatar"
-          />
+          <img [src]="userAvatar" alt="Avatar" class="menu-avatar" />
           <div class="menu-user-info">
             <div class="menu-user-name">{{ userName }}</div>
             <div class="menu-user-role">{{ role | titlecase }}</div>
           </div>
         </div>
         <mat-divider></mat-divider>
-        <button
-          mat-menu-item
-          routerLink="/public/auth/login"
-          (click)="closeSession()"
-        >
+        <button mat-menu-item (click)="closeSession()">
           <mat-icon>logout</mat-icon>
           <span>Cerrar Sesión</span>
         </button>

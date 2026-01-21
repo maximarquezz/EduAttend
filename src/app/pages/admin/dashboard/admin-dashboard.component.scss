@@ -1,0 +1,123 @@
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
+
+section {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--mat-sys-surface-container);
+}
+
+h3 {
+  margin: 0;
+  font: var(--mat-sys-title-large);
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+h4 {
+  margin: 0 0 12px 0;
+  font: var(--mat-sys-title-medium);
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+p {
+  margin: 4px 0 0;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+main {
+  flex: 1;
+  padding: 16px 24px;
+}
+
+.attendance-container {
+  background: var(--mat-sys-surface);
+  border-radius: 16px;
+  border: 1px solid var(--mat-sys-surface-dim);
+  padding: 24px;
+  overflow: hidden;
+}
+
+.stats-section {
+  margin-bottom: 32px;
+
+  > h3 {
+    margin: 0 0 8px 0;
+  }
+
+  > p {
+    margin: 0 0 20px 0;
+    font: var(--mat-sys-body-small);
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.chart-container {
+  background-color: var(--mat-sys-surface-container-high);
+  border: 1px solid var(--mat-sys-surface-dim);
+  border-radius: 16px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.comparison-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.comparison-card {
+  h4 {
+    margin-bottom: 12px;
+  }
+}
+
+.subjects-section {
+  > h3 {
+    margin: 24px 0 20px 0;
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, md)) {
+  .page-header {
+    padding: 24px 32px 20px 32px;
+
+    h1 {
+      font: var(--mat-sys-headline-medium);
+    }
+  }
+
+  main {
+    padding: 24px 32px;
+  }
+
+  .attendance-container {
+    padding: 32px;
+  }
+
+  .comparison-section {
+    flex-direction: row;
+    gap: 24px;
+
+    .comparison-card {
+      flex: 1;
+    }
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, lg)) {
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .chart-container {
+    height: 500px !important;
+    padding: 24px;
+  }
+}

@@ -5,6 +5,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
 import { TabMenuComponent } from '../components/tab-menu/tab-menu.component';
+import { HeaderComponent } from '../components/header/header.component';
+import { FooterComponent } from '../components/footer/footer.component';
 
 /**
  * Componente que funciona como layout para el profesor.
@@ -20,11 +22,19 @@ import { TabMenuComponent } from '../components/tab-menu/tab-menu.component';
  */
 @Component({
   selector: 'app-teacher-layout',
-  imports: [RouterOutlet, SidebarComponent, TabMenuComponent],
+  imports: [
+    RouterOutlet,
+    SidebarComponent,
+    TabMenuComponent,
+    HeaderComponent,
+    FooterComponent,
+  ],
   template: `
     <app-sidebar></app-sidebar>
     <div class="main-content">
+      <app-header></app-header>
       <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </div>
     <nav class="tab-menu-container">
       <app-tab-menu></app-tab-menu>

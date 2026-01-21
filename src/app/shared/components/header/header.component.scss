@@ -3,9 +3,9 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 0 24px;
+  padding: 40px 24px;
   height: 64px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .toolbar-content {
@@ -24,9 +24,25 @@
 
 .nav-section {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  align-items: flex-start;
   flex: 1;
+
+  h4,
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  h4 {
+    font: var(--mat-sys-title-large);
+    font-weight: 600;
+  }
+
+  p {
+    font: var(--mat-sys-body-medium);
+    color: var(--mat-sys-outline);
+  }
 
   a,
   button {
@@ -82,7 +98,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2.2px solid var(--mat-sys-outline-variant);
     object-fit: cover;
   }
 }
@@ -101,12 +117,12 @@
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background-color: rgba(0, 0, 0, 0.02);
 
   .menu-avatar {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    background-color: white;
   }
 
   .menu-user-info {

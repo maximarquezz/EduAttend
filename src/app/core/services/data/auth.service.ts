@@ -22,7 +22,7 @@ export class AuthService {
         tap((response) => {
           sessionStorage.setItem('userData', JSON.stringify(response));
           sessionStorage.setItem('username', response.user.name);
-        })
+        }),
       );
   }
 
@@ -43,7 +43,7 @@ export class AuthService {
     email: string,
     code: string,
     password: string,
-    password_confirmation: string
+    password_confirmation: string,
   ): Observable<any> {
     return this.http.post(`${environment.localApiUrl}/reset-password`, {
       email,
@@ -63,7 +63,7 @@ export class AuthService {
         sessionStorage.removeItem('userData');
         sessionStorage.removeItem('username');
         this.routerLinksService.goToLogin();
-      })
+      }),
     );
   }
 
@@ -95,5 +95,13 @@ export class AuthService {
     }
 
     return role as Role;
+  }
+
+  getUserAvatar(): string {
+    const userData = this.getUserData();
+    return (
+      userData?.user?.avatar ||
+      'https://api.dicebear.com/7.x/avataaars/svg?seed=default'
+    );
   }
 }

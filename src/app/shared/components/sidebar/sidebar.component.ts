@@ -34,11 +34,13 @@ export class SidebarComponent implements OnInit {
 
   role!: Role;
   userName: string | null = '';
+  userAvatar: string = '';
   menu: SidebarMenuItem[] = [];
 
   ngOnInit(): void {
-    this.initUserName();
     this.initUserRole();
+    this.initUsername();
+    this.initUserAvatar();
     this.initMenu();
   }
 
@@ -50,8 +52,12 @@ export class SidebarComponent implements OnInit {
     this.role = this.authService.getUserRole();
   }
 
-  private initUserName() {
+  private initUsername() {
     this.userName = this.authService.getUsername();
+  }
+
+  private initUserAvatar() {
+    this.userAvatar = this.authService.getUserAvatar();
   }
 
   private initMenu(): void {

@@ -9,6 +9,7 @@ import { ModalFactory } from '../modal/modal.factory';
 import { Role } from '../../../core/models/enums/role.enum';
 import { AuthService } from '../../../core/services/data/auth.service';
 import { CardFacade } from './card.facade';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-card',
@@ -17,6 +18,7 @@ import { CardFacade } from './card.facade';
     MatProgressBarModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
@@ -57,7 +59,7 @@ export class CardComponent implements OnInit {
   }
 
   get showAttendance(): boolean {
-    return this.role !== Role.Admin;
+    return this.role !== Role.Admin && this.role !== Role.Teacher;
   }
 
   ngOnInit(): void {
@@ -112,7 +114,7 @@ export class CardComponent implements OnInit {
           if (this.midComissionSubjectId) {
             const subjectData = data.find(
               (item) =>
-                item.mid_comission_subject_id === this.midComissionSubjectId
+                item.mid_comission_subject_id === this.midComissionSubjectId,
             );
             this.modalData = subjectData?.attendances || [];
           } else {

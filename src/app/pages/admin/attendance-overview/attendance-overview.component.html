@@ -1,0 +1,77 @@
+<section class="attendance-overview">
+  <main class="attendance-overview__content">
+    <mat-card class="filter-card">
+      <mat-card-content>
+        <div class="filters-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Carrera</mat-label>
+            <mat-select
+              [(value)]="selectedDegree"
+              (selectionChange)="onDegreeChange()"
+            >
+              <mat-option *ngFor="let degree of degrees" [value]="degree.id">
+                {{ degree.degree_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            [class.disabled]="!selectedDegree"
+          >
+            <mat-label>Comisión</mat-label>
+            <mat-select
+              [(value)]="selectedComission"
+              (selectionChange)="onComissionChange()"
+              [disabled]="!selectedDegree || comissions.length === 0"
+            >
+              <mat-option *ngFor="let com of comissions" [value]="com.id">
+                {{ com.comission_name }} - {{ com.comission_year }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        @if (isLoading) {
+          <div class="loading-state">
+            <mat-spinner diameter="48"></mat-spinner>
+            <p>Cargando materias...</p>
+          </div>
+        } @else if (groupedSubjects.length > 0) {
+          <div class="subjects-container">
+            @for (yearGroup of groupedSubjects; track yearGroup.year) {
+              <div class="year-group">
+                <h2 class="year-title">
+                  {{ yearGroup.year }}º Año
+                  <mat-chip disabled>{{ yearGroup.subjects.length }}</mat-chip>
+                </h2>
+                <div class="year-subjects">
+                  @for (subject of yearGroup.subjects; track subject.id) {
+                    <app-card
+                      [cardTitle]="subject.subject_name"
+                      [cardSubtitle]="'Comisión: ' + subject.comission_name"
+                      [cardPercentageLabel]="'Año'"
+                      [cardPercentage]="subject.subject_year"
+                      [midComissionSubjectId]="subject.id"
+                      [isAdminView]="true"
+                    />
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @else if (selectedComission) {
+          <app-empty-state
+            [icon]="'school_off'"
+            [text]="'No hay materias en esta comisión.'"
+          />
+        } @else {
+          <app-empty-state
+            [icon]="'visibility'"
+            [text]="'Selecciona una carrera y comisión para ver las materias.'"
+          />
+        }
+      </mat-card-content>
+    </mat-card>
+  </main>
+</section>

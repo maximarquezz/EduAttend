@@ -20,12 +20,19 @@ import { SidebarComponent } from '../components/sidebar/sidebar.component';
  */
 @Component({
   selector: 'app-student-layout',
-  imports: [RouterOutlet, SidebarComponent, TabMenuComponent, HeaderComponent],
+  imports: [
+    RouterOutlet,
+    SidebarComponent,
+    TabMenuComponent,
+    HeaderComponent,
+    FooterComponent,
+  ],
   template: `
     <app-sidebar></app-sidebar>
     <div class="main-content">
       <app-header></app-header>
       <router-outlet></router-outlet>
+      <app-footer></app-footer>
     </div>
     <nav class="tab-menu-container">
       <app-tab-menu></app-tab-menu>

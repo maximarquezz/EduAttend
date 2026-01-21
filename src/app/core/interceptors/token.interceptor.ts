@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { LoginComponent } from '../../features/auth/login/login.component';
+import { LoginComponent } from '../../pages/auth/login/login.component';
 
 /**
  * Este interceptor añade el token de autenticación.

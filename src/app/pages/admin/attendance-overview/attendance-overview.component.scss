@@ -1,0 +1,82 @@
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
+
+.attendance-overview {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+
+  &__content {
+    flex: 1;
+    padding: 20px 16px 24px 16px;
+    background-color: var(--mat-sys-surface-container);
+
+    .filter-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--mat-sys-surface-dim);
+      background-color: var(--mat-sys-surface);
+      box-shadow: none;
+
+      .filters-row {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+
+        mat-form-field {
+          flex: 1;
+        }
+
+        button {
+          height: 56px;
+          border-radius: 12px;
+        }
+      }
+    }
+
+    .subjects-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .year-group {
+      .year-title {
+        font: var(--mat-sys-title-medium);
+        font-weight: 600;
+        color: var(--mat-sys-on-surface);
+        margin: 0 0 20px 0;
+        padding-bottom: 12px;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 80px;
+          height: 2px;
+          background: var(--mat-sys-primary);
+          opacity: 0.4;
+        }
+      }
+
+      .year-subjects {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .mat-mdc-standard-chip {
+  background-color: var(--mat-sys-primary) !important;
+  border-radius: 999px;
+}
+
+:host ::ng-deep .mat-mdc-chip-action-label {
+  color: white !important;
+  font-weight: bold;
+}

@@ -1,14 +1,83 @@
-<footer>
-  <section>
-    <article>
-      Eduattend © 2025 | v0.6.0
-    </article>
+<footer class="app-footer">
+  <div class="footer-content">
+    <!-- Sección Principal -->
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="assets/images/logo.png" alt="Eduattend" class="footer-logo" />
+        <p class="footer-tagline">
+          Sistema de gestión de asistencias educativas
+        </p>
+      </div>
 
-    <article>
-      <mat-icon>notifications</mat-icon>
-      <mat-icon>dark_mode</mat-icon>
-      <mat-icon>settings</mat-icon>
-      <mat-icon>account_circle</mat-icon>
-    </article>
-  </section>
+      <nav class="footer-nav">
+        <div class="footer-column">
+          <h6>Producto</h6>
+          <a href="/features">Características</a>
+          <a href="/about">Acerca de Eduattend</a>
+          <a href="/updates">Actualizaciones</a>
+        </div>
+
+        <div class="footer-column">
+          <h6>Recursos</h6>
+          <a href="/help">Centro de ayuda</a>
+          <a href="/docs">Documentación</a>
+          <a href="/tutorials">Tutoriales</a>
+        </div>
+
+        <div class="footer-column">
+          <h6>Soporte</h6>
+          <a href="/faq">Preguntas frecuentes</a>
+          <a href="/contact">Contactar soporte</a>
+          <a href="/status">Estado del sistema</a>
+        </div>
+
+        <div class="footer-column">
+          <h6>Legal</h6>
+          <a href="/privacy">Privacidad</a>
+          <a href="/terms">Términos de uso</a>
+          <a href="/security">Seguridad</a>
+        </div>
+      </nav>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Sección Inferior -->
+    <div class="footer-bottom">
+      <div class="footer-info">
+        <span class="footer-version">Eduattend © 2025 | v0.6.0</span>
+        <span class="footer-separator">•</span>
+        <a href="/status" class="footer-link">
+          <mat-icon class="status-icon">circle</mat-icon>
+          Sistema operativo
+        </a>
+      </div>
+
+      <div class="footer-actions">
+        <a
+          href="https://github.com/eduattend"
+          mat-icon-button
+          aria-label="GitHub"
+          target="_blank"
+        >
+          <mat-icon>code</mat-icon>
+        </a>
+        <a
+          href="https://twitter.com/eduattend"
+          mat-icon-button
+          aria-label="Twitter"
+          target="_blank"
+        >
+          <mat-icon>alternate_email</mat-icon>
+        </a>
+        <a
+          href="mailto:soporte@eduattend.com"
+          mat-icon-button
+          aria-label="Email"
+        >
+          <mat-icon>email</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>

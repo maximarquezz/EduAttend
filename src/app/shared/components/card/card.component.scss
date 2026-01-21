@@ -19,13 +19,22 @@ mat-card {
     @extend .flex-row_spc-ctr;
     justify-content: flex-start;
     padding: 20px 20px 16px 20px;
-    background: var(--mat-sys-surface-container-high);
+    background: var(--mat-sys-surface-container);
     margin: 0;
 
     mat-card-title {
+      width: 100%; // CLAVE
+      max-width: 100%; // CLAVE
+      min-width: 0; // CLAVE para flexbox
       font: var(--mat-sys-title-medium);
       color: var(--mat-sys-on-surface);
       margin: 0;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      max-width: 100%;
     }
 
     mat-card-subtitle {
@@ -40,13 +49,13 @@ mat-card {
     align-items: center;
     padding: 20px;
     gap: 16px;
-    width: 100%; // Cambiar de 90%
-    margin: 0; // Remover margin: auto
-    box-sizing: border-box; // Asegurar que padding no cause overflow
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
 
     mat-progress-bar {
       flex: 3;
-      min-width: 0; // Evitar overflow del progress bar
+      min-width: 0;
       height: 8px;
       border-radius: 4px;
       overflow: hidden;
@@ -75,7 +84,7 @@ mat-card {
       margin-left: 8px;
 
       &[fontIcon="check_circle"] {
-        color: var(--mat-sys-tertiary);
+        color: green;
       }
 
       &[fontIcon="schedule"] {
@@ -100,4 +109,14 @@ mat-card {
       font-weight: 500;
     }
   }
+}
+
+:host ::ng-deep .mat-mdc-card-header-text {
+  min-width: 0;
+}
+
+:host ::ng-deep .mat-mdc-card-title-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

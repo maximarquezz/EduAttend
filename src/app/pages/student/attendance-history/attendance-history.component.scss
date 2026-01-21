@@ -1,0 +1,221 @@
+@use "../../../shared/styles/layout.scss" as *;
+@use "../../../shared/styles/breakpoints.scss" as *;
+@use "sass:map";
+
+.attendance-history {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--mat-sys-surface-container);
+
+  &__content {
+    flex: 1;
+    padding: 20px 16px 24px 16px;
+
+    .history-card {
+      background: var(--mat-sys-surface);
+      border-radius: 16px;
+      border: 1px solid var(--mat-sys-surface-dim);
+      box-shadow: none;
+      overflow: hidden;
+
+      mat-card-content {
+        padding: 0;
+      }
+    }
+
+    .table-container {
+      min-height: 100vh;
+      overflow-x: auto;
+      display: flex;
+      flex-direction: column;
+
+      table {
+        width: 100%;
+        background: var(--mat-sys-surface);
+
+        th {
+          background: var(--mat-sys-surface-container-low);
+          color: var(--mat-sys-on-surface);
+          font-weight: 600;
+          padding: 16px;
+          border-bottom: 1px solid var(--mat-sys-surface-dim);
+        }
+
+        td {
+          padding: 16px;
+          color: var(--mat-sys-on-surface);
+          border-bottom: 1px solid var(--mat-sys-surface-dim);
+        }
+
+        tr.mat-mdc-row {
+          &:last-child td {
+            border-bottom: none;
+          }
+        }
+
+        // Estilos para la celda de fecha
+        .date-cell {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+
+          .date-text {
+            font: var(--mat-sys-body-medium);
+            color: var(--mat-sys-on-surface);
+          }
+
+          .time-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            background: var(--mat-sys-primary-container);
+            color: var(--mat-sys-on-primary-container);
+            border-radius: 12px;
+            font: var(--mat-sys-label-small);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+          }
+        }
+
+        .state-cell {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        // Estilos para el link de materia
+        .subject-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: none;
+          border: none;
+          color: var(--mat-sys-primary);
+          font: var(--mat-sys-body-medium);
+          font-weight: 500;
+          cursor: pointer;
+          padding: 4px 8px;
+          margin: -4px -8px;
+          border-radius: 8px;
+          transition: all 0.1s ease;
+          text-align: left;
+
+          mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+            transition: opacity 0.1s ease;
+          }
+
+          &:hover {
+            background: var(--mat-sys-primary-container);
+            color: var(--mat-sys-on-primary-container);
+
+            mat-icon {
+              opacity: 1;
+            }
+          }
+
+          &:active {
+            background: var(--mat-sys-primary);
+            color: var(--mat-sys-on-primary);
+          }
+        }
+      }
+
+      ::ng-deep mat-paginator {
+        margin-top: auto;
+        background: var(--mat-sys-surface-container-low);
+        border-top: 1px solid var(--mat-sys-surface-dim);
+
+        .mat-mdc-paginator-container {
+          padding: 12px 16px;
+        }
+
+        .mat-mdc-paginator-range-label {
+          color: var(--mat-sys-on-surface);
+        }
+
+        .mat-mdc-form-field {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.circle-present,
+.circle-absent,
+.circle-late,
+.circle-justified {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.circle-present {
+  background-color: #4caf50;
+}
+
+.circle-absent {
+  background-color: #f44336;
+}
+
+.circle-late {
+  background-color: #ff9800;
+}
+
+.circle-justified {
+  background-color: #2196f3;
+}
+
+@media (max-width: map.get($width-breakpoints, sm)) {
+  .attendance-history {
+    &__content {
+      .table-container {
+        table {
+          .date-cell {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, md)) {
+  .attendance-history {
+    &__content {
+      padding: 32px 24px 32px 24px;
+
+      .page-header {
+        padding: 24px 32px 20px 32px;
+
+        img {
+          display: none;
+        }
+
+        h1 {
+          font: var(--mat-sys-headline-large);
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: map.get($width-breakpoints, lg)) {
+  .attendance-history {
+    &__content {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
